@@ -1344,3 +1344,48 @@ html.js .pm-site :is(.pm-grid,.bento,.acc,.pm-covers,.pm-steps,.pm-contacts,.ap-
 @media(max-width:900px){.lp-grid{grid-template-columns:1fr}.lp-toc{position:static}.lp-toc ol{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.lp-toc{display:none}.lp-content p,.lp-content li{font-size:15px}}
 @media(min-width:761px){.pm-foot-bottom{padding-right:84px!important}}
+
+/* ════════ v11 — tighter vertical rhythm (measured: ~160px between sections before) ════════ */
+@media(min-width:900px) and (prefers-reduced-motion:no-preference){.pm-hx{height:185vh}}
+.pm-sec{padding-block:clamp(40px,4vw,58px)}
+.pm-head-row{margin-bottom:clamp(24px,2.6vw,40px)}
+.pm-enq{padding-block:clamp(40px,4vw,58px)}
+.pm-enq-copy{gap:18px}
+.pm-welcome{margin-top:clamp(28px,3vw,40px);padding-top:clamp(24px,2.4vw,32px)}
+.pm-stats{margin-top:clamp(32px,3.4vw,48px)}
+.pm-sheet{margin-top:clamp(28px,3vw,44px)}
+.pm-prod{min-height:min(72svh,660px)}
+.pm-prod-inner{padding:clamp(60px,6.5vw,92px) var(--pm-g)}
+.pm-foot-cta{padding-block:clamp(40px,4vw,60px) clamp(28px,3vw,40px)}
+@media(max-width:760px){
+  .pm-sec,.pm-enq{padding-block:40px}
+  .pm-head-row{gap:14px;margin-bottom:24px}
+  .pm-prod-inner{padding:72px var(--pm-g)}
+  .pm-foot-cta{padding-block:36px 24px}
+}
+
+/* ════════ v12 — remove the remaining dead space (from screenshots) ════════ */
+/* 1 · section rhythm */
+.pm-sec,.pm-enq{padding-block:clamp(32px,3.2vw,48px)!important}
+.pm-head-row{margin-bottom:clamp(20px,2vw,32px)!important;align-items:end}
+.pm-head-row .pm-label{margin-bottom:14px!important}
+/* 2 · production banner: no black letterbox bars (they read as an empty band) */
+.pm-prod .bar{display:none!important}
+.pm-prod{min-height:0!important}
+.pm-prod-inner{padding:clamp(56px,6vw,84px) var(--pm-g)!important}
+.pm-prod .frame-info{bottom:18px!important}
+/* 3 · course showcase: frame no taller than the list beside it */
+.cs-frame{aspect-ratio:1/1!important;max-height:min(600px,calc(100svh - var(--pm-head) - 60px))!important}
+.cs{align-items:stretch}
+.cs-list{align-self:center}
+/* 4 · phone footer: no tall empty strip at the bottom */
+@media(max-width:760px){
+  .pm-sec,.pm-enq{padding-block:32px!important}
+  .pm-foot-bottom{padding-block:16px 24px!important;gap:8px!important}
+  .pm-foot-grid{padding-block:24px 16px!important;gap:24px 16px!important}
+  .pm-foot-cta{padding-block:32px 20px!important}
+}
+/* footer bottom: © left · legal centre · credit right */
+.pm-foot-bottom .pm-legal{justify-self:center!important}
+.pm-foot-bottom .pm-credit{justify-self:end!important}
+@media(max-width:760px){.pm-foot-bottom .pm-legal,.pm-foot-bottom .pm-credit{justify-self:center!important}}

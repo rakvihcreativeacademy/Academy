@@ -54,8 +54,8 @@ export default function WebsiteLayout({ children }: { children: React.ReactNode 
       </div>
       <div className="pm-wrap pm-foot-bottom">
         <span>© {new Date().getFullYear()} RAKVIH Solutions Pvt. Ltd. All rights reserved.</span>
-        <span className="pm-credit">Designed and powered by <a href="https://www.rakvih.in" target="_blank" rel="noopener noreferrer">RAKVIH</a></span>
         <span className="pm-legal"><Link href="/privacy">Privacy Policy</Link><Link href="/terms">Terms &amp; Conditions</Link></span>
+        <span className="pm-credit">Designed and powered by <a href="https://www.rakvih.in" target="_blank" rel="noopener noreferrer">RAKVIH</a></span>
       </div>
     </footer>
     <a className="wa-fab" href={hello} target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp">

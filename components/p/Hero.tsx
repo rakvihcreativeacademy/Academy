@@ -45,7 +45,7 @@ export default function Hero() {
       if (!mq.matches) { reset(); if (!was) { was = true; setAct2(true); } return; }
       const r = el.getBoundingClientRect();
       const p = clamp(-r.top / Math.max(1, r.height - window.innerHeight));
-      const e1 = ease(clamp(p / .6)), e2 = clamp((p - .48) / .3);
+      const e1 = ease(clamp(p / .55)), e2 = clamp((p - .42) / .3); // finishes at ~72% so there's no dead scroll after the tagline
       const s = .44 + .56 * e1;
       if (win.current) { win.current.style.transform = `scale(${s.toFixed(4)})`; win.current.style.borderRadius = `${((1 - e1) * 20 / s).toFixed(2)}px`; win.current.style.setProperty('--sh', e2.toFixed(3)); }
       if (words.current) {
