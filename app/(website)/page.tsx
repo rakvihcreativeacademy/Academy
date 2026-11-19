@@ -1,201 +1,206 @@
 import Link from '@/components/SiteLink';
-import Image from 'next/image';
-import { ArrowUpRight, MessageCircle, Mic, Video, Lightbulb, Headphones, MonitorPlay, Camera, Scissors, Clapperboard, Aperture, Users } from 'lucide-react';
-import HomeAdmissions from '@/components/v/HomeAdmissions';
+import { ArrowUpRight, MessageCircle } from 'lucide-react';
+import Hero from '@/components/p/Hero';
+import CourseIndex from '@/components/p/CourseIndex';
+import Covers from '@/components/p/Covers';
 import Words from '@/components/v/Words';
-import HeroSlides from '@/components/v/HeroSlides';
-import CoursePicker from '@/components/v/CoursePicker';
-import WhyTabs from '@/components/v/WhyTabs';
-import CareerCarousel from '@/components/v/CareerCarousel';
+import FormSection from '@/components/v/FormSection';
+import Band from '@/components/p/Band';
+import Pillars from '@/components/p/Pillars';
+import Offers from '@/components/p/Offers';
 import { courses } from '@/lib/courses';
-import { site, whatsappLink, studioAudience, studioFacilities, podcastServices, productionServices } from '@/lib/site';
+import { site, whatsappLink, studioFacilities, studioAudience, productionServices } from '@/lib/site';
 
-const hello = whatsappLink(`Hello ${site.name}, I’d like to know more about your courses.`);
-const studioColumns = [
-  { title: 'Facilities', icon: Lightbulb, items: studioFacilities, dur: 34 },
-  { title: 'Who books it', icon: Users, items: studioAudience, dur: 28 },
-  { title: 'Services', icon: Mic, items: podcastServices, dur: 38 },
+const steps = [
+  { t: 'Learn the craft', d: 'Practical classes with experienced trainers — the fundamentals of light, frame, sound and story.' },
+  { t: 'Hands-on practice', d: 'Professional cameras, lighting and industry software, with individual attention as you go.' },
+  { t: 'Real projects', d: 'Short films, promotional videos, photography assignments, interviews and digital content.' },
+  { t: 'Your portfolio', d: 'Leave with finished work that shows what you can do — plus guidance on freelancing and careers.' },
 ];
-const journey = ['Learn the craft', 'Hands-on practice', 'Real projects', 'Your portfolio'];
+const sheet = [
+  { src: '/images/academy-filmmaking.webp', n: '12A' }, { src: '/images/academy-photography.webp', n: '13' },
+  { src: '/images/course-lighting-sound.webp', n: '13A' }, { src: '/images/academy-editing.webp', n: '14' },
+  { src: '/images/course-motion-graphics.webp', n: '14A' }, { src: '/images/course-cinematography.webp', n: '15' },
+  { src: '/images/course-content-creation.webp', n: '15A' }, { src: '/images/course-ai-creative.webp', n: '16' },
+];
 
 export default function Home() {
-  return <main className="v-home">
-    {/* ── Hero ── */}
-    <HeroSlides />
+  return <main className="pm-home">
+    <Hero />
 
-    {/* ── Toolkit ── */}
-    <section className="v-dark v-toolkit">
-      <div className="v-glow" aria-hidden="true" />
-      <div className="v-center" data-v>
-        <h2><Words text="A full toolkit for a" /><br /><Words text="full creative career." start={5} /></h2>
-        <p className="v-sub">Training, studio access, real production work and portfolio support — everything you need to go from first class to finished work.</p>
-      </div>
-      <div className="v-wrap v-cards">
-        <article className="v-card v-card-wide" data-v>
-          <div className="v-card-copy">
-            <strong className="v-big" data-count="4">4 steps</strong>
-            <h3>From your first class to a finished portfolio.</h3>
-            <p>Practical classes, guided practice and real projects — so you leave with work that shows what you can do.</p>
-            <span className="v-chip"><img src="/brand/rakvih-mark-128.png" alt="" />RAKVIH method <small>Learn · Practise · Create</small></span>
+    <Band words={['Video editing', 'Cinematography', 'Photography', 'Filmmaking', 'Motion design', 'Sound', 'Content']} />
+
+    {/* (01) — Manifesto */}
+    <section className="pm-sec pm-paper">
+      <div className="pm-wrap">
+        <div className="pm-manifesto-grid">
+          <div className="pm-manifesto-side">
+            <p className="pm-label rule">(01) — <b>Welcome</b></p>
+            <p className="pm-small" style={{ maxWidth: 280, margin: 0 }}><strong style={{ color: 'var(--pm-text)' }}>{site.name}</strong><br />{site.parent}</p>
+            <p className="pm-small" style={{ maxWidth: 280, margin: 0, fontStyle: 'normal' }}>{site.promise}</p>
           </div>
-          <div className="v-chart" aria-hidden="true">
-            <span className="v-chart-label">Your journey</span>
-            <svg viewBox="0 0 520 260" preserveAspectRatio="none">
-              <defs><linearGradient id="vArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#a9ba5a" stopOpacity=".55" /><stop offset="1" stopColor="#a9ba5a" stopOpacity="0" /></linearGradient></defs>
-              {[0, 1, 2, 3, 4].map(i => <line key={i} x1={i * 130} x2={i * 130} y1="0" y2="260" className="v-grid" />)}
-              <path className="v-area" d="M0,236 C70,230 90,200 130,190 C190,176 220,150 260,132 C320,106 350,92 390,70 C440,44 480,30 520,18 L520,260 L0,260Z" fill="url(#vArea)" />
-              <path className="v-line" pathLength="1" d="M0,236 C70,230 90,200 130,190 C190,176 220,150 260,132 C320,106 350,92 390,70 C440,44 480,30 520,18" />
-              {[[130, 190], [260, 132], [390, 70], [512, 21]].map(([x, y], i) => <circle key={i} cx={x} cy={y} r="5" className="v-pt" style={{ '--i': i } as React.CSSProperties} />)}
-            </svg>
-            {journey.map((j, i) => <span key={j} className="v-chart-pill" style={{ '--i': i, left: `${[25, 50, 75, 97][i]}%`, top: `${[73, 51, 27, 8][i]}%` } as React.CSSProperties}>{j}</span>)}
-          </div>
-        </article>
-        <article className="v-card" data-v>
-          <span className="v-card-label">Courses</span>
-          <strong className="v-big" data-count="8">8 courses</strong>
-          <div className="v-dial" aria-hidden="true"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" className="v-dial-ring" /><path d="M60,60 L60,8 A52,52 0 0 1 112,60 Z" className="v-dial-fill" />{Array.from({ length: 8 }, (_, i) => <line key={i} x1="60" y1="4" x2="60" y2="12" transform={`rotate(${i * 45} 60 60)`} />)}</svg></div>
-          <ul className="v-mini-pills">{['Editing', 'Camera', 'Photo', 'Film'].map(t => <li key={t}>{t}</li>)}</ul>
-          <h3>Professional courses</h3>
-          <p>From editing and cinematography to motion graphics, sound and AI tools.</p>
-        </article>
-        <article className="v-card" data-v>
-          <span className="v-card-label">Studio</span>
-          <strong className="v-big">On air</strong>
-          <div className="v-wave" aria-hidden="true">{Array.from({ length: 28 }, (_, i) => <i key={i} style={{ '--i': i, '--h': `${20 + Math.round(Math.abs(Math.sin(i * 0.9)) * 70)}%` } as React.CSSProperties} />)}</div>
-          <h3>Premium podcast studio</h3>
-          <p>Professional microphones, multi-camera recording and acoustic treatment.</p>
-        </article>
-      </div>
-    </section>
-
-    {/* ── Studio ── */}
-    <section className="v-cream v-studio">
-      <div className="v-sunrise" aria-hidden="true" />
-      <div className="v-center" data-v>
-        <h2><Words text="A studio built for the" /><br /><Words text="way you create." start={5} /></h2>
-        <p className="v-sub">Record podcasts, interviews and video series in a professionally equipped space — with production and editing support when you need it.</p>
-      </div>
-      <div className="v-wrap">
-        <div className="v-studio-card" data-v data-cursor="Book">
-          <Image src="/images/academy-studio.webp" alt="Illustration of a podcast studio with microphones and armchairs" fill sizes="(max-width: 900px) 100vw, 1200px" />
-          <div className="v-studio-copy">
-            <div>
-              <p className="v-eyebrow light"><span className="v-live-dot" /> RAKVIH Podcast Studio</p>
-              <h3>Book the studio for your next show.</h3>
-              <ul className="v-glass-pills"><li>Multi-camera</li><li>Acoustic treatment</li><li>Editing support</li></ul>
-            </div>
-            <div className="v-studio-book">
-              <p>Tell us your date and format — audio or video — and we’ll confirm your slot on WhatsApp.</p>
-              <div className="v-row">
-                <Link href="/podcast-studio#book" className="v-pill-white">Book a slot <ArrowUpRight size={15} /></Link>
-                <a href={whatsappLink(`Hello ${site.name}, I’d like to book the podcast studio.`)} target="_blank" rel="noopener noreferrer" className="v-pill-ghost"><MessageCircle size={15} /> Ask on WhatsApp</a>
-              </div>
-            </div>
-          </div>
+          <p className="pm-manifesto-text" data-v>
+            We teach the craft of <em>seeing</em> <span className="pm-inline-img"><img src="/images/academy-photography.webp" alt="" loading="lazy" /></span> — light, frame and the decisive moment. The discipline of the <em>cut</em> <span className="pm-inline-img"><img src="/images/academy-editing.webp" alt="" loading="lazy" /></span>, the patience of sound, <span className="mute">and the courage to make work that is</span> unmistakably <em>yours</em> <span className="pm-inline-img"><img src="/images/academy-filmmaking.webp" alt="" loading="lazy" /></span>.
+          </p>
         </div>
-      </div>
-    </section>
-
-    {/* ── Studio offers (moving columns) ── */}
-    <section className="v-offers">
-      <div className="v-wrap v-offers-grid">
-        <div className="v-offers-copy" data-v>
-          <p className="v-eyebrow light">Inside the studio</p>
-          <h2><Words text="Everything the" /><br /><Words text="studio offers." start={2} /></h2>
-          <p className="v-sub">Professional facilities, the people who book it and the services we provide — from a single recording to a complete podcast production package.</p>
-          <Link href="/podcast-studio" className="v-pill-white">Explore the studio <ArrowUpRight size={15} /></Link>
-        </div>
-        <div className="v-tickers">
-          {studioColumns.map((col, c) => <div key={col.title} className={'v-ticker' + (c === 1 ? ' down' : '')} style={{ '--dur': `${col.dur}s` } as React.CSSProperties}>
-            <p className="v-ticker-title"><col.icon size={15} />{col.title}<span>{col.items.length}</span></p>
-            <div className="v-ticker-win">
-              <ul>{[...col.items, ...col.items].map((it, i) => <li key={i} aria-hidden={i >= col.items.length}><span><col.icon size={13} /></span>{it}</li>)}</ul>
-            </div>
-          </div>)}
-        </div>
-      </div>
-    </section>
-
-    {/* ── Courses ── */}
-    <section className="v-cream v-courses"><div className="v-wrap"><CoursePicker /></div></section>
-
-    {/* ── Production ── */}
-    <section className="v-production">
-      <Image src="/images/course-cinematography.webp" alt="" fill sizes="100vw" className="v-production-bg" />
-      <div className="v-wrap">
-        <div className="v-glass-panel" data-v>
+        <div className="pm-welcome" data-v>
           <div>
-            <p className="v-eyebrow light"><Aperture size={14} /> RAKVIH Production</p>
-            <h2>From concept to the final cut.</h2>
-            <div className="v-stat-box"><span className="v-stat-tag">Production services</span><strong data-count="12">12</strong><small>Brand films · Events · Podcasts · Reels</small></div>
-            <p className="v-small">Our creative team produces videos, photography and podcasts for brands, businesses and creators.</p>
-            <Link href="/production" className="v-pill-white">See all services <ArrowUpRight size={15} /></Link>
+            <p>Welcome to {site.name} — a creative and technology-driven destination for aspiring video editors, cinematographers, photographers, filmmakers and digital content creators.</p>
+            <p>We combine creative education with practical industry experience to help individuals transform their passion into professional skills. From mastering professional editing software to operating cinema cameras, creating films, producing podcasts and developing digital content, we provide hands-on learning experiences that prepare students for the creative industry.</p>
           </div>
-          <ul className="v-prod-list">{productionServices.slice(0, 6).map((s, i) => <li key={s.title} style={{ '--i': i } as React.CSSProperties}><span>{String(i + 1).padStart(2, '0')}</span>{s.title}</li>)}</ul>
+          <div className="pm-welcome-cta">
+            <strong>Learn the Skills. Master the Technology. <em>Create Your Future.</em></strong>
+            <div className="pm-row">
+              <Link href="/courses" className="pm-btn ink">Explore Our Courses <ArrowUpRight size={15} /></Link>
+              <Link href="/podcast-studio#enquire" className="pm-btn ghost">Book Our Podcast Studio</Link>
+              <Link href="/admissions" className="pm-btn ghost">Enquire for Admission</Link>
+            </div>
+            <Link href="/production#enquire" className="pm-link" style={{ alignSelf: 'flex-start' }}>Enquire About Production Services <ArrowUpRight size={14} /></Link>
+          </div>
+        </div>
+        <div className="pm-stats">
+          <div data-v><strong className="pm-num">{String(courses.length).padStart(2, '0')}</strong><span>Professional courses</span></div>
+          <div data-v><strong className="pm-num">01</strong><span>Premium podcast studio</span></div>
+          <div data-v><strong className="pm-num">{productionServices.length}</strong><span>Production services</span></div>
+          <div data-v><strong className="pm-num">04</strong><span>Steps to a finished portfolio</span></div>
         </div>
       </div>
     </section>
 
-    {/* ── Why ── */}
-    <section className="v-cream v-whysec">
-      <div className="v-wrap">
-        <div className="v-center left" data-v><p className="v-eyebrow">Why RAKVIH Creative Academy</p><h2>Everything you need to <em>grow</em> as a creator.</h2></div>
-        <WhyTabs />
+    {/* (02) — What we offer */}
+    <section className="pm-sec pm-paper2">
+      <div className="pm-wrap">
+        <div className="pm-head-row">
+          <div data-v>
+            <p className="pm-label rule">(02) — <b>What we offer</b></p>
+            <h2 className="pm-h2"><Words text="One brand." /> <em><Words text="Every creative service." start={2} /></em></h2>
+          </div>
+          <p className="pm-lede">{site.positioning}</p>
+        </div>
+        <Offers />
       </div>
     </section>
 
-    {/* ── Careers ── */}
-    <section className="v-sage v-careersec">
-      <div className="v-center" data-v>
-        <h2><Words text="Your skills." /><br /><Words text="Your career path." start={2} /></h2>
-        <p className="v-sub">Twelve creative careers our training prepares you for — here are six of them.</p>
+    {/* (03) — Programmes */}
+    <section className="pm-sec pm-dark" data-dark>
+      <div className="pm-wrap">
+        <div className="pm-head-row">
+          <div data-v>
+            <p className="pm-label rule">(03) — <b>The Programmes</b></p>
+            <h2 className="pm-h2"><Words text="Eight disciplines." /> <em><Words text="One creative career." start={2} /></em></h2>
+          </div>
+          <div className="pm-stack" style={{ gap: 24 }}>
+            <p className="pm-lede">From editing and cinematography to motion graphics, sound and AI tools. Choose a discipline — or combine them.</p>
+            <Link href="/courses" className="pm-link" style={{ alignSelf: 'flex-start' }}>View all courses <ArrowUpRight size={14} /></Link>
+          </div>
+        </div>
+        <CourseIndex />
       </div>
-      <div className="v-wrap"><CareerCarousel /><p className="v-fine">Career guidance and placement assistance are subject to available opportunities. Employment is not guaranteed.</p></div>
     </section>
 
-    {/* ── WhatsApp: real advice + enquiry ── */}
-    <section className="v-sage v-phone-sec v-wa">
-      <div className="v-wrap">
-        <header className="v-wa-head" data-v>
+    {/* (04) — Method */}
+    <section className="pm-sec pm-paper2" style={{ overflow: 'hidden' }}>
+      <div className="pm-wrap">
+        <div className="pm-head-row">
+          <div data-v>
+            <p className="pm-label rule">(04) — <b>The Method</b></p>
+            <h2 className="pm-h2"><Words text="From your first class" /> <em><Words text="to a finished portfolio." start={4} /></em></h2>
+          </div>
+          <p className="pm-lede">Learn · Practise · Create. Every programme follows the same four movements, so you leave with work — not just notes.</p>
+        </div>
+        <div className="pm-steps">
+          {steps.map((s, i) => <article key={s.t} data-v style={{ '--d': `${i * 90}ms` } as React.CSSProperties}>
+            <span className="n pm-num">{String(i + 1).padStart(2, '0')}</span><h3>{s.t}</h3><p>{s.d}</p>
+          </article>)}
+        </div>
+      </div>
+      <div className="pm-sheet" aria-hidden="true" data-no-reveal>
+        <div className="pm-sheet-track">
+          {[...sheet, ...sheet].map((f, i) => <figure key={i} className={'pm-frame' + (i % 8 === 3 ? ' pick' : '')} style={{ margin: 0 }}><img src={f.src} alt="" loading="lazy" /><small>▸ {f.n} &nbsp; RAKVIH 400</small></figure>)}
+        </div>
+      </div>
+    </section>
+
+    {/* (05) — Studio */}
+    <section className="pm-sec pm-dark2" data-dark>
+      <div className="pm-wrap pm-studio-grid">
+        <figure className="pm-plate" data-v>
+          <div className="pm-plate-img" data-cursor="Book">
+            <img src="/images/academy-studio.webp" alt="Illustration of the RAKVIH podcast studio with microphones and armchairs" loading="lazy" data-parallax="0.06" />
+            <span className="pm-onair"><i />ON AIR</span>
+            <span className="pm-wave" aria-hidden="true">{Array.from({ length: 22 }, (_, k) => <i key={k} style={{ '--i': k, '--h': 25 + Math.round(Math.abs(Math.sin(k * 1.3)) * 75) } as React.CSSProperties} />)}</span>
+          </div>
+          <figcaption><span>Plate 04 — RAKVIH Podcast Studio</span><span>Bengaluru</span></figcaption>
+        </figure>
+        <div className="pm-stack">
+          <div data-v>
+            <p className="pm-label rule" style={{ marginBottom: 28 }}>(05) — <b>The Studio</b></p>
+            <h2 className="pm-h2"><Words text="A studio built for" /> <em><Words text="the way you create." start={4} /></em></h2>
+          </div>
+          <p className="pm-lede">Record podcasts, interviews and video series in a professionally equipped space — with production and editing support when you need it.</p>
+          <ul className="pm-list">{studioFacilities.slice(0, 8).map((f, i) => <li key={f}><span className="pm-num">{String(i + 1).padStart(2, '0')}</span>{f}</li>)}</ul>
           <div>
-            <p className="v-eyebrow">Real people. Real advice.</p>
-            <h2><Words text="Your enquiry, straight" /><br /><Words text="to WhatsApp." start={3} /></h2>
+            <p className="pm-label" style={{ marginBottom: 14 }}>Who books it</p>
+            <ul className="pm-tags">{studioAudience.slice(0, 6).map(a => <li key={a}>{a}</li>)}</ul>
           </div>
-          <div className="v-wa-head-side">
-            <p className="v-sub">Courses, batches, studio bookings or a production brief — pick what you need, add your details and your message opens in WhatsApp, ready to send. Our team replies right there.</p>
-            <div className="v-row">
-              <a href="#enquire" className="v-pill-dark">Start your enquiry <ArrowUpRight size={15} /></a>
-              <a href={hello} target="_blank" rel="noopener noreferrer" className="v-pill-wa"><MessageCircle size={16} /> Chat on WhatsApp</a>
-            </div>
-          </div>
-        </header>
-        <div className="v-wa-grid">
-          <div className="v-bubbles" data-v>
-            <div className="v-bubble me" style={{ '--d': 0 } as React.CSSProperties}><p>Hi RAKVIH 👋 I love editing reels. Which course should I start with?</p><span className="v-who"><i>Y</i>You</span></div>
-            <div className="v-bubble them" style={{ '--d': 1 } as React.CSSProperties}><p>Professional Video Editing is a great start — Premiere Pro, DaVinci Resolve, colour grading and reels editing.</p><span className="v-who"><img src="/brand/rakvih-mark-128.png" alt="" />RAKVIH Creative Academy</span></div>
-            <div className="v-bubble me alt" style={{ '--d': 2 } as React.CSSProperties}><p>Perfect. Can you share the fees and the next batch?</p><span className="v-who"><i>Y</i>You</span></div>
-            <p className="v-bubble-note">Example conversation</p>
-          </div>
-          <div className="v-wa-phone-col">
-            <p className="v-wa-phone-label"><span>1</span> Fill the form <i /> <span>2</span> WhatsApp opens <i /> <span>3</span> Tap send</p>
-            <div className="v-phone" data-v aria-hidden="true">
-              <div className="v-phone-screen">
-                <div className="v-phone-status"><b>9:41</b><span /></div>
-                <div className="v-phone-head"><img src="/brand/rakvih-mark-128.png" alt="" /><span>RAKVIH Creative Academy<small>WhatsApp</small></span></div>
-                <h4>Turn your creativity into your career.</h4>
-                <div className="v-phone-msg">
-                  <b>New course enquiry</b>
-                  <p><i>Name:</i> Your name</p><p><i>Course:</i> Cinematography</p><p><i>Email:</i> you@example.com</p><p><i>Mode:</i> Weekend batch</p>
-                  <span className="v-phone-send">Send ➤</span>
-                </div>
-              </div>
-            </div>
+          <div className="pm-row on-dark">
+            <Link href="/podcast-studio#enquire" className="pm-btn">Book a slot <ArrowUpRight size={15} /></Link>
+            <a href={whatsappLink(`Hello ${site.name}, I’d like to book the podcast studio.`)} target="_blank" rel="noopener noreferrer" className="pm-btn ghost on-dark"><MessageCircle size={15} /> Ask on WhatsApp</a>
           </div>
         </div>
       </div>
     </section>
 
-    {/* ── Enquiry ── */}
-    <HomeAdmissions />
+    {/* (06) — Production (letterboxed) */}
+    <section className="pm-prod" data-v data-dark>
+      <img src="/images/course-cinematography.webp" alt="" loading="lazy" data-parallax="0.08" />
+      <span className="bar t" aria-hidden="true" /><span className="bar b" aria-hidden="true" />
+      <div className="pm-prod-inner">
+        <p className="pm-label on-dark">(06) — <b>RAKVIH Digital Production</b></p>
+        <h2 className="pm-h2">From concept <em>to the final cut.</em></h2>
+        <p className="pm-lede" style={{ color: '#cfccbd', textAlign: 'center' }}>Our creative team produces videos, photography and podcasts for brands, businesses and creators.</p>
+        <div className="pm-prod-marquee" aria-label="Production services">
+          <div>{[...productionServices, ...productionServices].map((s, k) => <span key={k} aria-hidden={k >= productionServices.length}>{s.title}</span>)}</div>
+        </div>
+        <div className="on-dark"><Link href="/production" className="pm-btn ghost on-dark">See all services <ArrowUpRight size={15} /></Link></div>
+      </div>
+      <div className="frame-info" aria-hidden="true"><span>2.39 : 1 — Anamorphic</span><span>Scene 05 · Take 01</span></div>
+    </section>
+
+    {/* (07) — Standard */}
+    <section className="pm-sec pm-paper">
+      <div className="pm-wrap">
+        <div className="pm-head-row">
+          <div data-v>
+            <p className="pm-label rule">(07) — <b>Why choose RAKVIH Digital?</b></p>
+            <h2 className="pm-h2"><Words text="Everything you need" /> <em><Words text="to grow as a creator." start={3} /></em></h2>
+          </div>
+          <p className="pm-lede">Practical learning, professional tools, a real studio and a portfolio at the end of it.</p>
+        </div>
+        <Pillars />
+      </div>
+    </section>
+
+    {/* (08) — Careers */}
+    <section className="pm-sec pm-paper2" style={{ overflow: 'hidden' }}>
+      <div className="pm-wrap">
+        <div className="pm-head-row">
+          <div data-v>
+            <p className="pm-label rule">(08) — <b>Careers</b></p>
+            <h2 className="pm-h2"><Words text="Your skills." /> <em><Words text="Your career path." start={2} /></em></h2>
+          </div>
+          <div className="pm-stack" style={{ gap: 24 }}>
+            <p className="pm-lede">Twelve creative careers our training prepares you for — here are six of them.</p>
+            <Link href="/careers" className="pm-link" style={{ alignSelf: 'flex-start' }}>Explore career paths <ArrowUpRight size={14} /></Link>
+          </div>
+        </div>
+        <Covers note="Career guidance and placement assistance are subject to available opportunities. Employment is not guaranteed." />
+      </div>
+    </section>
+
+    {/* Enquiry */}
+    <FormSection eyebrow="Admissions & enquiries" title="Learn the art. Master the technology." italic="Create your future."
+      sub="One small step towards something creative. Tell us what interests you — a course, a studio booking or a production brief — and we’ll help you find the right direction."
+      allowTypeSwitch note="Creative learning images are AI-generated illustrations, not photographs of RAKVIH facilities." />
   </main>;
 }

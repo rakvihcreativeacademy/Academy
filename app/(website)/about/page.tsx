@@ -1,84 +1,83 @@
 import type { Metadata } from 'next';
 import Link from '@/components/SiteLink';
-import Image from 'next/image';
-import { ArrowUpRight, Eye, Target } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import Banner from '@/components/v/Banner';
 import Words from '@/components/v/Words';
-import Icon from '@/components/Icon';
-import { mission, whyUs, site, offers } from '@/lib/site';
+import { mission, whyUs, site } from '@/lib/site';
+import Offers from '@/components/p/Offers';
 
 export const metadata: Metadata = { title: 'About us' };
 
 export default function About() {
-  return <main className="v-page">
-    <Banner crumb="About us" eyebrow="About RAKVIH Creative Academy" title="Empowering the next generation of" italic="creative professionals."
-      lede={`${site.name} is an initiative of RAKVIH Digital, established to make professional creative and media skills accessible to aspiring creators.`}
+  return <main className="pm-page">
+    <Banner crumb="About" eyebrow="About RAKVIH Digital" title="Empowering the next generation of" italic="creative professionals."
+      lede={`${site.name} is a division of RAKVIH Solutions Pvt. Ltd., built around technology, creativity and practical learning — established to make professional creative and media skills accessible to aspiring creators, while offering production facilities and services to businesses and individuals.`}
       image="/images/academy-filmmaking.webp" imageAlt="Illustration of students working on a film camera" position="70% 40%"
-      facts={[{ icon: 'graduation', label: '8 professional courses' }, { icon: 'mic', label: 'Premium podcast studio' }, { icon: 'film', label: 'Real production work' }]}
-      side={<figure className="v-glass-quote"><blockquote>“Learn the art. Master the technology. Create your future.”</blockquote><figcaption><img src="/brand/rakvih-mark-128.png" alt="" /> RAKVIH Creative Academy</figcaption></figure>}>
-      <Link href="/courses" className="v-pill-sun">Explore courses <ArrowUpRight size={15} /></Link>
-      <Link href="/contact" className="v-pill-ghost">Talk to us</Link>
+      facts={[{ label: '8 professional courses' }, { label: 'Premium podcast studio' }, { label: 'Real production work' }]}
+      side={<figure className="pm-quote"><blockquote>“Learn the art. Master the technology. Create your future.”</blockquote><figcaption><img src="/brand/rakvih-mark-128.png" alt="" /> RAKVIH Digital</figcaption></figure>}>
+      <Link href="/courses" className="pm-btn">Explore courses <ArrowUpRight size={15} /></Link>
+      <Link href="/contact" className="pm-btn ghost on-dark">Talk to us</Link>
     </Banner>
 
-    {/* Who we are */}
-    <section className="v-sec bg-paper">
-      <div className="v-wrap v-split">
-        <div className="v-split-media" data-v>
-          <Image src="/images/academy-editing.webp" alt="Illustration of a student editing video" fill sizes="(max-width: 900px) 92vw, 50vw" />
-          <span className="v-glass-tag"><img src="/brand/rakvih-mark-128.png" alt="" />A division of RAKVIH Solutions Pvt. Ltd.</span>
-        </div>
-        <div className="v-head" data-v>
-          <p className="v-eyebrow">Who we are</p>
-          <h2><Words text="Creativity becomes a profession with the right" /> <em><Words text="knowledge, practice and technology." start={7} /></em></h2>
-          <p className="v-lead">Our academy focuses on developing skills in video production, editing, cinematography, photography, filmmaking, podcasting and digital content creation.</p>
-          <p className="v-lead">We aim to create an environment where students don’t just learn software and equipment, but understand how the creative industry works — through real projects, professional facilities and individual guidance.</p>
-        </div>
-      </div>
-    </section>
-
-    {/* What we offer */}
-    <section className="v-sec bg-lime">
-      <div className="v-wrap">
-        <div className="v-head center" data-v><p className="v-eyebrow">What we offer</p><h2><Words text="One place to learn, create" /> <em><Words text="and grow." start={5} /></em></h2></div>
-        <div className="v-tiles four">
-          {offers.map((o, i) => <Link key={o.title} href={o.href} className="v-tile" data-v style={{ '--i': i } as React.CSSProperties}>
-            <span className="v-tile-ico"><Icon name={o.icon} size={20} /></span><h3>{o.title}</h3><p>{o.text}</p><span className="v-tile-go"><ArrowUpRight size={16} /></span>
-          </Link>)}
+    <section className="pm-sec pm-paper">
+      <div className="pm-wrap pm-split">
+        <figure className="pm-plate" data-v>
+          <div className="pm-plate-img"><img src="/images/academy-editing.webp" alt="Illustration of a student editing video" loading="lazy" data-parallax="0.05" /></div>
+          <figcaption><span>Plate 01 — The edit suite</span><span>RAKVIH Solutions Pvt. Ltd.</span></figcaption>
+        </figure>
+        <div className="pm-stack">
+          <div data-v>
+            <p className="pm-label rule" style={{ marginBottom: 28 }}>(01) — <b>Who we are</b></p>
+            <h2 className="pm-h2" style={{ fontSize: 'clamp(30px,3.4vw,54px)' }}><Words text="We believe creativity becomes a profession when it is supported by the right" /> <em><Words text="knowledge, practical experience and technology." start={14} /></em></h2>
+          </div>
+          <p className="pm-lede">Our academy focuses on developing skills in video production, editing, cinematography, photography, filmmaking, podcasting and digital content creation.</p>
+          <p className="pm-lede">We aim to create an environment where students don’t just learn software and equipment, but understand how the creative industry works.</p>
         </div>
       </div>
     </section>
 
-    {/* Vision & mission */}
-    <section className="v-sec bg-forest">
-      <div className="v-glow-soft" aria-hidden="true" />
-      <div className="v-wrap v-vm">
-        <article className="v-vm-vision" data-v>
-          <span className="v-tile-ico dark"><Eye size={20} /></span>
-          <p className="v-eyebrow light">Our vision</p>
-          <h2>To become a trusted destination for creative media education, professional production and <em>digital content innovation.</em></h2>
-        </article>
-        <article className="v-vm-mission" data-v>
-          <span className="v-tile-ico"><Target size={20} /></span>
-          <p className="v-eyebrow">Our mission</p>
+    <section className="pm-sec pm-paper2">
+      <div className="pm-wrap">
+        <div className="pm-head-row">
+          <div data-v><p className="pm-label rule">(02) — <b>What we offer</b></p><h2 className="pm-h2"><Words text="One place to learn," /> <em><Words text="create and grow." start={4} /></em></h2></div>
+          <p className="pm-lede">Training, a professional studio, real production work, creative services and technology — under one brand.</p>
+        </div>
+        <Offers />
+      </div>
+    </section>
+
+    <section className="pm-sec pm-dark" data-dark>
+      <div className="pm-wrap pm-vm">
+        <div className="pm-stack" data-v>
+          <p className="pm-label rule">(03) — <b>Our vision</b></p>
+          <h2 className="pm-h2" style={{ fontSize: 'clamp(34px,3.8vw,60px)' }}>To become a trusted destination for creative media education, professional production and <em>digital content innovation.</em></h2>
+        </div>
+        <div className="pm-stack">
+          <p className="pm-label rule">Our mission</p>
           <ol>{mission.map((m, i) => <li key={m}><span>{String(i + 1).padStart(2, '0')}</span>{m}</li>)}</ol>
-        </article>
-      </div>
-    </section>
-
-    {/* Why choose us */}
-    <section className="v-sec bg-sand">
-      <div className="v-wrap">
-        <div className="v-head center" data-v><p className="v-eyebrow">Why choose us</p><h2><Words text="What makes our learning" /> <em><Words text="different." start={4} /></em></h2></div>
-        <div className="v-tiles five">
-          {whyUs.map((w, i) => <div key={w.title} className="v-tile mini" data-v style={{ '--i': i % 5 } as React.CSSProperties}><span className="v-tile-ico"><Icon name={w.icon} size={18} /></span><h3>{w.title}</h3></div>)}
         </div>
       </div>
     </section>
 
-    <section className="v-cta-band">
-      <div className="v-wrap v-cta-inner" data-v>
-        <h2>Ready to start your <em>creative journey?</em></h2>
-        <div className="v-row"><Link href="/admissions" className="v-pill-sun">Apply for admission <ArrowUpRight size={15} /></Link><Link href="/courses" className="v-pill-ghost">See all courses</Link></div>
+    <section className="pm-sec pm-paper">
+      <div className="pm-wrap">
+        <div className="pm-head-row">
+          <div data-v><p className="pm-label rule">(04) — <b>Why choose RAKVIH Digital?</b></p><h2 className="pm-h2"><Words text="What makes our learning" /> <em><Words text="different." start={4} /></em></h2></div>
+          <p className="pm-lede">Ten reasons students choose to learn with us.</p>
+        </div>
+        <div className="pm-grid" style={{ '--cols': 5 } as React.CSSProperties}>
+          {whyUs.map((w, i) => <div key={w.title} className="pm-cell" data-v style={{ '--d': `${(i % 5) * 70}ms`, minHeight: 190 } as React.CSSProperties}>
+            <span className="n pm-num">{String(i + 1).padStart(2, '0')}</span><h3 style={{ marginTop: 'auto', fontSize: 22 }}>{w.title}</h3>
+          </div>)}
+        </div>
+      </div>
+    </section>
+
+    <section className="pm-sec pm-dark2" data-dark>
+      <div className="pm-wrap pm-cta-band" data-v>
+        <p className="pm-label on-dark"><span className="pm-dot" /> Admissions open</p>
+        <h2 className="pm-h2">Ready to start your <em>creative journey?</em></h2>
+        <div className="pm-row on-dark"><Link href="/admissions" className="pm-btn">Apply for admission <ArrowUpRight size={15} /></Link><Link href="/courses" className="pm-btn ghost on-dark">See all courses</Link></div>
       </div>
     </section>
   </main>;

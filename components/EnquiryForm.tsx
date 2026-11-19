@@ -1,5 +1,5 @@
 "use client";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { Send, CheckCircle2 } from 'lucide-react';
 import { courses } from '@/lib/courses';
@@ -17,8 +17,18 @@ const interestLabel: Record<EnquiryType, string> = {
 };
 
 /** Enquiry form: validates, saves for the admin panel (if connected) and sends the details to RAKVIH on WhatsApp. */
-export default function EnquiryForm({ course = '', type: initialType = 'admission', allowTypeSwitch = false, courseOptions }: { course?: string; type?: EnquiryType; allowTypeSwitch?: boolean; courseOptions?: string[] }) {
+export default function EnquiryForm({ course: initialCourse = '', type: initialType = 'admission', allowTypeSwitch = false, courseOptions, fromUrl = false }: { course?: string; type?: EnquiryType; allowTypeSwitch?: boolean; courseOptions?: string[]; fromUrl?: boolean }) {
   const [type, setType] = useState<EnquiryType>(initialType);
+  const [course, setCourse] = useState(initialCourse);
+  // On cached pages the ?course= / ?type= preselection is read in the browser instead of on the server.
+  useEffect(() => {
+    if (!fromUrl) return;
+    const q = new URLSearchParams(window.location.search);
+    const t = q.get('type') as EnquiryType | null;
+    if (t && t in enquiryTypes) setType(t);
+    const c = q.get('course');
+    if (c) setCourse(c);
+  }, [fromUrl]);
   const [busy, setBusy] = useState(false);
   const [sent, setSent] = useState(false);
 
@@ -70,7 +80,7 @@ export default function EnquiryForm({ course = '', type: initialType = 'admissio
       <label>Email address<input type="email" name="email" required autoComplete="email" placeholder="you@example.com" /></label>
     </div>
     <label>{interestLabel[type]}
-      <select name="interest" key={type} defaultValue={type === 'admission' ? course : ''} required>
+      <select name="interest" key={type + course} defaultValue={type === 'admission' ? course : ''} required>
         <option value="">Select an option</option>
         {(type === 'admission' && courseOptions ? courseOptions : optionsFor[type]).map(c => <option key={c}>{c}</option>)}
       </select>

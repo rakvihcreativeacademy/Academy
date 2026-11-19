@@ -1,23 +1,66 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
-import { ArrowUpRight, Check, MessageCircle, MoveDown } from 'lucide-react';
+import { ArrowUpRight, MessageCircle, MapPin, Check } from 'lucide-react';
+import Link from '@/components/SiteLink';
 import { getPageContent } from '@/lib/cms/server';
 import EnquiryForm from '@/components/EnquiryForm';
-import { site, whatsappLink, type EnquiryType } from '@/lib/site';
+import { courses } from '@/lib/courses';
+import { courseImages } from '@/lib/course-images';
+import { site, whatsappLink } from '@/lib/site';
 
 export const metadata: Metadata = { title: 'Admissions' };
-const types: EnquiryType[] = ['admission', 'studio', 'production', 'general'];
-export default async function Admissions({ searchParams }: { searchParams: Promise<{ course?: string; type?: string }> }) {
-  const p = await searchParams;
+const stages = [
+  { t: 'Tell us what excites you', d: 'Choose a course and share a little about your goals.' },
+  { t: 'Let’s talk possibilities', d: 'Our team shares course details, fees and batch availability.' },
+  { t: 'Start making things', d: 'Find your direction and take the next step with RAKVIH.' },
+];
+
+// Cached; ?course= and ?type= are applied in the browser by the form.
+export const revalidate = 300;
+export default async function Admissions() {
   const catalogue = await getPageContent('courses');
   const courseOptions = catalogue.sections.flatMap(s => s.items.map(i => i.title));
-  const type = (types.includes(p.type as EnquiryType) ? p.type : 'admission') as EnquiryType;
-  return <main className="apply-page">
-    <section className="apply-hero v-wrap">
-      <div className="apply-hero-copy"><p className="v-eyebrow">ADMISSIONS AT RAKVIH</p><h1>A creative career.<br /><em>A beginning<br />that’s yours.</em></h1><p>You bring the curiosity. We’ll help you build the skills. Discover hands-on learning in filmmaking, editing, photography and more.</p><a href="#enquire" className="v-pill-sun">Find your course <ArrowUpRight size={17} /></a><span className="apply-welcome"><Check size={15} />No experience? You’re welcome here.</span></div>
-      <div className="apply-hero-visual"><Image src="/images/course-content-creation.webp" alt="Illustration of a creator recording a video" fill priority sizes="(max-width: 760px) 100vw, 50vw" /><span className="apply-image-label">YOUR IDEAS. REAL POSSIBILITIES.</span><div className="apply-photo-note"><span>FROM FIRST TRY</span><strong>to your next big thing.</strong><ArrowUpRight size={25} /></div></div>
+  return <main className="ap-page">
+    <section className="ap-hero" data-hero data-dark id="apply">
+      <img className="ap-bg" src="/images/course-content-creation.webp" alt="" aria-hidden="true" />
+      <div className="pm-wrap ap-grid">
+        <div className="ap-copy">
+          <p className="pm-label on-dark"><span className="pm-dot" /> Admissions open — {site.location.split(',')[0]}</p>
+          <h1>Your creative journey <em>starts here.</em></h1>
+          <p className="ap-lede">Whether you are a beginner, student, working professional or aspiring content creator, we have learning opportunities to help you develop your skills. No matter where your creative journey begins, we help you take the next step.</p>
+        </div>
+        <div className="ap-more">
+          <ol className="ap-steps">{stages.map((s, i) => <li key={s.t}><span>{String(i + 1).padStart(2, '0')}</span><div><b>{s.t}</b><small>{s.d}</small></div></li>)}</ol>
+          <ul className="ap-perks">{['Beginners welcome', 'Project-based learning', 'Completion certificate'].map(x => <li key={x}><Check size={14} />{x}</li>)}</ul>
+          <div className="ap-contact">
+            <a href={whatsappLink(`Hello ${site.name}, I’d like to know more about admissions.`)} target="_blank" rel="noopener noreferrer"><MessageCircle size={16} /> {site.whatsappDisplay}</a>
+            <span><MapPin size={16} /> {site.location}</span>
+          </div>
+        </div>
+        <div className="pm-form-card ap-card">
+          <header>
+            <div><p className="pm-label"><span className="pm-dot" /> Opens in WhatsApp</p><h3>Apply for Admission Today.</h3></div>
+            <img src="/brand/rakvih-mark-128.png" alt="" />
+          </header>
+          <EnquiryForm courseOptions={courseOptions} allowTypeSwitch fromUrl />
+          <p className="pm-fine">Submitting opens WhatsApp with your enquiry ready to send.</p>
+        </div>
+      </div>
     </section>
-    <section className="apply-process v-wrap" aria-label="How admissions work">{[{n:'01',t:'Tell us what excites you',d:'Choose a course and share a little about your goals.'},{n:'02',t:'Let’s talk possibilities',d:'Our team shares course details, fees and batch availability.'},{n:'03',t:'Start making things',d:'Find your direction and take the next step with RAKVIH.'}].map(s=><div key={s.n}><span>{s.n}</span><h2>{s.t}</h2><p>{s.d}</p></div>)}</section>
-    <section className="apply-enquiry" id="enquire"><div className="v-wrap apply-enquiry-grid"><aside><p className="v-eyebrow">YOUR FIRST STEP</p><h2>Big ideas start<br />with a simple<br /><em>hello.</em></h2><p>Tell us what you’d love to learn. We’ll help you explore the right course, learning mode and next available batch.</p><ul>{['Beginners and career changers welcome','Practical, project-based learning','Course-completion certificate'].map(x=><li key={x}><Check size={17} />{x}</li>)}</ul><a className="apply-chat" href={whatsappLink(`Hello ${site.name}, I’d like to know more about admissions.`)} target="_blank" rel="noopener noreferrer"><MessageCircle size={21} /><span>Want to speak to us?<strong>{site.whatsappDisplay}</strong></span><ArrowUpRight size={18} /></a><MoveDown className="apply-down" size={46} strokeWidth={1} /></aside><div className="home-admissions-form apply-form-card"><span className="apply-form-label">LET’S GET TO KNOW YOU</span><h3>Your creative journey starts here.</h3><p>Share your details. We’ll take it from there.</p><EnquiryForm courseOptions={courseOptions} type={type} course={p.course} allowTypeSwitch /><p className="apply-form-privacy">Submitting opens WhatsApp with your enquiry ready to send.</p></div></div></section>
+
+    <section className="pm-sec pm-paper">
+      <div className="pm-wrap">
+        <div className="pm-head-row">
+          <div><p className="pm-label rule" style={{ marginBottom: 18 }}>Choose your programme</p><h2 className="pm-h2">Not sure yet? <em>Start with a course.</em></h2></div>
+          <p className="pm-lede">Pick a programme and it’s pre-selected in the form above.</p>
+        </div>
+        <div className="ap-courses">
+          {courses.map(c => <Link key={c.slug} className="ap-course" data-v href={`/admissions?course=${encodeURIComponent(c.title)}#apply`}>
+            <span className="ap-course-img"><img src={courseImages[c.slug].src} alt="" loading="lazy" /></span>
+            <span className="ap-course-copy"><small>{c.symbol} · {c.tag}</small><b>{c.title}</b></span>
+            <ArrowUpRight size={18} className="ap-course-go" />
+          </Link>)}
+        </div>
+      </div>
+    </section>
   </main>;
 }

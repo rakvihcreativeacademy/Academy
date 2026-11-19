@@ -1,24 +1,85 @@
 import Link from '@/components/SiteLink';
-import { ArrowUpRight, Check } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import Banner from '@/components/v/Banner';
-import EnquiryForm from '@/components/EnquiryForm';
+import FormSection from '@/components/v/FormSection';
 import CourseListing from '@/components/CourseListing';
 import BrandCard from '@/components/BrandCard';
 import { getPageContent } from '@/lib/cms/server';
 import type { PageKey } from '@/lib/cms/schema';
 import { configured } from '@/lib/supabase/config';
-import { createClient } from '@/lib/supabase/server';
+import { createPublicClient } from '@/lib/supabase/public';
 import type { Project } from '@/lib/types';
-const labels={courses:'Courses','podcast-studio':'Podcast Studio',production:'Production',projects:'Student Work',careers:'Careers'};
-export default async function ManagedPage({page}:{page:PageKey}){
-  const doc=await getPageContent(page);
-  const courseDoc=page==='courses'?doc:await getPageContent('courses');
-  const courseOptions=courseDoc.sections.flatMap(s=>s.items.map(i=>i.title));
-  let projects:Project[]=[];
-  if(page==='projects'&&configured){const db=await createClient();const {data,error}=await db.from('projects').select('*').eq('status','published').order('created_at',{ascending:false});if(error)throw new Error('Unable to load student work.');projects=data??[];}
-  return <main className="v-page managed-page"><Banner crumb={labels[page]} eyebrow={doc.banner.eyebrow} title={doc.banner.title} italic={doc.banner.italic} lede={doc.banner.description} image={doc.banner.image||'/images/academy-filmmaking.webp'} imageAlt={doc.banner.image_alt}>{doc.banner.button_label&&doc.banner.button_link&&<Link className="v-pill-sun" href={doc.banner.button_link}>{doc.banner.button_label}<ArrowUpRight size={15}/></Link>}</Banner>
-    {page==='courses'?<CourseListing sections={doc.sections}/>:doc.sections.map((section,si)=><section className="v-sec bg-paper" key={si}><div className="v-wrap"><header className="v-head center"><p className="v-eyebrow">{section.eyebrow}</p><h2>{section.title}</h2>{section.description&&<p className="v-lead">{section.description}</p>}</header><div className="cms-public-grid">{section.items.map((item,i)=><article id={item.slug || undefined} className="cms-public-card" key={i}>{item.image&&<img src={item.image} alt={item.title} loading="lazy"/>}<div className="cms-public-copy"><span className="v-eyebrow">{String(i+1).padStart(2,'0')}</span><h3>{item.title}</h3>{item.description&&<p>{item.description}</p>}{item.details.length>0&&<ul>{item.details.filter(Boolean).map((d,j)=><li key={j}><Check size={14}/>{d}</li>)}</ul>}{item.href&&<Link href={item.href} className="v-pill-dark">Find out more<ArrowUpRight size={15}/></Link>}</div></article>)}</div></div></section>)}
-    {page==='projects'&&<section className="v-sec bg-paper" id="showcase"><div className="v-wrap"><header className="v-head center"><p className="v-eyebrow">Student showcase</p><h2>Work by our students.</h2></header>{projects.length?<div className="project-grid">{projects.map(p=><Link key={p.id} href={'/projects/'+p.id}><BrandCard project={p}/></Link>)}</div>:<div className="v-empty"><h3>Student work coming soon.</h3><p>Approved, published student projects will appear here.</p></div>}</div></section>}
-    {doc.enquiry.enabled&&<section className="home-admissions" id="enquire"><div className="v-wrap"><header className="home-admissions-heading"><p className="v-eyebrow">Get in touch</p><h2>{doc.enquiry.title}</h2><p>{doc.enquiry.description}</p></header><div className="home-admissions-form cms-public-enquiry"><EnquiryForm courseOptions={courseOptions} type={page==='podcast-studio'?'studio':page==='production'?'production':'admission'} /></div></div></section>}
+import { itemImages } from '@/lib/item-images';
+
+const labels = { courses: 'Courses', 'podcast-studio': 'Podcast Studio', production: 'Production', projects: 'Student Work', careers: 'Careers' };
+const tones = ['pm-paper', 'pm-dark', 'pm-paper2'];
+
+/** CMS-driven inner page rendered as numbered editorial chapters. Content comes from the admin workspace. */
+export default async function ManagedPage({ page }: { page: PageKey }) {
+  const doc = await getPageContent(page);
+  const courseDoc = page === 'courses' ? doc : await getPageContent('courses');
+  const courseOptions = courseDoc.sections.flatMap(s => s.items.map(i => i.title));
+  let projects: Project[] = [];
+  if (page === 'projects' && configured) {
+    const db = createPublicClient();
+    const { data, error } = await db.from('projects').select('*').eq('status', 'published').order('created_at', { ascending: false });
+    if (error) throw new Error('Unable to load student work.');
+    projects = data ?? [];
+  }
+  const b = doc.banner;
+  return <main className="pm-page managed-page">
+    <Banner crumb={labels[page]} eyebrow={b.eyebrow} title={b.title} italic={b.italic} lede={b.description} image={b.image || '/images/academy-filmmaking.webp'} imageAlt={b.image_alt} band={doc.sections[0]?.items.map(i => i.title)}>
+      {b.button_label && b.button_link && <Link className="pm-btn" href={b.button_link}>{b.button_label}<ArrowUpRight size={15} /></Link>}
+      {page === 'podcast-studio' && <Link className="pm-btn ghost on-dark" href="/admissions?type=studio#apply">Enquire About Packages</Link>}
+    </Banner>
+
+    {page === 'courses' ? <CourseListing sections={doc.sections} /> : doc.sections.map((section, si) => {
+      const tone = tones[si % tones.length];
+      const dark = tone === 'pm-dark';
+      const withMedia = section.items.some(i => i.image);
+      const n = section.items.length;
+      const bgs = withMedia ? [] : itemImages(section.items.map(it => it.title));
+      const cols = n <= 4 ? Math.max(n, 1) : [4, 5, 3].find(c => n % c === 0) ?? 4;
+      return <section className={`pm-sec ${tone}`} key={si} data-dark={dark || undefined}>
+        <div className="pm-wrap">
+          <div className="pm-head-row">
+            <div data-v>
+              <p className="pm-label rule" style={{ marginBottom: 20 }}>({String(si + 1).padStart(2, '0')}) — <b>{section.eyebrow}</b></p>
+              <h2 className="pm-h2" style={{ fontSize: 'clamp(36px,4.6vw,76px)' }}>{section.title}</h2>
+            </div>
+            {section.description ? <p className="pm-lede">{section.description}</p> : <span />}
+          </div>
+          <div className="pm-grid" style={{ '--cols': cols } as React.CSSProperties}>
+            {section.items.map((item, i) => {
+              const bg = withMedia ? '' : bgs[i];
+              const cls = 'pm-cell' + (bg ? ` has-bg fx-${(i + si * 3) % 7}` : '');
+              const body = <>
+                {bg && <span className="pm-cell-bg" aria-hidden="true"><img src={bg} alt="" loading="lazy" decoding="async" /></span>}
+                {withMedia && item.image && <img className="cover" src={item.image} alt={item.title} loading="lazy" />}
+                <span className="n pm-num">{String(i + 1).padStart(2, '0')}</span>
+                <h3 style={{ marginTop: withMedia ? 0 : 36 }}>{item.title}</h3>
+                {item.description && <p>{item.description}</p>}
+                {item.details.filter(Boolean).length > 0 && <ul>{item.details.filter(Boolean).map((d, j) => <li key={j}>{d}</li>)}</ul>}
+              </>;
+              return item.href
+                ? <Link key={i} id={item.slug || undefined} href={item.href} className={cls} data-v style={{ '--d': `${(i % 4) * 70}ms` } as React.CSSProperties}>{body}<ArrowUpRight size={18} className="arrow" /></Link>
+                : <article key={i} id={item.slug || undefined} className={cls} data-v style={{ '--d': `${(i % 4) * 70}ms` } as React.CSSProperties}>{body}</article>;
+            })}
+          </div>
+        </div>
+      </section>;
+    })}
+
+    {page === 'projects' && <section className="pm-sec pm-paper" id="showcase">
+      <div className="pm-wrap">
+        <div className="pm-head-row"><div><p className="pm-label rule" style={{ marginBottom: 28 }}>Student showcase</p><h2 className="pm-h2">Work by <em>our students.</em></h2></div><span /></div>
+        {projects.length
+          ? <div className="project-grid">{projects.map(p => <Link key={p.id} href={'/projects/' + p.id}><BrandCard project={p} /></Link>)}</div>
+          : <div className="pm-empty"><p className="pm-label">Darkroom</p><h3>Student work is <em>developing.</em></h3><p className="pm-small">Approved, published student projects will appear here.</p></div>}
+      </div>
+    </section>}
+
+    {doc.enquiry.enabled && <FormSection eyebrow="Get in touch" title={doc.enquiry.title} sub={doc.enquiry.description}
+      courseOptions={courseOptions} type={page === 'podcast-studio' ? 'studio' : page === 'production' ? 'production' : 'admission'} />}
   </main>;
 }

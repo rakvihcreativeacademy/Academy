@@ -11,7 +11,7 @@ import { useEffect } from 'react';
  */
 const SPOT = '.course-card, .panel, .brand-card, .project-item, .v-card, .v-tile, .v-role, .v-mini';
 const TILT = '.v-card, .v-tile, .course-card, .project-item';
-const MAGNET = '.v-pill-white, .v-pill-dark, .v-pill-wa, .v-pill-ghost, .v-pill-sun, .v-pill-outline, .v-apply, .wa-fab, .rk-btn';
+const MAGNET = '.pm-btn, .v-pill-white, .v-pill-dark, .v-pill-wa, .v-pill-ghost, .v-pill-sun, .v-pill-outline, .v-apply, .wa-fab, .rk-btn';
 const AUTO_REVEAL = [
   'main section h2', 'main .eyebrow', 'main .v-eyebrow',
   'main .v-tile', 'main .course-card', 'main .panel', 'main .project-item', 'main .brand-card',
@@ -166,45 +166,6 @@ function start(): () => void {
     };
     document.addEventListener('pointermove', onMove, { passive: true });
     cleanups.push(() => document.removeEventListener('pointermove', onMove));
-
-    /* ── custom cursor ── */
-    const ring = document.createElement('div');
-    ring.className = 'rk-cursor';
-    ring.setAttribute('aria-hidden', 'true');
-    ring.innerHTML = '<span class="rk-cursor-label"></span>';
-    const dot = document.createElement('div');
-    dot.className = 'rk-cursor-dot';
-    dot.setAttribute('aria-hidden', 'true');
-    document.body.append(ring, dot);
-    root.classList.add('has-cursor');
-    let mx = -100, my = -100, rx = -100, ry = -100, cRaf = 0;
-    const label = ring.firstElementChild as HTMLElement;
-    const loop = () => {
-      rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18;
-      ring.style.transform = `translate3d(${rx}px, ${ry}px, 0)`;
-      cRaf = requestAnimationFrame(loop);
-    };
-    cRaf = requestAnimationFrame(loop);
-    const onCursor = (e: PointerEvent) => {
-      mx = e.clientX; my = e.clientY;
-      dot.style.transform = `translate3d(${mx}px, ${my}px, 0)`;
-      const t = e.target as Element | null;
-      const media = t?.closest<HTMLElement>('[data-cursor]');
-      const hot = t?.closest('a, button, [role="tab"], input, select, textarea, label');
-      ring.classList.toggle('is-hot', !!hot && !media);
-      ring.classList.toggle('is-media', !!media);
-      label.textContent = media?.dataset.cursor || '';
-      const dark = t?.closest('.v-dark, .v-hb, .v-offers, .v-production, .v-footer, .rk-marquee, [data-dark]');
-      ring.classList.toggle('on-dark', !!dark); dot.classList.toggle('on-dark', !!dark);
-    };
-    const onLeave = () => { mx = my = -100; };
-    document.addEventListener('pointermove', onCursor, { passive: true });
-    document.documentElement.addEventListener('pointerleave', onLeave);
-    cleanups.push(() => {
-      cancelAnimationFrame(cRaf); ring.remove(); dot.remove(); root.classList.remove('has-cursor');
-      document.removeEventListener('pointermove', onCursor);
-      document.documentElement.removeEventListener('pointerleave', onLeave);
-    });
 
     return () => cleanups.forEach(f => f());
   }
