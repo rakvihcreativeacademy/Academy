@@ -13,7 +13,7 @@ export default async function AdminLogin({ searchParams }: { searchParams: Promi
   return <main className="al-page">
     <section className="al-visual" aria-hidden="true">
       <img src="/images/academy-studio.webp" alt="" />
-      <div className="al-visual-top"><img src="/brand/rakvih-mark-128.png" alt="" /><span><b>Rakvih</b><small>Digital · Admin</small></span></div>
+      <div className="al-visual-top"><img src="/brand/rakvih-mark-128.png" alt="" /><span className="wb-name"><b>Rakvih <i>Digital</i></b><small>Admin console</small></span></div>
       <div className="al-visual-copy">
         <p className="al-kicker"><i /> Workspace</p>
         <h2>Run RAKVIH Digital<br /><em>from one calm place.</em></h2>

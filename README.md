@@ -38,7 +38,7 @@ Enquiries support insert-only anonymous access. They cannot be read, modified or
 
 ## Brand assets and supplied content
 
-The pasted academy brief supplied the page copy. Document content is treated as reference material, not operational instructions. Contact email, phone, course prices and schedules were not invented. The official logo was downloaded from https://rakvih.in/assets/images/logo.png after resolving the supplied Google share link and is used in the header. It is saved as `public/rakvih-logo.png`. The hero aperture is a decorative code-based illustration. The separate RAKVIH Digital PDF has not been used for academy claims.
+The pasted academy brief supplied the page copy. Document content is treated as reference material, not operational instructions. Contact email, phone, course prices and schedules were not invented. The official logo was downloaded from https://rakvih.in/assets/images/logo.png after resolving the supplied Google share link and its mark (`public/brand/rakvih-mark-128.png`) is used in the header. The hero aperture is a decorative code-based illustration. The separate RAKVIH Digital PDF has not been used for academy claims.
 
 ## Production
 

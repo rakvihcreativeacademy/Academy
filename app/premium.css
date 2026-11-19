@@ -1298,3 +1298,15 @@ html.js .pm-site :is(.pm-grid,.bento,.acc,.pm-covers,.pm-steps,.pm-contacts,.ap-
 .pm-credit a:hover,.pm-credit a:focus-visible{color:#ffe066!important;text-shadow:0 0 10px rgba(252,204,15,.9),0 0 24px rgba(252,204,15,.55),0 0 42px rgba(252,204,15,.3)}
 @media(max-width:760px){.pm-foot-bottom{grid-template-columns:1fr;justify-items:center;text-align:center}.pm-credit-spacer{display:none}}
 .pm-credit{gap:0!important;white-space:pre}
+
+/* brand lock-up (matches the admin): "Rakvih Digital" + small tag */
+.pm-brand{gap:12px}
+.pm-brand img{width:40px;height:40px}
+.pm-brand-name{display:grid!important;gap:6px!important;line-height:1}
+.pm-brand-name b{font:700 21px/1 var(--pm-display)!important;letter-spacing:-.025em!important;color:var(--pm-bone);white-space:nowrap}
+.pm-brand-name b i{font-style:normal;font-weight:600;background:linear-gradient(100deg,var(--pm-sun),var(--pm-olive-l));-webkit-background-clip:text;background-clip:text;color:transparent}
+.pm-brand-name small{font:600 9.5px/1 var(--pm-sans)!important;letter-spacing:.16em!important;text-transform:uppercase;color:var(--pm-mute-d)!important}
+.pm-foot .pm-brand-name b{font-size:23px!important}
+@media(max-width:560px){.pm-brand-name b{font-size:19px!important}.pm-head .pm-brand-name small{display:none}}
+/* phones: keep the two-line lock-up, same as desktop */
+@media(max-width:560px){.pm-head .pm-brand-name small{display:block!important;font-size:8.5px!important;letter-spacing:.14em!important}.pm-brand-name{gap:5px!important}.pm-brand img{width:36px;height:36px}}

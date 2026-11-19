@@ -52,7 +52,7 @@ export default function Masthead() {
     <header className="pm-head">
       <Link href="/" className="pm-brand" aria-label={`${site.name} — home`}>
         <img src="/brand/rakvih-mark-128.png" alt="" width={40} height={40} />
-        <span><b>Rakvih</b><small>Digital</small></span>
+        <span className="pm-brand-name"><b>Rakvih <i>Digital</i></b><small>Creative · Media · Tech</small></span>
       </Link>
       <nav className="pm-nav" aria-label="Main" ref={capsule} onMouseLeave={home}>
         <span className={'pm-nav-pill' + (glide ? ' glide' : '')} aria-hidden="true" style={pill ? { transform: `translateX(${pill.x}px)`, width: pill.w, opacity: 1 } : { opacity: 0 }} />
