@@ -4,3 +4,6 @@ node_modules
 !.env.example
 *.tsbuildinfo
 .DS_Store
+
+# local secret dumps — never commit
+envfile

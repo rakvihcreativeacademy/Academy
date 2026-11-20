@@ -1,10 +1,13 @@
 import Link from '@/components/SiteLink';
 import Words from '@/components/v/Words';
 import Band from '@/components/p/Band';
+import ViewfinderHud from '@/components/p/ViewfinderHud';
+
+const SCENES: Record<string, string> = { About: '01', Courses: '02', 'Podcast Studio': '03', Production: '04', 'Student Work': '05', Careers: '06', Contact: '07' };
 
 type Fact = { icon?: string; label: string };
 
-/** Cinematic opening spread for every inner page: drifting photograph, rotating seal, kinetic band underneath. */
+/** Cinematic opening for every inner page: a photograph seen through a camera viewfinder (REC, timecode, focus box), pulling back as you scroll; kinetic band underneath. */
 export default function Banner({ crumb, eyebrow, title, italic, lede, image, imageAlt, position = '60% 45%', facts = [], children, side, band }: {
   crumb: string; eyebrow: string; title: string; italic?: string; lede?: string;
   image: string; imageAlt: string; position?: string; facts?: Fact[];
@@ -13,7 +16,10 @@ export default function Banner({ crumb, eyebrow, title, italic, lede, image, ima
   const n = title.split(' ').length;
   return <>
     <section className="pm-banner" data-hero data-dark>
-      <div className="pm-banner-media"><img src={image} alt={imageAlt} fetchPriority="high" decoding="async" style={{ objectPosition: position }} data-parallax="0.12" /></div>
+      <div className="pm-banner-frame">
+        <div className="pm-banner-media"><img src={image} alt={imageAlt} fetchPriority="high" decoding="async" style={{ objectPosition: position }} /></div>
+        <ViewfinderHud scene={SCENES[crumb] ?? '08'} />
+      </div>
       <div className="pm-banner-inner">
         <div>
           <nav className="pm-crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><i aria-hidden="true" /><span aria-current="page">{crumb}</span></nav>
@@ -27,13 +33,7 @@ export default function Banner({ crumb, eyebrow, title, italic, lede, image, ima
             {facts.length > 0 && <ul className="pm-facts">{facts.map(f => <li key={f.label}>{f.label}</li>)}</ul>}
           </div>
         </div>
-        <div className="pm-banner-side">
-          {side ?? <div className="pm-seal" aria-hidden="true">
-            <svg viewBox="0 0 200 200"><defs><path id="pmSeal" d="M100,100 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0" /></defs>
-              <text><textPath href="#pmSeal">Learn the art · Master the technology · Create your future · </textPath></text></svg>
-            <img src="/brand/rakvih-mark-128.png" alt="" />
-          </div>}
-        </div>
+        {side && <div className="pm-banner-side">{side}</div>}
       </div>
     </section>
     <Band words={band ?? ['Create', 'Capture', 'Edit', 'Inspire', crumb]} />

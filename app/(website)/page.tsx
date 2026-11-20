@@ -1,5 +1,5 @@
 import Link from '@/components/SiteLink';
-import { ArrowUpRight, MessageCircle } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import Hero from '@/components/p/Hero';
 import CourseIndex from '@/components/p/CourseIndex';
 import Covers from '@/components/p/Covers';
@@ -8,8 +8,10 @@ import FormSection from '@/components/v/FormSection';
 import Band from '@/components/p/Band';
 import Pillars from '@/components/p/Pillars';
 import Offers from '@/components/p/Offers';
+import StudioStage from '@/components/p/StudioStage';
+import ShootEdit from '@/components/p/ShootEdit';
 import { courses } from '@/lib/courses';
-import { site, whatsappLink, studioFacilities, studioAudience, productionServices } from '@/lib/site';
+import { site, studioFacilities, studioAudience, productionServices } from '@/lib/site';
 
 const steps = [
   { t: 'Learn the craft', d: 'Practical classes with experienced trainers — the fundamentals of light, frame, sound and story.' },
@@ -81,12 +83,15 @@ export default function Home() {
       </div>
     </section>
 
-    {/* (03) — Programmes */}
+    {/* (03) — Shoot & Edit (3D) */}
+    <ShootEdit label="(03)" />
+
+    {/* (04) — Programmes */}
     <section className="pm-sec pm-dark" data-dark>
       <div className="pm-wrap">
         <div className="pm-head-row">
           <div data-v>
-            <p className="pm-label rule">(03) — <b>The Programmes</b></p>
+            <p className="pm-label rule">(04) — <b>The Programmes</b></p>
             <h2 className="pm-h2"><Words text="Eight disciplines." /> <em><Words text="One creative career." start={2} /></em></h2>
           </div>
           <div className="pm-stack" style={{ gap: 24 }}>
@@ -98,12 +103,12 @@ export default function Home() {
       </div>
     </section>
 
-    {/* (04) — Method */}
+    {/* (05) — Method */}
     <section className="pm-sec pm-paper2" style={{ overflow: 'hidden' }}>
       <div className="pm-wrap">
         <div className="pm-head-row">
           <div data-v>
-            <p className="pm-label rule">(04) — <b>The Method</b></p>
+            <p className="pm-label rule">(05) — <b>The Method</b></p>
             <h2 className="pm-h2"><Words text="From your first class" /> <em><Words text="to a finished portfolio." start={4} /></em></h2>
           </div>
           <p className="pm-lede">Learn · Practise · Create. Every programme follows the same four movements, so you leave with work — not just notes.</p>
@@ -121,42 +126,33 @@ export default function Home() {
       </div>
     </section>
 
-    {/* (05) — Studio */}
-    <section className="pm-sec pm-dark2" data-dark>
-      <div className="pm-wrap pm-studio-grid">
-        <figure className="pm-plate" data-v>
-          <div className="pm-plate-img" data-cursor="Book">
-            <img src="/images/academy-studio.webp" alt="Illustration of the RAKVIH podcast studio with microphones and armchairs" loading="lazy" data-parallax="0.06" />
-            <span className="pm-onair"><i />ON AIR</span>
-            <span className="pm-wave" aria-hidden="true">{Array.from({ length: 22 }, (_, k) => <i key={k} style={{ '--i': k, '--h': 25 + Math.round(Math.abs(Math.sin(k * 1.3)) * 75) } as React.CSSProperties} />)}</span>
-          </div>
-          <figcaption><span>Plate 04 — RAKVIH Podcast Studio</span><span>Bengaluru</span></figcaption>
-        </figure>
-        <div className="pm-stack">
-          <div data-v>
-            <p className="pm-label rule" style={{ marginBottom: 28 }}>(05) — <b>The Studio</b></p>
-            <h2 className="pm-h2"><Words text="A studio built for" /> <em><Words text="the way you create." start={4} /></em></h2>
-          </div>
-          <p className="pm-lede">Record podcasts, interviews and video series in a professionally equipped space — with production and editing support when you need it.</p>
+    {/* (06) — Studio: pinned 3D set, then what's in it */}
+    <StudioStage label="(06)" />
+    <section className="pm-sec pm-dark2 pm-st-more" data-dark>
+      <div className="pm-wrap pm-st-more-grid">
+        <div data-v>
+          <p className="pm-label" style={{ marginBottom: 18 }}>In the studio</p>
           <ul className="pm-list">{studioFacilities.slice(0, 8).map((f, i) => <li key={f}><span className="pm-num">{String(i + 1).padStart(2, '0')}</span>{f}</li>)}</ul>
+        </div>
+        <div className="pm-stack" data-v>
           <div>
             <p className="pm-label" style={{ marginBottom: 14 }}>Who books it</p>
             <ul className="pm-tags">{studioAudience.slice(0, 6).map(a => <li key={a}>{a}</li>)}</ul>
           </div>
           <div className="pm-row on-dark">
             <Link href="/podcast-studio#enquire" className="pm-btn">Book a slot <ArrowUpRight size={15} /></Link>
-            <a href={whatsappLink(`Hello ${site.name}, I’d like to book the podcast studio.`)} target="_blank" rel="noopener noreferrer" className="pm-btn ghost on-dark"><MessageCircle size={15} /> Ask on WhatsApp</a>
+            <Link href="/podcast-studio" className="pm-btn ghost on-dark">Explore the studio</Link>
           </div>
         </div>
       </div>
     </section>
 
-    {/* (06) — Production (letterboxed) */}
+    {/* (07) — Production (letterboxed) */}
     <section className="pm-prod" data-v data-dark>
       <img src="/images/course-cinematography.webp" alt="" loading="lazy" data-parallax="0.08" />
       <span className="bar t" aria-hidden="true" /><span className="bar b" aria-hidden="true" />
       <div className="pm-prod-inner">
-        <p className="pm-label on-dark">(06) — <b>RAKVIH Digital Production</b></p>
+        <p className="pm-label on-dark">(07) — <b>RAKVIH Digital Production</b></p>
         <h2 className="pm-h2">From concept <em>to the final cut.</em></h2>
         <p className="pm-lede" style={{ color: '#cfccbd', textAlign: 'center' }}>Our creative team produces videos, photography and podcasts for brands, businesses and creators.</p>
         <div className="pm-prod-marquee" aria-label="Production services">
@@ -167,12 +163,12 @@ export default function Home() {
       <div className="frame-info" aria-hidden="true"><span>2.39 : 1 — Anamorphic</span><span>Scene 05 · Take 01</span></div>
     </section>
 
-    {/* (07) — Standard */}
+    {/* (08) — Standard */}
     <section className="pm-sec pm-paper">
       <div className="pm-wrap">
         <div className="pm-head-row">
           <div data-v>
-            <p className="pm-label rule">(07) — <b>Why choose RAKVIH Digital?</b></p>
+            <p className="pm-label rule">(08) — <b>Why choose RAKVIH Digital?</b></p>
             <h2 className="pm-h2"><Words text="Everything you need" /> <em><Words text="to grow as a creator." start={3} /></em></h2>
           </div>
           <p className="pm-lede">Practical learning, professional tools, a real studio and a portfolio at the end of it.</p>
@@ -181,12 +177,12 @@ export default function Home() {
       </div>
     </section>
 
-    {/* (08) — Careers */}
+    {/* (09) — Careers */}
     <section className="pm-sec pm-paper2" style={{ overflow: 'hidden' }}>
       <div className="pm-wrap">
         <div className="pm-head-row">
           <div data-v>
-            <p className="pm-label rule">(08) — <b>Careers</b></p>
+            <p className="pm-label rule">(09) — <b>Careers</b></p>
             <h2 className="pm-h2"><Words text="Your skills." /> <em><Words text="Your career path." start={2} /></em></h2>
           </div>
           <div className="pm-stack" style={{ gap: 24 }}>

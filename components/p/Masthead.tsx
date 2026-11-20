@@ -3,6 +3,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { ArrowUpRight, House, LogIn } from 'lucide-react';
 import Link from '@/components/SiteLink';
 import { nav, site } from '@/lib/site';
+import { ThemeButton, ThemeSwitch } from '@/components/p/ThemeToggle';
 
 const useIso = typeof window === 'undefined' ? useEffect : useLayoutEffect;
 
@@ -31,6 +32,8 @@ export default function Masthead() {
   useEffect(() => {
     if (!open) return;
     window.__lenis?.stop();
+    const root = document.documentElement, hadMedia = root.classList.contains('hdr-media');
+    root.classList.remove('hdr-media');
     const prev = document.documentElement.style.overflow;
     document.documentElement.style.overflow = 'hidden';
     const close = () => { setOpen(false); btn.current?.focus(); };
@@ -45,7 +48,7 @@ export default function Masthead() {
     const onResize = () => { if (window.innerWidth > 1240) setOpen(false); };
     window.addEventListener('keydown', onKey);
     window.addEventListener('resize', onResize);
-    return () => { window.__lenis?.start(); document.documentElement.style.overflow = prev; window.removeEventListener('keydown', onKey); window.removeEventListener('resize', onResize); };
+    return () => { window.__lenis?.start(); document.documentElement.style.overflow = prev; if (hadMedia) root.classList.add('hdr-media'); window.removeEventListener('keydown', onKey); window.removeEventListener('resize', onResize); };
   }, [open]);
 
   return <>
@@ -62,7 +65,8 @@ export default function Masthead() {
         </Link>)}
       </nav>
       <div className="pm-head-actions">
-        <Link href="/login" className="pm-head-login"><LogIn size={14} strokeWidth={2} /> Login</Link>
+        <ThemeButton />
+        <Link href="/login" className="pm-head-login" aria-label="Student login"><LogIn size={14} strokeWidth={2} /> <span>Login</span></Link>
         <Link href="/admissions" className="pm-btn sm">Apply now <ArrowUpRight size={14} /></Link>
         <button ref={btn} type="button" className="pm-burger" aria-expanded={open} aria-controls="pm-menu" aria-label={open ? 'Close menu' : 'Open menu'} onClick={() => setOpen(o => !o)}>
           <span>{open ? 'Close' : 'Menu'}</span><i aria-hidden="true" />
@@ -82,6 +86,7 @@ export default function Masthead() {
         })}
       </nav>
       <div className="pm-menu-foot">
+        <ThemeSwitch />
         <div className="pm-menu-cta">
           <Link href="/admissions" className="pm-btn" onClick={() => setOpen(false)}>Apply now <ArrowUpRight size={14} /></Link>
           <Link href="/login" className="pm-btn ghost on-dark pm-menu-login" onClick={() => setOpen(false)}><LogIn size={15} /> Login</Link>

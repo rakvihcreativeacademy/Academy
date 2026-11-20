@@ -10,6 +10,9 @@ import { configured } from '@/lib/supabase/config';
 import { createPublicClient } from '@/lib/supabase/public';
 import type { Project } from '@/lib/types';
 import { itemImages } from '@/lib/item-images';
+import ChapterNav, { type Chapter } from '@/components/p/ChapterNav';
+import StudioStage from '@/components/p/StudioStage';
+import ShootEdit from '@/components/p/ShootEdit';
 
 const labels = { courses: 'Courses', 'podcast-studio': 'Podcast Studio', production: 'Production', projects: 'Student Work', careers: 'Careers' };
 const tones = ['pm-paper', 'pm-dark', 'pm-paper2'];
@@ -27,11 +30,23 @@ export default async function ManagedPage({ page }: { page: PageKey }) {
     projects = data ?? [];
   }
   const b = doc.banner;
+  const short = (t: string) => t.replace(/^Professional\s+/i, '').replace(/\s*&\s*/g, ' & ');
+  const chapters: Chapter[] = page === 'courses'
+    ? doc.sections.flatMap((s, si) => s.items.map((it, i) => ({ id: it.slug || `course-${si}-${i}`, label: short(it.title) })))
+    : [
+      ...doc.sections.map((s, si) => ({ id: `ch-${si + 1}`, label: s.eyebrow || s.title })),
+      ...(page === 'projects' ? [{ id: 'showcase', label: 'Student showcase' }] : []),
+      ...(doc.enquiry.enabled ? [{ id: 'enquire', label: page === 'podcast-studio' ? 'Book the studio' : page === 'production' ? 'Start a project' : 'Enquire' }] : []),
+    ];
   return <main className="pm-page managed-page">
     <Banner crumb={labels[page]} eyebrow={b.eyebrow} title={b.title} italic={b.italic} lede={b.description} image={b.image || '/images/academy-filmmaking.webp'} imageAlt={b.image_alt} band={doc.sections[0]?.items.map(i => i.title)}>
       {b.button_label && b.button_link && <Link className="pm-btn" href={b.button_link}>{b.button_label}<ArrowUpRight size={15} /></Link>}
       {page === 'podcast-studio' && <Link className="pm-btn ghost on-dark" href="/admissions?type=studio#apply">Enquire About Packages</Link>}
     </Banner>
+
+    <ChapterNav items={chapters} title={page === 'courses' ? 'Programmes' : labels[page]} />
+    {page === 'podcast-studio' && <StudioStage label="Tour" />}
+    {page === 'production' && <ShootEdit label="On set" variant="production" />}
 
     {page === 'courses' ? <CourseListing sections={doc.sections} /> : doc.sections.map((section, si) => {
       const tone = tones[si % tones.length];
@@ -40,7 +55,7 @@ export default async function ManagedPage({ page }: { page: PageKey }) {
       const n = section.items.length;
       const bgs = withMedia ? [] : itemImages(section.items.map(it => it.title));
       const cols = n <= 4 ? Math.max(n, 1) : [4, 5, 3].find(c => n % c === 0) ?? 4;
-      return <section className={`pm-sec ${tone}`} key={si} data-dark={dark || undefined}>
+      return <section className={`pm-sec ${tone}`} key={si} id={`ch-${si + 1}`} data-dark={dark || undefined}>
         <div className="pm-wrap">
           <div className="pm-head-row">
             <div data-v>

@@ -33,7 +33,7 @@ export default function CourseListing({ sections }: { sections: PageContent['sec
                 <figcaption><span>Programme {String(i + 1).padStart(2, '0')}</span><span>RAKVIH Digital</span></figcaption>
               </figure>
               <div className="pm-spread-copy">
-                <p className="pm-label"><span className="pm-num" style={{ color: 'var(--pm-olive)' }}>({String(i + 1).padStart(2, '0')})</span></p>
+                <p className="pm-label"><span className="pm-num pm-olive-text">({String(i + 1).padStart(2, '0')})</span></p>
                 <h3>{item.title}</h3>
                 {item.description && <p>{item.description}</p>}
                 {details.length > 0 && <>
