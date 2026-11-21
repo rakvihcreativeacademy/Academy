@@ -179,4 +179,107 @@ create policy "Admins upload academy media" on storage.objects for insert to aut
 drop policy if exists "Admins remove own academy media" on storage.objects;
 create policy "Admins remove own academy media" on storage.objects for delete to authenticated using (bucket_id='academy-media' and (select public.is_admin()) and (storage.foldername(name))[1]=(select auth.uid())::text);
 
+-- 004_payments.sql
+-- Razorpay payments & live course offering config for Professional Video Editing.
+create table if not exists public.course_offerings (
+  slug text primary key check (slug = 'video-editing'),
+  title text not null default 'Professional Video Editing',
+  price_inr integer not null default 14999 check (price_inr >= 1 and price_inr <= 500000),
+  currency text not null default 'INR' check (currency = 'INR'),
+  batch_label text default 'Next batch enrolling now',
+  duration_label text default '8 weeks · Hands-on studio training',
+  is_live boolean not null default true,
+  enrollments_enabled boolean not null default true,
+  updated_at timestamptz not null default now(),
+  updated_by uuid references auth.users(id) on delete set null
+);
+drop trigger if exists course_offerings_updated_at on public.course_offerings;
+create trigger course_offerings_updated_at before update on public.course_offerings for each row execute function public.set_updated_at();
+alter table public.course_offerings enable row level security;
+drop policy if exists "Anyone reads course offerings" on public.course_offerings;
+create policy "Anyone reads course offerings" on public.course_offerings for select to anon, authenticated using (true);
+drop policy if exists "Admins manage course offerings" on public.course_offerings;
+create policy "Admins manage course offerings" on public.course_offerings for all to authenticated using ((select public.is_admin())) with check ((select public.is_admin()));
+grant select on public.course_offerings to anon, authenticated;
+grant insert, update, delete on public.course_offerings to authenticated;
+insert into public.course_offerings (slug, title, price_inr, currency, batch_label, duration_label, is_live, enrollments_enabled)
+values ('video-editing', 'Professional Video Editing', 14999, 'INR', 'Next batch enrolling now', '8 weeks · Hands-on studio training', true, true)
+on conflict (slug) do nothing;
+
+create table if not exists public.course_payments (
+  id uuid primary key default gen_random_uuid(),
+  course_slug text not null default 'video-editing' check (course_slug = 'video-editing'),
+  course_title text not null default 'Professional Video Editing',
+  student_name text not null check (char_length(student_name) between 2 and 120),
+  student_email text not null check (char_length(student_email) <= 254),
+  student_phone text not null check (student_phone ~ '^[+()0-9 -]{8,20}$'),
+  learning_mode text check (char_length(learning_mode) <= 60),
+  amount_paise integer not null check (amount_paise > 0),
+  currency text not null default 'INR' check (currency = 'INR'),
+  razorpay_order_id text unique not null,
+  razorpay_payment_id text unique,
+  razorpay_signature text,
+  status text not null default 'created' check (status in ('created', 'paid', 'failed', 'refunded')),
+  notes text check (char_length(notes) <= 2000),
+  paid_at timestamptz,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+create index if not exists course_payments_created_idx on public.course_payments (created_at desc);
+create index if not exists course_payments_status_idx on public.course_payments (status, created_at desc);
+drop trigger if exists course_payments_updated_at on public.course_payments;
+create trigger course_payments_updated_at before update on public.course_payments for each row execute function public.set_updated_at();
+alter table public.course_payments enable row level security;
+drop policy if exists "Admins read course payments" on public.course_payments;
+create policy "Admins read course payments" on public.course_payments for select to authenticated using ((select public.is_admin()));
+drop policy if exists "Admins update course payments" on public.course_payments;
+create policy "Admins update course payments" on public.course_payments for update to authenticated using ((select public.is_admin())) with check ((select public.is_admin()));
+drop policy if exists "Admins delete course payments" on public.course_payments;
+create policy "Admins delete course payments" on public.course_payments for delete to authenticated using ((select public.is_admin()));
+revoke all on public.course_payments from anon, authenticated;
+grant select, update(status, notes), delete on public.course_payments to authenticated;
+
+-- 005_enrollment_kyc.sql
+-- Adds full student enrollment fields, Aadhaar KYC document storage (private bucket),
+-- and admin approval / student account creation columns to public.course_payments.
+alter table public.course_payments add column if not exists date_of_birth date;
+alter table public.course_payments add column if not exists gender text check (char_length(gender) <= 40);
+alter table public.course_payments add column if not exists address text check (char_length(address) <= 400);
+alter table public.course_payments add column if not exists city text check (char_length(city) <= 100);
+alter table public.course_payments add column if not exists state text check (char_length(state) <= 100);
+alter table public.course_payments add column if not exists pincode text check (char_length(pincode) <= 12);
+alter table public.course_payments add column if not exists aadhaar_number text check (aadhaar_number is null or aadhaar_number ~ '^[0-9]{12}$');
+alter table public.course_payments add column if not exists aadhaar_doc_path text check (char_length(aadhaar_doc_path) <= 400);
+alter table public.course_payments add column if not exists aadhaar_doc_name text check (char_length(aadhaar_doc_name) <= 200);
+alter table public.course_payments add column if not exists education text check (char_length(education) <= 120);
+alter table public.course_payments add column if not exists occupation text check (char_length(occupation) <= 120);
+alter table public.course_payments add column if not exists experience_level text check (char_length(experience_level) <= 60);
+alter table public.course_payments add column if not exists emergency_contact_name text check (char_length(emergency_contact_name) <= 120);
+alter table public.course_payments add column if not exists emergency_contact_phone text check (char_length(emergency_contact_phone) <= 24);
+alter table public.course_payments add column if not exists goals text check (char_length(goals) <= 1500);
+
+alter table public.course_payments add column if not exists approval_status text not null default 'pending'
+  check (approval_status in ('pending', 'approved', 'rejected'));
+alter table public.course_payments add column if not exists student_user_id uuid references auth.users(id) on delete set null;
+alter table public.course_payments add column if not exists approved_at timestamptz;
+alter table public.course_payments add column if not exists approved_by uuid references auth.users(id) on delete set null;
+
+create index if not exists course_payments_approval_idx on public.course_payments (approval_status, created_at desc);
+
+grant update(status, notes, approval_status, student_user_id, approved_at, approved_by) on public.course_payments to authenticated;
+
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values ('student-documents', 'student-documents', false, 5242880, array['image/jpeg', 'image/png', 'image/webp', 'application/pdf'])
+on conflict (id) do nothing;
+
+drop policy if exists "Admins read student documents" on storage.objects;
+create policy "Admins read student documents"
+  on storage.objects for select to authenticated
+  using (bucket_id = 'student-documents' and (select public.is_admin()));
+
+drop policy if exists "Admins delete student documents" on storage.objects;
+create policy "Admins delete student documents"
+  on storage.objects for delete to authenticated
+  using (bucket_id = 'student-documents' and (select public.is_admin()));
+
 commit;

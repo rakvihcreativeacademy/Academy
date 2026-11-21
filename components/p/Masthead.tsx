@@ -6,6 +6,7 @@ import { nav, site } from '@/lib/site';
 import { ThemeButton, ThemeSwitch } from '@/components/p/ThemeToggle';
 
 const useIso = typeof window === 'undefined' ? useEffect : useLayoutEffect;
+const headerNav = nav.filter(l => l.href !== '/about');
 
 /** Masthead: brand · glass nav capsule (with a dedicated Home button and a sliding active pill) · Apply. */
 export default function Masthead() {
@@ -59,9 +60,9 @@ export default function Masthead() {
       </Link>
       <nav className="pm-nav" aria-label="Main" ref={capsule} onMouseLeave={home}>
         <span className={'pm-nav-pill' + (glide ? ' glide' : '')} aria-hidden="true" style={pill ? { transform: `translateX(${pill.x}px)`, width: pill.w, opacity: 1 } : { opacity: 0 }} />
-        {nav.map(l => <Link key={l.href} href={l.href} className={(active(l.href) ? 'active ' : '') + (l.href === '/' ? 'home' : '')}
+        {headerNav.map(l => <Link key={l.href} href={l.href} className={(active(l.href) ? 'active ' : '') + (l.href === '/' ? 'home' : '') + (l.href === '/production' ? ' has-badge' : '')}
           aria-current={active(l.href) ? 'page' : undefined} onMouseEnter={e => place(e.currentTarget)} onFocus={e => place(e.currentTarget)}>
-          {l.href === '/' ? <><House size={14} strokeWidth={1.6} />Home</> : l.label}
+          {l.href === '/' ? <><House size={14} strokeWidth={1.6} />Home</> : l.href === '/production' ? <span className="pm-nav-stack"><span>{l.label}</span><small className="pm-nav-badge">Upcoming</small></span> : l.label}
         </Link>)}
       </nav>
       <div className="pm-head-actions">
@@ -76,11 +77,11 @@ export default function Masthead() {
     {open && <div className="pm-menu" id="pm-menu" ref={panel} role="dialog" aria-modal="true" aria-label="Site menu">
       <p className="pm-menu-kicker"><span className="pm-dot" /> Menu</p>
       <nav className="pm-menu-nav" aria-label="Mobile">
-        {nav.map((l, i) => {
+        {headerNav.map((l, i) => {
           const on = active(l.href);
           return <Link key={l.href} href={l.href} className={'pm-menu-link' + (on ? ' active' : '')} aria-current={on ? 'page' : undefined}
             style={{ '--i': i } as React.CSSProperties} onClick={() => setOpen(false)}>
-            <span>{l.href === '/' && <House size={18} strokeWidth={1.8} />}{l.label}</span>
+            <span>{l.href === '/' && <House size={18} strokeWidth={1.8} />}<span className="pm-menu-stack"><span>{l.label}</span>{l.href === '/production' && <small className="pm-nav-badge">Upcoming</small>}</span></span>
             {on ? <i className="pm-menu-here">You’re here</i> : <ArrowUpRight size={18} className="pm-menu-arrow" />}
           </Link>;
         })}

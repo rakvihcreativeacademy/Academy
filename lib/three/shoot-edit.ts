@@ -116,51 +116,29 @@ function cover(src: THREE.Texture, w: number, h: number) {
 }
 
 /**
- * "Shoot & Edit": a photo-scanned cine camera (Poly Haven "Vintage Video Camera", CC0) on a tripod
- * starts recording; the frames it captures fly out of the lens and land as clips on an editing
- * timeline; then the playhead plays the cut on a preview monitor.
+ * "Shoot & Edit": a 3D cinema camera on a tripod (/3d/camera_with_tripod.glb) starts recording;
+ * the frames it captures fly out of the lens and land as clips on an editing timeline; then the
+ * playhead plays the cut on a preview monitor.
  */
 export function mountShootEdit(canvas: HTMLCanvasElement): ShootEdit {
   const stage = createStage(canvas, { fov: 30, exposure: 1.05 });
   const { scene, camera } = stage;
-  scene.environmentIntensity = 0.8;
+  scene.environmentIntensity = 0.95;
 
   const key = new THREE.DirectionalLight(0xfff0d8, 2.8); key.position.set(-2.5, 3, 3.5); scene.add(key);
-  const fill = new THREE.DirectionalLight(0xc6d0ff, 0.5); fill.position.set(3, 0.5, 2.5); scene.add(fill);
+  const fill = new THREE.DirectionalLight(0xc6d0ff, 0.75); fill.position.set(3, 0.5, 2.5); scene.add(fill);
   const rim = new THREE.DirectionalLight(0xfccc0f, 3.4); rim.position.set(1.5, 2, -3); scene.add(rim);
-  const rim2 = new THREE.DirectionalLight(0xc3cc8f, 1.4); rim2.position.set(-3, 0.4, -2); scene.add(rim2);
+  const rim2 = new THREE.DirectionalLight(0xc3cc8f, 1.5); rim2.position.set(-3, 0.4, -2); scene.add(rim2);
 
   const world = new THREE.Group(); scene.add(world);
   const bk = bokeh(60, { x: 7, y: 3.5, z: 2.5, z0: -1.2 }, 0.14); scene.add(bk.points);
   const ground = floor(6); ground.position.y = -1.25; world.add(ground);
 
-  // ── cine camera on a tripod ──
+  // ── cine camera on a tripod (/3d/camera_with_tripod.glb) ──
   const camRig = new THREE.Group(); world.add(camRig);
-  const body = new THREE.Group(); camRig.add(body);
-  const satin = new THREE.MeshPhysicalMaterial({ color: 0x121210, metalness: 0.55, roughness: 0.38, clearcoat: 0.5 });
-  const brass = new THREE.MeshStandardMaterial({ color: 0xd9ad2b, metalness: 1, roughness: 0.28 });
   const tripod = new THREE.Group(); camRig.add(tripod);
-  const plate = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.035, 0.34), satin); plate.position.y = -0.02; tripod.add(plate);
-  const headBall = new THREE.Mesh(new THREE.CylinderGeometry(0.075, 0.095, 0.12, 40), satin); headBall.position.y = -0.1; tripod.add(headBall);
-  const handle = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3([new THREE.Vector3(0, -0.1, -0.05), new THREE.Vector3(-0.08, -0.12, -0.3), new THREE.Vector3(-0.2, -0.2, -0.55)]), 24, 0.014, 10), satin);
-  tripod.add(handle);
-  const grip = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.022, 0.12, 16), new THREE.MeshStandardMaterial({ color: 0x1b1b18, roughness: 0.8 }));
-  grip.position.set(-0.2, -0.2, -0.55); grip.lookAt(-0.3, -0.26, -0.75); grip.rotateX(Math.PI / 2); tripod.add(grip);
-  const hub = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.05, 0.08, 24), satin); hub.position.y = -0.2; tripod.add(hub);
-  for (let k = 0; k < 3; k++) {
-    const a = k * Math.PI * 2 / 3 + Math.PI / 6;
-    const top = new THREE.Vector3(Math.cos(a) * 0.05, -0.2, Math.sin(a) * 0.05), foot = new THREE.Vector3(Math.cos(a) * 0.62, -1.25, Math.sin(a) * 0.62);
-    const mid = top.clone().lerp(foot, 0.5);
-    const upper = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.022, top.distanceTo(mid), 16), satin);
-    upper.position.copy(top.clone().lerp(mid, 0.5)); upper.lookAt(mid); upper.rotateX(Math.PI / 2); tripod.add(upper);
-    const lower = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.012, mid.distanceTo(foot), 16), new THREE.MeshStandardMaterial({ color: 0x8c8b82, metalness: 1, roughness: 0.3 }));
-    lower.position.copy(mid.clone().lerp(foot, 0.5)); lower.lookAt(foot); lower.rotateX(Math.PI / 2); tripod.add(lower);
-    const clamp = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.05, 20), brass);
-    clamp.position.copy(mid); clamp.lookAt(foot); clamp.rotateX(Math.PI / 2); tripod.add(clamp);
-    const shoe = new THREE.Mesh(new THREE.SphereGeometry(0.024, 16, 10), new THREE.MeshStandardMaterial({ color: 0x0a0a09, roughness: 0.9 })); shoe.position.copy(foot); tripod.add(shoe);
-  }
-  const recLed = new THREE.Mesh(new THREE.SphereGeometry(0.014, 16, 12), new THREE.MeshStandardMaterial({ color: 0x5a1410, emissive: 0xff2a1a, emissiveIntensity: 0 }));
-  body.add(recLed);
+  const body = new THREE.Group(); camRig.add(body);
+  const recLedMats: THREE.MeshStandardMaterial[] = [];
 
   // lens light beam (visible while recording)
   const beamTex = (() => { const c = document.createElement('canvas'); c.width = 4; c.height = 256; const g = c.getContext('2d')!; const gr = g.createLinearGradient(0, 0, 0, 256); gr.addColorStop(0, 'rgba(255,255,255,0)'); gr.addColorStop(0.7, 'rgba(255,255,255,.5)'); gr.addColorStop(1, 'rgba(255,255,255,1)'); g.fillStyle = gr; g.fillRect(0, 0, 4, 256); return new THREE.CanvasTexture(c); })();
@@ -170,7 +148,7 @@ export function mountShootEdit(canvas: HTMLCanvasElement): ShootEdit {
   body.add(beam);
   const flare = new THREE.Mesh(new THREE.PlaneGeometry(0.9, 0.9), new THREE.MeshBasicMaterial({ map: radialTexture('rgba(255,236,170,.95)', 'rgba(252,204,15,0)'), transparent: true, opacity: 0, depthWrite: false, depthTest: false, blending: THREE.AdditiveBlending, toneMapped: false }));
   flare.renderOrder = 10; scene.add(flare);
-  const lensPt = new THREE.Vector3(0, 0.25, 0.3);   // lens front in body space (filled after load)
+  const lensPt = new THREE.Vector3(0, 0.3, 0.72);   // lens front in body space (filled after load)
 
   // ── editing timeline + preview monitor ──
   const tl = new THREE.Group(); world.add(tl);
@@ -231,20 +209,69 @@ export function mountShootEdit(canvas: HTMLCanvasElement): ShootEdit {
   stage.onResize(() => layout());
 
   const ready = Promise.all([
-    new Promise<THREE.Group>((res, rej) => new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).load('/3d/cinecam.glb', g => res(g.scene), undefined, rej)),
+    new Promise<THREE.Group>((res, rej) => new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).load('/3d/camera_with_tripod.glb', g => res(g.scene), undefined, rej)),
     ...IMAGES.map(src => new Promise<THREE.Texture>((res, rej) => loader.load(src, t => { t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; res(t); }, undefined, rej))),
   ]).then(([model, ...tex]) => {
     const m = model as THREE.Group;
+    m.updateMatrixWorld(true);
     const box = new THREE.Box3().setFromObject(m);
-    const h = box.max.y - box.min.y, s = 0.78 / h;
+    const h = box.max.y - box.min.y, s = 1.98 / Math.max(0.001, h);
     const c = box.getCenter(new THREE.Vector3());
-    m.scale.setScalar(s); m.position.set(-c.x * s, -box.min.y * s, -c.z * s);
-    m.traverse(o => { const mm = o as THREE.Mesh; if (mm.isMesh) { const mat = mm.material as THREE.MeshStandardMaterial; mat.envMapIntensity = 1.1; } });
-    body.add(m);
-    const depth = (box.max.z - box.min.z) * s, width = (box.max.x - box.min.x) * s;
-    lensPt.set(width * 0.06, 0.78 * 0.33, depth / 2 + 0.005);
+    // rest the tripod feet flush on the floor pool (y = -1.25 in world, camRig.y = -0.05 on desktop)
+    const ox = -c.x * s, oy = -1.20 - box.min.y * s, oz = 0;
+
+    const tripodGroup = new THREE.Group();
+    const headGroup = new THREE.Group();
+    let tripodTopY = -0.12;
+    const tripodBox = new THREE.Box3();
+    const glassBox = new THREE.Box3();
+
+    m.traverse(o => {
+      const mm = o as THREE.Mesh;
+      if (!mm.isMesh) return;
+      const mats = Array.isArray(mm.material) ? mm.material : [mm.material];
+      mats.forEach(mat => {
+        const std = mat as THREE.MeshStandardMaterial;
+        if ('envMapIntensity' in std) std.envMapIntensity = 1.35;
+        if (std.map) std.map.anisotropy = 8;
+        if (o.name.endsWith('__led') || std.name === 'led') {
+          std.emissive.set(0xff2a1a);
+          std.emissiveIntensity = 0.08;
+          if (!recLedMats.includes(std)) recLedMats.push(std);
+        }
+      });
+    });
+
+    // split tripod legs (stationary on floor) from camera head (pivots gently on the fluid head)
+    for (const child of [...m.children]) {
+      if (child.name.startsWith('tripod__')) {
+        tripodBox.expandByObject(child);
+        tripodGroup.add(child);
+      } else {
+        if (child.name.includes('glass')) glassBox.expandByObject(child);
+        headGroup.add(child);
+      }
+    }
+    if (!tripodBox.isEmpty()) tripodTopY = tripodBox.max.y;
+    const headPivotY = oy + tripodTopY * s;
+
+    tripodGroup.scale.setScalar(s);
+    tripodGroup.position.set(ox, oy, oz);
+    tripod.add(tripodGroup);
+
+    body.position.set(0, headPivotY, 0);
+    headGroup.scale.setScalar(s);
+    headGroup.position.set(ox, oy - headPivotY, oz);
+    body.add(headGroup);
+
+    // exact front optical glass centre in body space (used for beam, flare, close-up & flying clips)
+    if (!glassBox.isEmpty()) {
+      const gc = glassBox.getCenter(new THREE.Vector3());
+      lensPt.set(ox + gc.x * s, (oy - headPivotY) + gc.y * s, oz + glassBox.max.z * s + 0.01);
+    } else {
+      lensPt.set(0, (oy - headPivotY), oz + box.max.z * s);
+    }
     beam.position.copy(lensPt);
-    recLed.position.set(width * 0.32, 0.78 * 0.86, depth / 2 - 0.06);
     images.push(...(tex as THREE.Texture[]));
     monTex.push(...images.map(t => cover(t, 16, 9)));
     tl.updateMatrixWorld(true);
@@ -297,7 +324,8 @@ export function mountShootEdit(canvas: HTMLCanvasElement): ShootEdit {
 
     camRig.rotation.y = (narrow ? 0.25 : 0.62) * pull + px * 0.08 * pull;
     body.rotation.x = -0.02 + Math.sin(t * 0.6) * 0.004;
-    (recLed.material as THREE.MeshStandardMaterial).emissiveIntensity = rec ? (Math.sin(t * 6) > 0 ? 4 : 0.6) : 0;
+    const ledGlow = rec ? (Math.sin(t * 6) > 0 ? 4.5 : 0.7) : 0.08;
+    for (const lm of recLedMats) lm.emissiveIntensity = ledGlow;
     (beam.material as THREE.MeshBasicMaterial).opacity = recAmt * pull * (0.11 + Math.sin(t * 2.2) * 0.02);
 
     tl.position.y = (narrow ? -0.62 : -0.18) - (1 - panelIn) * 0.35;
@@ -309,14 +337,14 @@ export function mountShootEdit(canvas: HTMLCanvasElement): ShootEdit {
     (ovMesh.material as THREE.MeshBasicMaterial).opacity = panelIn;
     (monGlow.material as THREE.MeshBasicMaterial).opacity = panelIn * (0.9 + play * 0.7);
 
-    // camera: from just in front of the lens, back to the framing shot, then a slow push-in
+    // camera: from just in front of the matte box / lens, back to the framing shot, then a slow push-in
     world.updateMatrixWorld(true);
     lensW.copy(lensPt); body.localToWorld(lensW);
     fwd.copy(lensPt); fwd.z += 1; body.localToWorld(fwd); fwd.sub(lensW).normalize();
     const dist = d0 * (1.04 - 0.06 * smooth((p - 0.22) / 0.7));
     farPos.set(px * 0.18 * pull, 0.2 + py * -0.08 * pull, dist);
     farLook.set(narrow ? 0 : 0.2, narrow ? 0.0 : -0.08, 0);
-    nearPos.copy(lensW).addScaledVector(fwd, narrow ? 1.05 : 1.05);
+    nearPos.copy(lensW).addScaledVector(fwd, narrow ? 1.28 : 1.32);
     camera.position.lerpVectors(nearPos, farPos, pull);
     look.lerpVectors(lensW, farLook, ease3(p / 0.2));
     camera.lookAt(look);

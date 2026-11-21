@@ -23,70 +23,43 @@ export type HeroCamera = {
 import { PART_LABELS } from './part-labels';
 export { PART_LABELS };
 
-type Part = { mesh: THREE.Mesh; home: THREE.Vector3; off: THREE.Vector3; axis: THREE.Vector3; spin: number; label: number; size: number };
-
-/** Split a mesh into its disconnected pieces (vertices welded by position so UV seams don't split a piece). */
-function splitIslands(geo: THREE.BufferGeometry) {
-  const pos = geo.attributes.position, n = pos.count;
-  const parent = new Int32Array(n); for (let i = 0; i < n; i++) parent[i] = i;
-  const find = (i: number) => { while (parent[i] !== i) { parent[i] = parent[parent[i]]; i = parent[i]; } return i; };
-  const uni = (a: number, b: number) => { a = find(a); b = find(b); if (a !== b) parent[a] = b; };
-  const seen = new Map<string, number>();
-  for (let i = 0; i < n; i++) {
-    const k = `${Math.round(pos.getX(i) * 1e4)},${Math.round(pos.getY(i) * 1e4)},${Math.round(pos.getZ(i) * 1e4)}`;
-    const j = seen.get(k); if (j === undefined) seen.set(k, i); else uni(i, j);
-  }
-  const idx = geo.index;
-  const tri = (t: number) => (idx ? idx.getX(t) : t);
-  const triCount = idx ? idx.count : n;
-  for (let t = 0; t < triCount; t += 3) { uni(tri(t), tri(t + 1)); uni(tri(t), tri(t + 2)); }
-  const tris = new Map<number, number[]>();
-  for (let t = 0; t < triCount; t += 3) { const r = find(tri(t)); let l = tris.get(r); if (!l) tris.set(r, l = []); l.push(tri(t), tri(t + 1), tri(t + 2)); }
-  const out: { geo: THREE.BufferGeometry; center: THREE.Vector3; size: number }[] = [];
-  tris.forEach(list => {
-    const remap = new Map<number, number>(), order: number[] = [];
-    const index = list.map(v => { let m = remap.get(v); if (m === undefined) { m = order.length; remap.set(v, m); order.push(v); } return m; });
-    const g = new THREE.BufferGeometry();
-    for (const name of Object.keys(geo.attributes)) {
-      const a = geo.attributes[name], arr = new Float32Array(order.length * a.itemSize);
-      order.forEach((v, i) => { for (let c = 0; c < a.itemSize; c++) arr[i * a.itemSize + c] = a.getComponent(v, c); });
-      g.setAttribute(name, new THREE.BufferAttribute(arr, a.itemSize));
-    }
-    g.setIndex(index);
-    g.computeBoundingBox();
-    const center = g.boundingBox!.getCenter(new THREE.Vector3()), size = g.boundingBox!.getSize(new THREE.Vector3()).length();
-    g.translate(-center.x, -center.y, -center.z);
-    out.push({ geo: g, center, size });
-  });
-  return out;
-}
+type Part = {
+  obj: THREE.Object3D;
+  home: THREE.Vector3;
+  homeQ: THREE.Quaternion;
+  localCenter: THREE.Vector3;
+  off: THREE.Vector3;
+  axis: THREE.Vector3;
+  spin: number;
+  label: number;
+};
 
 const smooth = (t: number) => { t = clamp01(t); return t * t * (3 - 2 * t); };
 const ease3 = (t: number) => { t = clamp01(t); return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
 
 /**
- * The hero's photo-scanned camera (Poly Haven "Camera 01", CC0), split into its real parts.
+ * The hero's 3D Sony Alpha A7 + FE 24-70mm f/2.8 G Master system, animated by its real sub-assemblies.
  * Desktop story (p through a long pinned hero):
- *   .05–.20  burst: the lens telescopes forward element by element, the dials lift, the eyepiece slides back
+ *   .05–.20  burst: the G Master lens telescopes forward ring by ring, the EVF & dials lift, the rear LCD slides back
  *   .20–.40  exploded view turns slowly while seven parts are labelled
  *   .40–.54  everything flies home while the camera makes a full 360° turn, ending face-on
  *   .54–.74  the view dives into the lens, where the page opens into the photographs
- * Phones: the same burst, labels and 360° rebuild, without the dive.
+ * Phones: the same burst, labels, 360° rebuild and dive, framed for portrait screens.
  */
 export function mountHeroCamera(canvas: HTMLCanvasElement, opts: { still?: boolean } = {}): HeroCamera {
-  const stage = createStage(canvas, { fov: 28, exposure: 1.05 });
+  const stage = createStage(canvas, { fov: 28, exposure: 1.08 });
   const { scene, camera } = stage;
-  scene.environmentIntensity = 0.9;
+  scene.environmentIntensity = 0.95;
 
   const key = new THREE.DirectionalLight(0xfff1dc, 2.6); key.position.set(-2.2, 2.6, 3); scene.add(key);
-  const fill = new THREE.DirectionalLight(0xc9d3ff, 0.55); fill.position.set(3, 0.6, 2); scene.add(fill);
+  const fill = new THREE.DirectionalLight(0xc9d3ff, 0.65); fill.position.set(3, 0.6, 2); scene.add(fill);
   const rim = new THREE.DirectionalLight(0xfccc0f, 3.2); rim.position.set(1.6, 1.4, -3); scene.add(rim);
   const rim2 = new THREE.DirectionalLight(0xc3cc8f, 1.4); rim2.position.set(-2.4, -0.4, -2.2); scene.add(rim2);
 
   const rig = new THREE.Group(); scene.add(rig);       // pointer + idle sway
   const turn = new THREE.Group(); rig.add(turn);       // scroll-driven turn
 
-  const shadow = new THREE.Mesh(new THREE.PlaneGeometry(1.7, 0.75),
+  const shadow = new THREE.Mesh(new THREE.PlaneGeometry(1.85, 0.95),
     new THREE.MeshBasicMaterial({ map: radialTexture('rgba(0,0,0,.75)', 'rgba(0,0,0,0)'), transparent: true, depthWrite: false }));
   shadow.rotation.x = -Math.PI / 2; rig.add(shadow);
 
@@ -99,88 +72,154 @@ export function mountHeroCamera(canvas: HTMLCanvasElement, opts: { still?: boole
   const ground = floor(5.5); scene.add(ground);
   const dialMats = [focusDial.material, apDial.material] as THREE.MeshBasicMaterial[];
 
-  const lens = new THREE.Vector3(0, 0, 0.3);   // lens front centre in turn space (filled after load)
-  let lensR = 0.15, mode: 'dive' | 'compact' = 'dive';
+  const lens = new THREE.Vector3(0, 0, 0.5);   // lens front centre in turn space (filled after load)
+  let lensR = 0.18, mode: 'dive' | 'compact' = 'dive';
   let p = 0, pt = 0, px = 0, py = 0, tx = 0, ty = 0, loaded = false;
   const parts: Part[] = [];
-  let partsParent: THREE.Object3D | null = null;
 
   const fitDist = () => {
     const a = camera.aspect, tan = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
-    const wantW = mode === 'dive' ? (a > 1.2 ? 0.5 : 0.7) : 0.62;   // share of the viewport width
-    const byW = 1.08 / (wantW * 2 * tan * a);
-    const byH = 0.62 / ((mode === 'dive' ? 0.46 : 0.5) * 2 * tan);
+    const wantW = mode === 'dive' ? (a > 1.2 ? 0.48 : 0.68) : 0.6;   // share of the viewport width
+    const byW = 1.18 / (wantW * 2 * tan * a);
+    const byH = 0.72 / ((mode === 'dive' ? 0.48 : 0.5) * 2 * tan);
     return Math.max(byW, byH);
   };
 
   const ready = new Promise<void>((resolve, reject) => {
-    new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).load('/3d/camera.glb', gltf => {
+    new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).load('/3d/sony-alpha-gm-realistic.glb', gltf => {
       const model = gltf.scene;
+      model.updateMatrixWorld(true);
       const box = new THREE.Box3().setFromObject(model);
-      const s = 1 / (box.max.x - box.min.x);
+      const s = 1 / Math.max(0.001, box.max.x - box.min.x);
       const c = box.getCenter(new THREE.Vector3());
       model.scale.setScalar(s);
       model.position.set(-c.x * s, -c.y * s, -c.z * s);
       turn.add(model);
-      model.updateMatrixWorld(true);
+      turn.updateMatrixWorld(true);
 
-      // lens front (aim of the dive), measured on the intact model
-      let barrel: THREE.Object3D | null = null;
-      model.traverse(o => { if ((o as THREE.Mesh).isMesh && /lens_body/i.test(((o as THREE.Mesh).material as THREE.Material).name)) barrel = o; });
-      const gb = new THREE.Box3().setFromObject(barrel ?? model);
-      gb.getCenter(lens); lens.z = gb.max.z;
-      lensR = Math.max(gb.max.x - gb.min.x, gb.max.y - gb.min.y) / 2 * .8;
-
-      // split every mesh into its real pieces
-      const meshes: THREE.Mesh[] = [];
-      model.traverse(o => { if ((o as THREE.Mesh).isMesh) meshes.push(o as THREE.Mesh); });
-      const axis = new THREE.Vector2();
-      let lensAxisSet = false;
-      meshes.forEach(m => {
-        const mat = m.material as THREE.MeshStandardMaterial;
-        mat.envMapIntensity = 1.15; if (mat.map) mat.map.anisotropy = 8;
-        const name = mat.name;
-        const pieces = splitIslands(m.geometry);
-        if (!lensAxisSet && /lens_body/i.test(name)) { const big = pieces.sort((a, b) => b.size - a.size)[0]; axis.set(big.center.x, big.center.y); lensAxisSet = true; }
-        partsParent = m.parent;
-        pieces.forEach(pc => {
-          const mesh = new THREE.Mesh(pc.geo, mat);
-          mesh.position.copy(pc.center);
-          m.parent!.add(mesh);
-          parts.push({ mesh, home: pc.center.clone(), off: new THREE.Vector3(), axis: new THREE.Vector3(), spin: 0, label: -1, size: pc.size });
-          (mesh.userData as { mat: string }).mat = name;
-        });
-        m.parent!.remove(m); m.geometry.dispose();
-      });
-
-      // choreograph: where each piece goes when the camera bursts open
-      const bodyMain = parts.filter(pt => /body$/i.test((pt.mesh.userData as { mat: string }).mat)).sort((a, b) => b.size - a.size)[0];
-      const rnd = (k: number) => { const x = Math.sin(k * 12.9898) * 43758.5453; return x - Math.floor(x); };
-      parts.forEach((pt, k) => {
-        const mat = (pt.mesh.userData as { mat: string }).mat, c = pt.home;
-        const onAxis = Math.hypot(c.x - axis.x, c.y - axis.y) < 0.09;
-        if (pt === bodyMain) { pt.label = 6; return; }
-        if (onAxis && /lens|strap/i.test(mat)) {
-          // the lens telescopes forward; elements further forward travel further
-          pt.off.set(0, 0, 0.45 + (c.z + 0.15) * 1.9);
-          pt.axis.set(0, 0, 1); pt.spin = (rnd(k) - 0.5) * 1.2;
-          pt.label = /lens$/i.test(mat) ? 0 : (/strap/i.test(mat) || c.z < 0.1) ? 2 : 1;
-          return;
+      // enhance PBR materials for studio lighting
+      model.traverse(o => {
+        if ((o as THREE.Mesh).isMesh) {
+          const m = o as THREE.Mesh;
+          const mats = Array.isArray(m.material) ? m.material : [m.material];
+          mats.forEach(mat => {
+            const std = mat as THREE.MeshStandardMaterial;
+            if ('envMapIntensity' in std) std.envMapIntensity = 1.2;
+            if (std.map) std.map.anisotropy = 8;
+          });
         }
-        const d = new THREE.Vector3(c.x * 0.8, c.y * 1.5, (c.z + 0.34) * 1.3);
-        if (d.lengthSq() < 1e-4) d.set(0, 1, 0);
-        d.normalize();
-        const mag = 0.34 + 0.32 * (1 - clamp01(pt.size / 0.6));
-        pt.off.copy(d).multiplyScalar(mag);
-        if (c.y > 0.4) pt.off.y += 0.2 + rnd(k) * 0.1;            // top-plate controls lift
-        if (c.z < -0.5) pt.off.z -= 0.45;                            // eyepiece / back slides back
-        if (c.y < -0.4) pt.off.y -= 0.3;
-        pt.axis.set(rnd(k) - 0.5, rnd(k + 1) - 0.5, rnd(k + 2) - 0.5).normalize();
-        pt.spin = /lens$/i.test(mat) ? 0 : 0.6 + rnd(k + 3) * 1.4;   // glass windows stay square to the camera
-        if (/lens$/i.test(mat) && c.y > 0.3 && c.z > -0.2) pt.label = 3;            // front windows
-        else if (c.y > 0.42 && pt.size < 0.4) pt.label = 4;                          // dials
-        else if (c.z < -0.5 && c.y > 0.25) pt.label = 5;                             // viewfinder
       });
+
+      // locate the body and G Master lens groups
+      const bodyGroup = model.getObjectByName('Sony_Alpha_A7_Body');
+      const lensGroup = model.getObjectByName('Sony_FE_24_70_F28_GMaster_Lens');
+
+      // measure lens front (aim of the dive) in turn space on the intact model
+      const gb = new THREE.Box3().setFromObject(lensGroup ?? model);
+      gb.getCenter(lens);
+      lens.z = gb.max.z;
+      lensR = Math.max(gb.max.x - gb.min.x, gb.max.y - gb.min.y) / 2 * 0.72;
+
+      const rnd = (k: number) => { const x = Math.sin(k * 12.9898) * 43758.5453; return x - Math.floor(x); };
+      const getCenters = (obj: THREE.Object3D) => {
+        const b = new THREE.Box3().setFromObject(obj);
+        const worldCenter = b.isEmpty() ? obj.getWorldPosition(new THREE.Vector3()) : b.getCenter(new THREE.Vector3());
+        const localCenter = obj.worldToLocal(worldCenter.clone());
+        const parentCenter = obj.parent ? obj.parent.worldToLocal(worldCenter.clone()) : worldCenter.clone();
+        return { localCenter, parentCenter };
+      };
+
+      // choreograph body sub-assemblies
+      if (bodyGroup) {
+        bodyGroup.children.forEach((child, k) => {
+          const { localCenter, parentCenter: pc } = getCenters(child);
+          const off = new THREE.Vector3();
+          const spinAxis = new THREE.Vector3(0, 1, 0);
+          let spin = 0;
+          let label = -1;
+          const name = child.name;
+
+          if (name === 'Main_Magnesium_Chassis') {
+            label = 6;
+          } else if (name === 'Pentaprism_EVF_Hump') {
+            off.set(0, 1.05, -0.18);
+            spinAxis.set(1, 0, 0); spin = -0.14;
+            label = 5;
+          } else if (name === 'Ergonomic_Leatherette_Grip') {
+            const side = pc.x >= 0 ? 1 : -1;
+            off.set(side * 0.95, -0.06, 0.35);
+            spinAxis.set(0, 1, 0); spin = side * 0.22;
+            label = 3;
+          } else if (name === 'Anodized_Orange_EMount_Ring') {
+            off.set(0, 0, 0.72);
+            label = 2;
+          } else if (name === 'Rear_Controls_and_LCD') {
+            off.set(0, -0.05, -1.15);
+            spinAxis.set(1, 0, 0); spin = 0.08;
+          } else if (pc.z > 0.35 && Math.hypot(pc.x - 0.14, pc.y + 0.06) < 0.9) {
+            // mount flange / lens release near E-mount
+            off.set(0, 0, 0.55);
+          } else if (pc.y > 0.78) {
+            // top plate & control dials lift cleanly upward
+            off.set(pc.x * 0.22, 0.78 + rnd(k) * 0.32, pc.z * 0.25);
+            spinAxis.set(0, 1, 0); spin = (rnd(k + 2) - 0.5) * 0.9;
+            if (pc.x < -0.25) label = 4;
+          } else if (pc.y < -0.75) {
+            // bottom plate drops down
+            off.set(0, -0.72, 0);
+          } else {
+            // side plates & strap lugs pop outward
+            const dir = pc.clone();
+            if (dir.lengthSq() < 1e-4) dir.set(1, 0, 0);
+            dir.normalize();
+            off.copy(dir).multiplyScalar(0.75 + rnd(k) * 0.25);
+            spinAxis.set(rnd(k) - 0.5, rnd(k + 1) - 0.5, rnd(k + 2) - 0.5).normalize();
+            spin = 0.35 + rnd(k + 3) * 0.4;
+          }
+
+          parts.push({ obj: child, home: child.position.clone(), homeQ: child.quaternion.clone(), localCenter, off, axis: spinAxis, spin, label });
+        });
+      }
+
+      // choreograph G Master lens assemblies along the +Z optical axis
+      if (lensGroup) {
+        lensGroup.children.forEach((child, k) => {
+          const { localCenter, parentCenter: pc } = getCenters(child);
+          const off = new THREE.Vector3();
+          const spinAxis = new THREE.Vector3(0, 0, 1);
+          let spin = 0;
+          let label = -1;
+          const name = child.name;
+
+          if (name === 'Front_MultiCoated_Optical_Glass') {
+            off.set(0, 0, 3.15);
+            label = 0;
+          } else if (name === 'Lens_Main_Barrel_Lathe96') {
+            off.set(0, 0, 1.15);
+            label = 2;
+          } else if (name === 'Zoom_Ring_Rubber') {
+            off.set(0, 0, 1.65);
+            spin = 0.45;
+            label = 1;
+          } else if (name === 'Focus_Ring_Rubber') {
+            off.set(0, 0, 2.35);
+            spin = -0.45;
+            label = 1;
+          } else if (Math.hypot(pc.x, pc.y) > 0.45) {
+            // side switches / focus-hold button pop radially + forward with the barrel
+            const rad = new THREE.Vector2(pc.x, pc.y).normalize();
+            off.set(rad.x * 0.55, rad.y * 0.55, 1.25 + pc.z * 0.45);
+          } else {
+            // concentric optical elements, 11-blade iris, rear collar & front filter bezel telescope smoothly by Z depth
+            const zNorm = clamp01(pc.z / 2.8);
+            off.set(0, 0, 0.85 + zNorm * 2.55);
+            if (pc.z > 2.45) label = 0;
+            else spin = (rnd(k + 7) - 0.5) * 0.4;
+          }
+
+          parts.push({ obj: child, home: child.position.clone(), homeQ: child.quaternion.clone(), localCenter, off, axis: spinAxis, spin, label });
+        });
+      }
 
       const h = (box.max.y - box.min.y) * s;
       shadow.position.y = -h / 2 - 0.004;
@@ -199,8 +238,13 @@ export function mountHeroCamera(canvas: HTMLCanvasElement, opts: { still?: boole
 
   const place = (explode: number, tumble: number) => {
     parts.forEach(pt => {
-      pt.mesh.position.copy(pt.home).addScaledVector(pt.off, explode);
-      if (pt.spin) { q.setFromAxisAngle(pt.axis, pt.spin * tumble); pt.mesh.quaternion.copy(q); }
+      pt.obj.position.copy(pt.home).addScaledVector(pt.off, explode);
+      if (pt.spin) {
+        q.setFromAxisAngle(pt.axis, pt.spin * tumble);
+        pt.obj.quaternion.copy(pt.homeQ).multiply(q);
+      } else {
+        pt.obj.quaternion.copy(pt.homeQ);
+      }
     });
   };
 
@@ -241,7 +285,7 @@ export function mountHeroCamera(canvas: HTMLCanvasElement, opts: { still?: boole
     (ground.material as THREE.MeshBasicMaterial).opacity = fade;
 
     // the exploded camera is wider: pull back while it's open
-    const dist = d0 * (1 + 0.62 * explode);
+    const dist = d0 * (1 + 0.72 * explode);
     lookA.set(0, -0.02 + explode * 0.04, 0);
     lookB.set(lens.x, lens.y, lens.z - 1);
     target.lerpVectors(lookA, lookB, smooth(centring * 0.6 + k * 0.4));
@@ -254,10 +298,16 @@ export function mountHeroCamera(canvas: HTMLCanvasElement, opts: { still?: boole
     camera.updateMatrixWorld();
 
     // labels: average screen position of each labelled group
-    if (labelCb && partsParent) {
+    if (labelCb) {
       sums.forEach(s => { s.v.set(0, 0, 0); s.n = 0; });
-      partsParent.updateMatrixWorld(true);
-      parts.forEach(pt => { if (pt.label < 0) return; tmp.copy(pt.mesh.position); partsParent!.localToWorld(tmp); sums[pt.label].v.add(tmp); sums[pt.label].n++; });
+      turn.updateMatrixWorld(true);
+      parts.forEach(pt => {
+        if (pt.label < 0) return;
+        tmp.copy(pt.localCenter);
+        pt.obj.localToWorld(tmp);
+        sums[pt.label].v.add(tmp);
+        sums[pt.label].n++;
+      });
       sums.forEach((s, i) => {
         const L = labels[i];
         if (!s.n) { L.o = 0; return; }

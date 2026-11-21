@@ -1,10 +1,10 @@
 /** The labelled parts, in the order the labels are rendered. */
 export const PART_LABELS = [
-  { t: 'Optical glass', d: 'Eight elements focus light into a sharp image.' },
-  { t: 'Focus & aperture rings', d: 'Control sharpness and depth of field.' },
-  { t: 'Lens mount', d: 'Swap lenses for every kind of shot.' },
-  { t: 'Rangefinder windows', d: 'Frame and focus with precision.' },
-  { t: 'Shutter & exposure dials', d: 'Freeze motion — or let it blur.' },
-  { t: 'Viewfinder', d: 'See the shot before you take it.' },
-  { t: 'Camera body', d: 'Where light becomes an image.' },
+  { t: 'Optical glass', d: 'Multi-coated G Master elements focus light with razor clarity.' },
+  { t: 'Focus & zoom rings', d: 'Control sharpness, focal length and depth of field.' },
+  { t: 'E-Mount & barrel', d: 'Interchangeable Sony E-Mount for every kind of shot.' },
+  { t: 'Grip & controls', d: 'Ergonomic grip and custom dials built for fast shooting.' },
+  { t: 'Mode & exposure dials', d: 'Freeze motion — or let it blur.' },
+  { t: 'EVF viewfinder', d: 'See the shot in real time before you press record.' },
+  { t: 'Magnesium body', d: 'Full-frame chassis where light becomes an image.' },
 ];

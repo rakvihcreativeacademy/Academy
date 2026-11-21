@@ -1,11 +1,14 @@
 'use client';
 import {useEffect,useRef,useState} from 'react';
-import { LayoutDashboard, GraduationCap, Mic, Clapperboard, FolderOpen, Briefcase, Inbox, ExternalLink, LogOut, Menu, X } from 'lucide-react';
+import { LayoutDashboard, GraduationCap, Mic, Clapperboard, FolderOpen, Briefcase, Inbox, CreditCard, Users, PlaySquare, ExternalLink, LogOut, Menu, X } from 'lucide-react';
 import Link from '@/components/SiteLink';
 import {adminSignOut} from '@/actions/auth';
 const nav=[
  {label:'Dashboard',href:'/admin',icon:LayoutDashboard},
  {label:'Courses',href:'/admin/content?page=courses',icon:GraduationCap},
+ {label:'Course Registrations',href:'/admin/payments',icon:CreditCard},
+ {label:'Students',href:'/admin/students',icon:Users},
+ {label:'Video Feeds',href:'/admin/video-feeds',icon:PlaySquare},
  {label:'Podcast Studio',href:'/admin/content?page=podcast-studio',icon:Mic},
  {label:'Production',href:'/admin/content?page=production',icon:Clapperboard},
  {label:'Student Work',href:'/admin/student-work',icon:FolderOpen},

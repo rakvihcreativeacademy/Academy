@@ -1,21 +1,19 @@
 import Link from '@/components/SiteLink';
 import Words from '@/components/v/Words';
-import Band from '@/components/p/Band';
 import ViewfinderHud from '@/components/p/ViewfinderHud';
 
 const SCENES: Record<string, string> = { About: '01', Courses: '02', 'Podcast Studio': '03', Production: '04', 'Student Work': '05', Careers: '06', Contact: '07' };
 
 type Fact = { icon?: string; label: string };
 
-/** Cinematic opening for every inner page: a photograph seen through a camera viewfinder (REC, timecode, focus box), pulling back as you scroll; kinetic band underneath. */
-export default function Banner({ crumb, eyebrow, title, italic, lede, image, imageAlt, position = '60% 45%', facts = [], children, side, band }: {
+/** Cinematic opening for every inner page: a photograph seen through a camera viewfinder (REC, timecode, focus box), pulling back as you scroll. */
+export default function Banner({ crumb, eyebrow, title, italic, lede, image, imageAlt, position = '60% 45%', facts = [], children, side }: {
   crumb: string; eyebrow: string; title: string; italic?: string; lede?: string;
   image: string; imageAlt: string; position?: string; facts?: Fact[];
   children?: React.ReactNode; side?: React.ReactNode; band?: string[];
 }) {
   const n = title.split(' ').length;
-  return <>
-    <section className="pm-banner" data-hero data-dark>
+  return <section className="pm-banner" data-hero data-dark>
       <div className="pm-banner-frame">
         <div className="pm-banner-media"><img src={image} alt={imageAlt} fetchPriority="high" decoding="async" style={{ objectPosition: position }} /></div>
         <ViewfinderHud scene={SCENES[crumb] ?? '08'} />
@@ -35,7 +33,5 @@ export default function Banner({ crumb, eyebrow, title, italic, lede, image, ima
         </div>
         {side && <div className="pm-banner-side">{side}</div>}
       </div>
-    </section>
-    <Band words={band ?? ['Create', 'Capture', 'Edit', 'Inspire', crumb]} />
-  </>;
+    </section>;
 }

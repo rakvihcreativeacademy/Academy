@@ -13,7 +13,7 @@ export default function AdminLoginForm({ next, disabled }: { next: string; disab
 
   return <form className="al2-form" onSubmit={async e => {
     e.preventDefault(); setBusy(true); setError('');
-    try { const r = await authenticate(new FormData(e.currentTarget)); if (r) setError(r.error || r.message || ''); }
+    try { const r = await authenticate(new FormData(e.currentTarget)); if (r?.error) setError(r.error); }
     finally { setBusy(false); }
   }}>
     <input type="hidden" name="mode" value="signin" />

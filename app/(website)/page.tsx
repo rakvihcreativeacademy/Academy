@@ -1,17 +1,20 @@
 import Link from '@/components/SiteLink';
 import { ArrowUpRight } from 'lucide-react';
 import Hero from '@/components/p/Hero';
-import CourseIndex from '@/components/p/CourseIndex';
-import Covers from '@/components/p/Covers';
+import VideographyStage from '@/components/p/VideographyStage';
+import CourseIndex, { type CourseIndexItem } from '@/components/p/CourseIndex';
+import LiveCourseCard, { type LiveCourseCardItem } from '@/components/p/LiveCourseCard';
+import VideoFeeds from '@/components/p/VideoFeeds';
 import Words from '@/components/v/Words';
-import FormSection from '@/components/v/FormSection';
-import Band from '@/components/p/Band';
 import Pillars from '@/components/p/Pillars';
-import Offers from '@/components/p/Offers';
-import StudioStage from '@/components/p/StudioStage';
 import ShootEdit from '@/components/p/ShootEdit';
-import { courses } from '@/lib/courses';
-import { site, studioFacilities, studioAudience, productionServices } from '@/lib/site';
+import { courses as staticCourses } from '@/lib/courses';
+import { courseImages } from '@/lib/course-images';
+import { getPageContent } from '@/lib/cms/server';
+import { isCourseEnabled, resolveCourseStatus } from '@/lib/cms/schema';
+import { getVideoEditingOffering } from '@/lib/payments-server';
+import { getPublicVideoFeeds } from '@/lib/video-feeds-server';
+import { productionServices } from '@/lib/site';
 
 const steps = [
   { t: 'Learn the craft', d: 'Practical classes with experienced trainers — the fundamentals of light, frame, sound and story.' },
@@ -26,42 +29,57 @@ const sheet = [
   { src: '/images/course-content-creation.webp', n: '15A' }, { src: '/images/course-ai-creative.webp', n: '16' },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const [courseDoc, videoEditingOffering, videoFeeds] = await Promise.all([
+    getPageContent('courses'),
+    getVideoEditingOffering(),
+    getPublicVideoFeeds(),
+  ]);
+  const hasVideoFeeds = videoFeeds.settings.section_enabled && (videoFeeds.youtube.length > 0 || videoFeeds.instagram.length > 0);
+
+  const cmsItems = courseDoc.sections.flatMap(s => s.items);
+  const activeItems = cmsItems.filter(it => isCourseEnabled(it));
+
+  const courseIndexItems: CourseIndexItem[] = activeItems.map((it, idx) => {
+    const fallback = staticCourses.find(c => c.slug === it.slug) ?? staticCourses[idx];
+    const slug = it.slug || fallback?.slug || `course-${idx + 1}`;
+    const imgFallback = courseImages[slug];
+    return {
+      slug,
+      title: it.title,
+      tag: fallback?.tag || 'Creative discipline',
+      symbol: String(idx + 1).padStart(2, '0'),
+      description: it.description,
+      skills: fallback?.skills ?? it.details.filter(Boolean).slice(0, 3),
+      image: it.image || imgFallback?.src || '/images/academy-editing.webp',
+      imageAlt: imgFallback?.alt || it.title,
+      live: resolveCourseStatus(it) === 'live',
+    };
+  });
+
+  const liveCourses: LiveCourseCardItem[] = activeItems
+    .filter(it => resolveCourseStatus(it) === 'live')
+    .map((it, idx) => {
+      const slug = it.slug || `course-${idx + 1}`;
+      return {
+        slug,
+        title: it.title,
+        description: it.description,
+        highlights: it.details.filter(Boolean).slice(0, 6),
+        href: it.href || `/admissions?course=${encodeURIComponent(it.title)}`,
+      };
+    });
+
+  const disciplineCount = activeItems.length || staticCourses.length;
+
   return <main className="pm-home">
     <Hero />
 
-    <Band words={['Video editing', 'Cinematography', 'Photography', 'Filmmaking', 'Motion design', 'Sound', 'Content']} />
-
-    {/* (01) — Manifesto */}
-    <section className="pm-sec pm-paper">
+    {/* Key stats strip */}
+    <section className="pm-sec pm-paper pm-stats-band">
       <div className="pm-wrap">
-        <div className="pm-manifesto-grid">
-          <div className="pm-manifesto-side">
-            <p className="pm-label rule">(01) — <b>Welcome</b></p>
-            <p className="pm-small" style={{ maxWidth: 280, margin: 0 }}><strong style={{ color: 'var(--pm-text)' }}>{site.name}</strong><br />{site.parent}</p>
-            <p className="pm-small" style={{ maxWidth: 280, margin: 0, fontStyle: 'normal' }}>{site.promise}</p>
-          </div>
-          <p className="pm-manifesto-text" data-v>
-            We teach the craft of <em>seeing</em> <span className="pm-inline-img"><img src="/images/academy-photography.webp" alt="" loading="lazy" /></span> — light, frame and the decisive moment. The discipline of the <em>cut</em> <span className="pm-inline-img"><img src="/images/academy-editing.webp" alt="" loading="lazy" /></span>, the patience of sound, <span className="mute">and the courage to make work that is</span> unmistakably <em>yours</em> <span className="pm-inline-img"><img src="/images/academy-filmmaking.webp" alt="" loading="lazy" /></span>.
-          </p>
-        </div>
-        <div className="pm-welcome" data-v>
-          <div>
-            <p>Welcome to {site.name} — a creative and technology-driven destination for aspiring video editors, cinematographers, photographers, filmmakers and digital content creators.</p>
-            <p>We combine creative education with practical industry experience to help individuals transform their passion into professional skills. From mastering professional editing software to operating cinema cameras, creating films, producing podcasts and developing digital content, we provide hands-on learning experiences that prepare students for the creative industry.</p>
-          </div>
-          <div className="pm-welcome-cta">
-            <strong>Learn the Skills. Master the Technology. <em>Create Your Future.</em></strong>
-            <div className="pm-row">
-              <Link href="/courses" className="pm-btn ink">Explore Our Courses <ArrowUpRight size={15} /></Link>
-              <Link href="/podcast-studio#enquire" className="pm-btn ghost">Book Our Podcast Studio</Link>
-              <Link href="/admissions" className="pm-btn ghost">Enquire for Admission</Link>
-            </div>
-            <Link href="/production#enquire" className="pm-link" style={{ alignSelf: 'flex-start' }}>Enquire About Production Services <ArrowUpRight size={14} /></Link>
-          </div>
-        </div>
         <div className="pm-stats">
-          <div data-v><strong className="pm-num">{String(courses.length).padStart(2, '0')}</strong><span>Professional courses</span></div>
+          <div data-v><strong className="pm-num">{String(disciplineCount).padStart(2, '0')}</strong><span>Professional courses</span></div>
           <div data-v><strong className="pm-num">01</strong><span>Premium podcast studio</span></div>
           <div data-v><strong className="pm-num">{productionServices.length}</strong><span>Production services</span></div>
           <div data-v><strong className="pm-num">04</strong><span>Steps to a finished portfolio</span></div>
@@ -69,29 +87,15 @@ export default function Home() {
       </div>
     </section>
 
-    {/* (02) — What we offer */}
-    <section className="pm-sec pm-paper2">
-      <div className="pm-wrap">
-        <div className="pm-head-row">
-          <div data-v>
-            <p className="pm-label rule">(02) — <b>What we offer</b></p>
-            <h2 className="pm-h2"><Words text="One brand." /> <em><Words text="Every creative service." start={2} /></em></h2>
-          </div>
-          <p className="pm-lede">{site.positioning}</p>
-        </div>
-        <Offers />
-      </div>
-    </section>
+    {/* (02) — Videography (3D Sony Alpha G Master burst + lens dive) */}
+    <VideographyStage label="(02)" />
 
-    {/* (03) — Shoot & Edit (3D) */}
-    <ShootEdit label="(03)" />
-
-    {/* (04) — Programmes */}
+    {/* (03) — Programmes (above Shoot & Edit) */}
     <section className="pm-sec pm-dark" data-dark>
       <div className="pm-wrap">
         <div className="pm-head-row">
           <div data-v>
-            <p className="pm-label rule">(04) — <b>The Programmes</b></p>
+            <p className="pm-label rule">(03) — <b>The Programmes</b></p>
             <h2 className="pm-h2"><Words text="Eight disciplines." /> <em><Words text="One creative career." start={2} /></em></h2>
           </div>
           <div className="pm-stack" style={{ gap: 24 }}>
@@ -99,9 +103,12 @@ export default function Home() {
             <Link href="/courses" className="pm-link" style={{ alignSelf: 'flex-start' }}>View all courses <ArrowUpRight size={14} /></Link>
           </div>
         </div>
-        <CourseIndex />
+        <CourseIndex items={courseIndexItems} />
       </div>
     </section>
+
+    {/* (04) — Shoot & Edit (3D) */}
+    <ShootEdit label="(04)" />
 
     {/* (05) — Method */}
     <section className="pm-sec pm-paper2" style={{ overflow: 'hidden' }}>
@@ -126,49 +133,15 @@ export default function Home() {
       </div>
     </section>
 
-    {/* (06) — Studio: pinned 3D set, then what's in it */}
-    <StudioStage label="(06)" />
-    <section className="pm-sec pm-dark2 pm-st-more" data-dark>
-      <div className="pm-wrap pm-st-more-grid">
-        <div data-v>
-          <p className="pm-label" style={{ marginBottom: 18 }}>In the studio</p>
-          <ul className="pm-list">{studioFacilities.slice(0, 8).map((f, i) => <li key={f}><span className="pm-num">{String(i + 1).padStart(2, '0')}</span>{f}</li>)}</ul>
-        </div>
-        <div className="pm-stack" data-v>
-          <div>
-            <p className="pm-label" style={{ marginBottom: 14 }}>Who books it</p>
-            <ul className="pm-tags">{studioAudience.slice(0, 6).map(a => <li key={a}>{a}</li>)}</ul>
-          </div>
-          <div className="pm-row on-dark">
-            <Link href="/podcast-studio#enquire" className="pm-btn">Book a slot <ArrowUpRight size={15} /></Link>
-            <Link href="/podcast-studio" className="pm-btn ghost on-dark">Explore the studio</Link>
-          </div>
-        </div>
-      </div>
-    </section>
+    {/* (06) — Video Feeds (YouTube & Instagram, managed from Admin) */}
+    <VideoFeeds feeds={videoFeeds} label="(06)" />
 
-    {/* (07) — Production (letterboxed) */}
-    <section className="pm-prod" data-v data-dark>
-      <img src="/images/course-cinematography.webp" alt="" loading="lazy" data-parallax="0.08" />
-      <span className="bar t" aria-hidden="true" /><span className="bar b" aria-hidden="true" />
-      <div className="pm-prod-inner">
-        <p className="pm-label on-dark">(07) — <b>RAKVIH Digital Production</b></p>
-        <h2 className="pm-h2">From concept <em>to the final cut.</em></h2>
-        <p className="pm-lede" style={{ color: '#cfccbd', textAlign: 'center' }}>Our creative team produces videos, photography and podcasts for brands, businesses and creators.</p>
-        <div className="pm-prod-marquee" aria-label="Production services">
-          <div>{[...productionServices, ...productionServices].map((s, k) => <span key={k} aria-hidden={k >= productionServices.length}>{s.title}</span>)}</div>
-        </div>
-        <div className="on-dark"><Link href="/production" className="pm-btn ghost on-dark">See all services <ArrowUpRight size={15} /></Link></div>
-      </div>
-      <div className="frame-info" aria-hidden="true"><span>2.39 : 1 — Anamorphic</span><span>Scene 05 · Take 01</span></div>
-    </section>
-
-    {/* (08) — Standard */}
+    {/* Standard */}
     <section className="pm-sec pm-paper">
       <div className="pm-wrap">
         <div className="pm-head-row">
           <div data-v>
-            <p className="pm-label rule">(08) — <b>Why choose RAKVIH Digital?</b></p>
+            <p className="pm-label rule">{hasVideoFeeds ? '(07)' : '(06)'} — <b>Why choose RAKVIH Digital?</b></p>
             <h2 className="pm-h2"><Words text="Everything you need" /> <em><Words text="to grow as a creator." start={3} /></em></h2>
           </div>
           <p className="pm-lede">Practical learning, professional tools, a real studio and a portfolio at the end of it.</p>
@@ -177,26 +150,7 @@ export default function Home() {
       </div>
     </section>
 
-    {/* (09) — Careers */}
-    <section className="pm-sec pm-paper2" style={{ overflow: 'hidden' }}>
-      <div className="pm-wrap">
-        <div className="pm-head-row">
-          <div data-v>
-            <p className="pm-label rule">(09) — <b>Careers</b></p>
-            <h2 className="pm-h2"><Words text="Your skills." /> <em><Words text="Your career path." start={2} /></em></h2>
-          </div>
-          <div className="pm-stack" style={{ gap: 24 }}>
-            <p className="pm-lede">Twelve creative careers our training prepares you for — here are six of them.</p>
-            <Link href="/careers" className="pm-link" style={{ alignSelf: 'flex-start' }}>Explore career paths <ArrowUpRight size={14} /></Link>
-          </div>
-        </div>
-        <Covers note="Career guidance and placement assistance are subject to available opportunities. Employment is not guaranteed." />
-      </div>
-    </section>
-
-    {/* Enquiry */}
-    <FormSection eyebrow="Admissions & enquiries" title="Learn the art. Master the technology." italic="Create your future."
-      sub="One small step towards something creative. Tell us what interests you — a course, a studio booking or a production brief — and we’ll help you find the right direction."
-      allowTypeSwitch note="Creative learning images are AI-generated illustrations, not photographs of RAKVIH facilities." />
+    {/* Live Course Apply Now Spotlight (homepage only) */}
+    <LiveCourseCard courses={liveCourses} videoEditingOffering={videoEditingOffering} />
   </main>;
 }

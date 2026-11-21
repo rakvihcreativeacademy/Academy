@@ -5,13 +5,13 @@ import FormSection from '@/components/v/FormSection';
 import CourseListing from '@/components/CourseListing';
 import BrandCard from '@/components/BrandCard';
 import { getPageContent } from '@/lib/cms/server';
+import { getVideoEditingOffering } from '@/lib/payments-server';
 import type { PageKey } from '@/lib/cms/schema';
 import { configured } from '@/lib/supabase/config';
 import { createPublicClient } from '@/lib/supabase/public';
 import type { Project } from '@/lib/types';
 import { itemImages } from '@/lib/item-images';
 import ChapterNav, { type Chapter } from '@/components/p/ChapterNav';
-import StudioStage from '@/components/p/StudioStage';
 import ShootEdit from '@/components/p/ShootEdit';
 
 const labels = { courses: 'Courses', 'podcast-studio': 'Podcast Studio', production: 'Production', projects: 'Student Work', careers: 'Careers' };
@@ -21,13 +21,17 @@ const tones = ['pm-paper', 'pm-dark', 'pm-paper2'];
 export default async function ManagedPage({ page }: { page: PageKey }) {
   const doc = await getPageContent(page);
   const courseDoc = page === 'courses' ? doc : await getPageContent('courses');
+  const videoEditingOffering = page === 'courses' ? await getVideoEditingOffering() : undefined;
   const courseOptions = courseDoc.sections.flatMap(s => s.items.map(i => i.title));
   let projects: Project[] = [];
   if (page === 'projects' && configured) {
-    const db = createPublicClient();
-    const { data, error } = await db.from('projects').select('*').eq('status', 'published').order('created_at', { ascending: false });
-    if (error) throw new Error('Unable to load student work.');
-    projects = data ?? [];
+    try {
+      const db = createPublicClient();
+      const { data } = await db.from('projects').select('*').eq('status', 'published').order('created_at', { ascending: false });
+      projects = data ?? [];
+    } catch {
+      projects = [];
+    }
   }
   const b = doc.banner;
   const short = (t: string) => t.replace(/^Professional\s+/i, '').replace(/\s*&\s*/g, ' & ');
@@ -45,10 +49,9 @@ export default async function ManagedPage({ page }: { page: PageKey }) {
     </Banner>
 
     <ChapterNav items={chapters} title={page === 'courses' ? 'Programmes' : labels[page]} />
-    {page === 'podcast-studio' && <StudioStage label="Tour" />}
     {page === 'production' && <ShootEdit label="On set" variant="production" />}
 
-    {page === 'courses' ? <CourseListing sections={doc.sections} /> : doc.sections.map((section, si) => {
+    {page === 'courses' ? <CourseListing sections={doc.sections} videoEditingOffering={videoEditingOffering} /> : doc.sections.map((section, si) => {
       const tone = tones[si % tones.length];
       const dark = tone === 'pm-dark';
       const withMedia = section.items.some(i => i.image);
@@ -60,7 +63,7 @@ export default async function ManagedPage({ page }: { page: PageKey }) {
           <div className="pm-head-row">
             <div data-v>
               <p className="pm-label rule" style={{ marginBottom: 20 }}>({String(si + 1).padStart(2, '0')}) — <b>{section.eyebrow}</b></p>
-              <h2 className="pm-h2" style={{ fontSize: 'clamp(36px,4.6vw,76px)' }}>{section.title}</h2>
+              <h2 className="pm-h2">{section.title}</h2>
             </div>
             {section.description ? <p className="pm-lede">{section.description}</p> : <span />}
           </div>

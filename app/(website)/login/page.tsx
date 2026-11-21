@@ -4,11 +4,22 @@ import { ArrowUpRight, LockKeyhole, FolderOpen, Sparkles, Eye } from 'lucide-rea
 import AuthForm from '@/components/AuthForm';
 import { redirect } from 'next/navigation';
 import { configured } from '@/lib/supabase/config';
+import { createClient } from '@/lib/supabase/server';
 
 export const metadata: Metadata = { title: 'Login' };
+
 export default async function Login({ searchParams }: { searchParams: Promise<{ next?: string }> }) {
   const { next = '' } = await searchParams;
   if (next.startsWith('/admin')) redirect('/admin/login?next=' + encodeURIComponent(next));
+
+  if (configured) {
+    const db = await createClient();
+    const { data: { user } } = await db.auth.getUser();
+    if (user) {
+      redirect(/^\/dashboard(\/|$)/.test(next) ? next : '/dashboard');
+    }
+  }
+
   return <main className="lg-page">
     <section className="lg-visual" aria-hidden="true">
       <img src="/images/academy-photography.webp" alt="" />
@@ -26,14 +37,14 @@ export default async function Login({ searchParams }: { searchParams: Promise<{ 
       <div className="lg-card">
         <p className="pm-label"><span className="pm-dot" /> Student login</p>
         <h1 id="lg-title">Good to have you back.</h1>
-        <p className="lg-desc">Sign in to your student account to manage your projects and portfolio.</p>
+        <p className="lg-desc">Sign in with the email and password shared by our admissions team after your enrollment is approved.</p>
         {!configured && <p className="lg-notice" role="status"><LockKeyhole size={15} /> The portal is being prepared. Please contact RAKVIH Digital for account access.</p>}
         <AuthForm next={next} />
         <div className="lg-foot">
-          <span>New to RAKVIH?</span>
+          <span>Not enrolled yet?</span>
           <Link href="/admissions" className="pm-link">Apply for admission <ArrowUpRight size={13} /></Link>
         </div>
-        <p className="lg-secure"><LockKeyhole size={13} /> Your creative work. Your own secure space.</p>
+        <p className="lg-secure"><LockKeyhole size={13} /> Approved students only · Accounts are issued by RAKVIH Digital.</p>
       </div>
     </section>
   </main>;

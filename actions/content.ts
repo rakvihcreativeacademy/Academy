@@ -13,7 +13,18 @@ export async function saveContent(key: string, input: unknown, revision: number,
     const {db} = await requireAdmin();
     const {data,error} = await db.rpc('save_site_content', {p_key:page,p_draft:draft,p_revision:revision,p_publish:publish});
     if(error) throw new Error(error.message);
-    if(publish) { revalidatePath('/'+page); revalidatePath('/admissions'); }
+    if(publish) {
+      if (page === 'courses') {
+        const ve = draft.sections.flatMap(s => s.items).find(i => i.slug === 'video-editing' || /professional video editing/i.test(i.title));
+        if (ve) {
+          const isLive = (ve.status ?? 'live') === 'live' && ve.enabled !== false;
+          try { await db.from('course_offerings').update({ is_live: isLive }).eq('slug', 'video-editing'); } catch { /* course_offerings optional */ }
+        }
+      }
+      revalidatePath('/');
+      revalidatePath('/'+page);
+      revalidatePath('/admissions');
+    }
     return {ok:true as const,revision:data as number};
   } catch(e) {return {ok:false as const,error:e instanceof z.ZodError ? e.issues[0].message : e instanceof Error ? e.message : 'Unable to save content.'};}
 }
