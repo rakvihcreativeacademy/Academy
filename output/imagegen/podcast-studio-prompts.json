@@ -1,0 +1,52 @@
+{
+  "method": "Built-in image_gen",
+  "prompts": [
+    {
+      "slug": "microphones",
+      "output": "public/images/podcast/microphones.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: ONE standalone landscape 4:3 website card image for RAKVIH podcast studio. Close environmental detail of two premium black podcast microphones on articulated boom arms with pop filters, headphones and a compact audio interface on a walnut desk. A softly blurred podcast guest sits in the background. Clear focus on professional microphone equipment, no camera. Consistent premium editorial photography, realistic equipment and skin, warm amber practical lighting, muted olive, cream, charcoal and walnut palette, contemporary Indian creative recording studio. Compose a clear centered subject and equipment for small card crops. No text, readable labels, logos, watermarks, collages or borders. No still-photography shoots, clapperboards, film sets, VFX, animation or unrelated career imagery."
+    },
+    {
+      "slug": "multi-camera",
+      "output": "public/images/podcast/multi-camera.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: ONE standalone landscape 4:3 website card image for RAKVIH podcast studio. Wide behind-the-scenes view of a professional video podcast recording with two Indian adult hosts facing one another with podcast microphones at a walnut desk. Three compact video cameras on tripods cover the conversation from different angles. A monitoring screen shows simple camera preview thumbnails with no text. Clearly a multi-camera podcast studio, not a film location. Consistent premium editorial photography, realistic equipment and skin, warm amber practical lighting, muted olive, cream, charcoal and walnut palette, contemporary Indian creative recording studio. Compose a clear centered subject and equipment for small card crops. No text, readable labels, logos, watermarks, collages or borders. No still-photography shoots, clapperboards, film sets, VFX, animation or unrelated career imagery."
+    },
+    {
+      "slug": "studio-lighting",
+      "output": "public/images/podcast/studio-lighting.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: ONE standalone landscape 4:3 website card image for RAKVIH podcast studio. A podcast studio technician adjusting a softbox and a warm LED light illuminating two chairs and podcast boom microphones in a recording room. Show the lighting fixtures and their relationship to the podcast seats, attractive practical setup, no film camera or clapperboard. Consistent premium editorial photography, realistic equipment and skin, warm amber practical lighting, muted olive, cream, charcoal and walnut palette, contemporary Indian creative recording studio. Compose a clear centered subject and equipment for small card crops. No text, readable labels, logos, watermarks, collages or borders. No still-photography shoots, clapperboards, film sets, VFX, animation or unrelated career imagery."
+    },
+    {
+      "slug": "acoustic-treatment",
+      "output": "public/images/podcast/acoustic-treatment.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: ONE standalone landscape 4:3 website card image for RAKVIH podcast studio. A detailed architectural photograph inside a premium podcast room showing wooden acoustic diffuser slats, textured fabric sound absorption panels, a ceiling acoustic cloud and a softly lit recording desk with boom microphone at the lower edge. Rich material texture and credible sound-treated studio design. Consistent premium editorial photography, realistic equipment and skin, warm amber practical lighting, muted olive, cream, charcoal and walnut palette, contemporary Indian creative recording studio. Compose a clear centered subject and equipment for small card crops. No text, readable labels, logos, watermarks, collages or borders. No still-photography shoots, clapperboards, film sets, VFX, animation or unrelated career imagery."
+    },
+    {
+      "slug": "interview-session",
+      "output": "public/images/podcast/interview-session.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: ONE standalone landscape 4:3 website card image for RAKVIH podcast studio. Two fictional Indian adult podcast guests, a female host and a male creative guest, having a lively friendly interview across a compact walnut table. Each person speaks into a professional boom-arm podcast microphone wearing studio headphones. Warm acoustic studio backdrop, medium-wide candid composition. Consistent premium editorial photography, realistic equipment and skin, warm amber practical lighting, muted olive, cream, charcoal and walnut palette, contemporary Indian creative recording studio. Compose a clear centered subject and equipment for small card crops. No text, readable labels, logos, watermarks, collages or borders. No still-photography shoots, clapperboards, film sets, VFX, animation or unrelated career imagery."
+    },
+    {
+      "slug": "audio-recording",
+      "output": "public/images/podcast/audio-recording.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: ONE standalone landscape 4:3 website card image for RAKVIH podcast studio. An Indian female podcaster recording a solo audio episode into a large black condenser microphone with a pop filter, wearing over-ear headphones. Side view in a compact acoustically treated booth, an audio interface and laptop with abstract waveform at her desk. No music instruments and no camera equipment. Consistent premium editorial photography, realistic equipment and skin, warm amber practical lighting, muted olive, cream, charcoal and walnut palette, contemporary Indian creative recording studio. Compose a clear centered subject and equipment for small card crops. No text, readable labels, logos, watermarks, collages or borders. No still-photography shoots, clapperboards, film sets, VFX, animation or unrelated career imagery."
+    },
+    {
+      "slug": "editing-suite",
+      "output": "public/images/podcast/editing-suite.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: ONE standalone landscape 4:3 website card image for RAKVIH podcast studio. An Indian podcast editor at a professional audio-video editing workstation, headphones on, dual monitors showing abstract interview video thumbnails and aligned audio waveforms. A compact control surface on a walnut desk, warm sound-treated studio, focused side three-quarter view. Clearly podcast editing, not cinematic film grading or graphic design. Consistent premium editorial photography, realistic equipment and skin, warm amber practical lighting, muted olive, cream, charcoal and walnut palette, contemporary Indian creative recording studio. Compose a clear centered subject and equipment for small card crops. No text, readable labels, logos, watermarks, collages or borders. No still-photography shoots, clapperboards, film sets, VFX, animation or unrelated career imagery."
+    },
+    {
+      "slug": "business-session",
+      "output": "public/images/podcast/business-session.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: ONE standalone landscape 4:3 website card image for RAKVIH podcast studio. Three fictional Indian business professionals recording a roundtable business podcast in a warm professional studio. Each has a desktop broadcast microphone and headphones, discussing ideas naturally around a walnut table with a tablet showing abstract charts. Studio acoustic panels, polished but candid, no corporate boardroom or handshake. Consistent premium editorial photography, realistic equipment and skin, warm amber practical lighting, muted olive, cream, charcoal and walnut palette, contemporary Indian creative recording studio. Compose a clear centered subject and equipment for small card crops. No text, readable labels, logos, watermarks, collages or borders. No still-photography shoots, clapperboards, film sets, VFX, animation or unrelated career imagery."
+    }
+  ],
+  "post_generation_edits": [
+    {
+      "slug": "audio-recording",
+      "method": "Built-in image_gen edit",
+      "prompt": "Remove only the tiny white stray writing in the extreme bottom-left corner of this generated podcast photograph. Fill that small area with the matching uninterrupted table/background texture. Preserve the entire image composition, podcaster, face, microphone, headphones, laptop, light, colour, framing and all other details exactly. No text or watermark anywhere."
+    }
+  ]
+}

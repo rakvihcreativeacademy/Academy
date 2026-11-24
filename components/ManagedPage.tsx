@@ -10,6 +10,7 @@ import type { PageKey } from '@/lib/cms/schema';
 import { configured } from '@/lib/supabase/config';
 import { createPublicClient } from '@/lib/supabase/public';
 import type { Project } from '@/lib/types';
+import { podcastImage, podcastItemImage } from '@/lib/podcast-images';
 import { itemImages } from '@/lib/item-images';
 import ChapterNav, { type Chapter } from '@/components/p/ChapterNav';
 import ShootEdit from '@/components/p/ShootEdit';
@@ -60,11 +61,12 @@ export default async function ManagedPage({ page }: { page: PageKey }) {
       const dark = tone === 'pm-dark';
       const withMedia = section.items.some(i => i.image);
       const n = section.items.length;
-      const bgs = withMedia ? [] : itemImages(section.items.map(it => it.title));
+      const imageDefaults = page === 'podcast-studio' ? section.items.map(it => podcastImage(it.title)) : itemImages(section.items.map(it => it.title));
+      const bgs = withMedia ? [] : imageDefaults;
       // Podcast bento: a 2×2 feature tile, then singles; the last tile widens to close the final row.
       const stFill4 = 1 + ((4 - ((n + 3) % 4)) % 4);
       const stOdd2 = (n - 1) % 2 === 1;
-      const variantImgs = withMedia ? itemImages(section.items.map(it => it.title)) : bgs;
+      const variantImgs = imageDefaults;
       const cols = n <= 4 ? Math.max(n, 1) : [4, 5, 3].find(c => n % c === 0) ?? 4;
       // Podcast Studio gives each chapter its own look: live-studio bento → guest passes → episode tracklist
       const sv = page === 'podcast-studio' ? (['st', 'gp', 'tl'] as const)[Math.min(si, 2)] : variant;
@@ -76,10 +78,10 @@ export default async function ManagedPage({ page }: { page: PageKey }) {
               <h2 className="pm-h2">{section.title}</h2>
             </div>
           </div>
-          {sv === 'tl' ? <PodcastConsole items={section.items.map((it, i) => ({ title: it.title, description: it.description, image: it.image || variantImgs[i], href: it.href || '#enquire' }))} />
+          {sv === 'tl' ? <PodcastConsole items={section.items.map((it, i) => ({ title: it.title, description: it.description, image: page === 'podcast-studio' ? podcastItemImage(it.title, it.image) : it.image || variantImgs[i], href: it.href || '#enquire' }))} />
           : sv ? <div className={`${sv}-grid` + (sv === 'st' && n >= 6 ? ' st-bento' : '')} style={{ '--cols': cols } as React.CSSProperties}>
             {(() => { const cards = section.items.map((item, i) => {
-              const img = item.image || variantImgs[i];
+              const img = page === 'podcast-studio' ? podcastItemImage(item.title, item.image) : item.image || variantImgs[i];
               const num = String(i + 1).padStart(2, '0');
               const details = item.details.filter(Boolean);
               const bento = sv === 'st' && n >= 6;

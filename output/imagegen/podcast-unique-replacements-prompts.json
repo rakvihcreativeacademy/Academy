@@ -1,0 +1,40 @@
+{
+  "method": "Built-in image_gen",
+  "prompts": [
+    {
+      "slug": "comfortable-environment",
+      "output": "public/images/podcast/comfortable-environment.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: ONE standalone 4:3 landscape website photograph for a specific RAKVIH podcast studio card. An empty comfortable podcast recording lounge photographed from a wide corner angle, two cream upholstered armchairs, generous leg room, a small walnut side table, a discreet boom microphone, soft curtains, cushions, warm indirect lamps and acoustic panels. Focus on comfort and a relaxed spacious recording environment. No people. Composition clearly different from a symmetrical two-chair interview set. Premium editorial photography, fictional Indian adults where people are specified, realistic skin and functional equipment, warm amber lighting, cream, olive, charcoal and walnut colours. A distinct composition that reads well in both rectangular cards and a centered circular thumbnail. No captions, text, logos, watermarks, collage, borders, duplicated people or overlapping images."
+    },
+    {
+      "slug": "video-production",
+      "output": "public/images/podcast/video-production.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: ONE standalone 4:3 landscape website photograph for a specific RAKVIH podcast studio card. An Indian female podcast video producer at a compact vision-mixing desk, using an illuminated video switcher while a monitor shows four abstract live camera views of a podcast conversation. Over-the-shoulder view, studio cameras and two hosts softly visible through control-room glass. Emphasis on producing and directing a video podcast, not the seated guest conversation. Premium editorial photography, fictional Indian adults where people are specified, realistic skin and functional equipment, warm amber lighting, cream, olive, charcoal and walnut colours. A distinct composition that reads well in both rectangular cards and a centered circular thumbnail. No captions, text, logos, watermarks, collage, borders, duplicated people or overlapping images."
+    },
+    {
+      "slug": "corporate-companies",
+      "output": "public/images/podcast/corporate-companies.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: ONE standalone 4:3 landscape website photograph for a specific RAKVIH podcast studio card. A confident Indian female corporate spokesperson in a charcoal blazer recording a company leadership podcast alone in a polished acoustic studio, speaking into a broadcast microphone, laptop and plain notes beside her. Medium environmental portrait, businesslike and composed, no roundtable group and no readable branding. Premium editorial photography, fictional Indian adults where people are specified, realistic skin and functional equipment, warm amber lighting, cream, olive, charcoal and walnut colours. A distinct composition that reads well in both rectangular cards and a centered circular thumbnail. No captions, text, logos, watermarks, collage, borders, duplicated people or overlapping images."
+    },
+    {
+      "slug": "youtubers-influencers",
+      "output": "public/images/podcast/youtubers-influencers.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: ONE standalone 4:3 landscape website photograph for a specific RAKVIH podcast studio card. An Indian male YouTube creator in a casual muted olive overshirt recording a video podcast at a compact creator desk, broadcast microphone on a boom arm, compact camera with flip screen and a portrait-oriented phone on a stand. Enthusiastic natural speaking gesture, modern creative studio, equipment clearly readable. Premium editorial photography, fictional Indian adults where people are specified, realistic skin and functional equipment, warm amber lighting, cream, olive, charcoal and walnut colours. A distinct composition that reads well in both rectangular cards and a centered circular thumbnail. No captions, text, logos, watermarks, collage, borders, duplicated people or overlapping images."
+    },
+    {
+      "slug": "educational-institutions",
+      "output": "public/images/podcast/educational-institutions.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: ONE standalone 4:3 landscape website photograph for a specific RAKVIH podcast studio card. An Indian adult professor with greying hair and an adult university student recording an educational podcast together, two microphones and headphones, open reference books and notes at a studio table. Candid knowledge-sharing discussion in a sound-treated recording room, no classroom lecture and no minors. Premium editorial photography, fictional Indian adults where people are specified, realistic skin and functional equipment, warm amber lighting, cream, olive, charcoal and walnut colours. A distinct composition that reads well in both rectangular cards and a centered circular thumbnail. No captions, text, logos, watermarks, collage, borders, duplicated people or overlapping images."
+    },
+    {
+      "slug": "interviewers-creators",
+      "output": "public/images/podcast/interviewers-creators.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: ONE standalone 4:3 landscape website photograph for a specific RAKVIH podcast studio card. An Indian male podcast interviewer with short silver hair holding plain question cards while listening to an Indian female creative guest, both at microphones across a small angled recording desk. Distinct side three-quarter composition with the interviewer prominent in the foreground, acoustic studio background, candid thoughtful conversation. Premium editorial photography, fictional Indian adults where people are specified, realistic skin and functional equipment, warm amber lighting, cream, olive, charcoal and walnut colours. A distinct composition that reads well in both rectangular cards and a centered circular thumbnail. No captions, text, logos, watermarks, collage, borders, duplicated people or overlapping images."
+    },
+    {
+      "slug": "marketing-agencies",
+      "output": "public/images/podcast/marketing-agencies.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: ONE standalone 4:3 landscape website photograph for a specific RAKVIH podcast studio card. Two Indian advertising creatives, a woman with short hair and a man in a cream shirt, producing a brand storytelling podcast at a studio table with microphones, a tablet showing abstract campaign thumbnails and a few unlabelled colour swatches. Candid collaborative conversation, modern acoustic recording room, no corporate roundtable and no readable text. Premium editorial photography, fictional Indian adults where people are specified, realistic skin and functional equipment, warm amber lighting, cream, olive, charcoal and walnut colours. A distinct composition that reads well in both rectangular cards and a centered circular thumbnail. No captions, text, logos, watermarks, collage, borders, duplicated people or overlapping images."
+    }
+  ]
+}
