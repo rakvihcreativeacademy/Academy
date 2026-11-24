@@ -7,7 +7,7 @@ const SCENES: Record<string, string> = { About: '01', Courses: '02', 'Podcast St
 /** Each inner page opens with its own banner design (all compact, all on the dark "film" ground). */
 type Variant = 'split' | 'reel' | 'onair' | 'cine' | 'mosaic' | 'compact' | 'careers';
 const VARIANTS: Record<string, Variant> = {
-  About: 'split', Courses: 'reel', 'Podcast Studio': 'onair', Production: 'cine', 'Student Work': 'mosaic', Careers: 'careers', Contact: 'compact',
+  About: 'split', Courses: 'reel', 'Podcast Studio': 'onair', Production: 'cine', 'Student Work': 'mosaic', Careers: 'mosaic', Contact: 'compact',
 };
 const REEL = ['/images/academy-editing.webp', '/images/course-cinematography.webp', '/images/academy-photography.webp', '/images/academy-filmmaking.webp', '/images/course-motion-graphics.webp', '/images/course-lighting-sound.webp', '/images/course-content-creation.webp', '/images/course-ai-creative.webp'];
 const POOL = ['/images/academy-editing.webp', '/images/course-motion-graphics.webp', '/images/academy-photography.webp', '/images/course-cinematography.webp', '/images/academy-studio.webp', '/images/course-content-creation.webp'];

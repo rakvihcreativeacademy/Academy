@@ -63,7 +63,7 @@ export default function About() {
         <div className="pm-head-row">
           <div data-v><p className="pm-label rule">(04) — <b>Why choose RAKVIH Digital?</b></p><h2 className="pm-h2"><Words text="What makes our learning" /> <em><Words text="different." start={4} /></em></h2></div>
         </div>
-        <div className="pm-grid" style={{ '--cols': 5 } as React.CSSProperties}>
+        <div className="pm-grid pm-why" style={{ '--cols': 5 } as React.CSSProperties}>
           {whyUs.map((w, i) => <div key={w.title} className="pm-cell" data-v style={{ '--d': `${(i % 5) * 70}ms`, minHeight: 190 } as React.CSSProperties}>
             <span className="n pm-num">{String(i + 1).padStart(2, '0')}</span><h3 style={{ marginTop: 'auto', fontSize: 22 }}>{w.title}</h3>
           </div>)}
