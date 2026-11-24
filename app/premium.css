@@ -2776,7 +2776,7 @@ a.ct-wa:hover .ct-cta{transform:translateX(4px);box-shadow:0 12px 28px -10px rgb
 .gp-live{display:inline-flex;align-items:center;gap:6px;font:700 9.5px/1 var(--pm-mono);letter-spacing:.14em;text-transform:uppercase;color:color-mix(in srgb,currentColor 45%,transparent);transition:color .3s}
 .gp-live i{width:7px;height:7px;border-radius:50%;background:color-mix(in srgb,currentColor 35%,transparent);transition:background .3s,box-shadow .3s}
 .gp-avatar{position:relative;width:124px;height:124px;margin:8px 0 6px;border-radius:50%;flex:none}
-.gp-avatar img{position:absolute;inset:9px;width:calc(100% - 18px);height:calc(100% - 18px);border-radius:50%;object-fit:cover;filter:grayscale(.55) contrast(1.05);transition:filter .6s,transform .9s var(--pm-ease)}
+.gp-avatar img{position:absolute;inset:9px;width:calc(100% - 18px);height:calc(100% - 18px);border-radius:50%;object-fit:cover;filter:none;transition:transform .9s var(--pm-ease)}
 .gp-ring{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from var(--gp-ang),var(--pm-sun),#ff7a3d 25%,transparent 45%,var(--pm-sun) 70%,transparent 92%);
   -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 3px));mask:radial-gradient(farthest-side,transparent calc(100% - 3px),#000 calc(100% - 3px));opacity:.4;transition:opacity .4s}
 .gp-avatar::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:1.5px solid var(--pm-sun);opacity:0}

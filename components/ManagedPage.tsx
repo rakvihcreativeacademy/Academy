@@ -12,6 +12,7 @@ import { createPublicClient } from '@/lib/supabase/public';
 import type { Project } from '@/lib/types';
 import { podcastImage, podcastItemImage } from '@/lib/podcast-images';
 import { itemImages } from '@/lib/item-images';
+import { productionItemImage } from '@/lib/production-images';
 import ChapterNav, { type Chapter } from '@/components/p/ChapterNav';
 import ShootEdit from '@/components/p/ShootEdit';
 import PodcastConsole from '@/components/p/PodcastConsole';
@@ -59,10 +60,11 @@ export default async function ManagedPage({ page }: { page: PageKey }) {
     {page === 'courses' ? <CourseListing sections={doc.sections} videoEditingOffering={videoEditingOffering} /> : doc.sections.map((section, si) => {
       const tone = tones[si % tones.length];
       const dark = tone === 'pm-dark';
-      const withMedia = section.items.some(i => i.image);
+      const sectionItems = page === 'production' ? section.items.map(item => ({ ...item, image: productionItemImage(item.title, item.image) })) : section.items;
+      const withMedia = page === 'production' ? false : sectionItems.some(i => i.image);
       const n = section.items.length;
       const imageDefaults = page === 'podcast-studio' ? section.items.map(it => podcastImage(it.title)) : itemImages(section.items.map(it => it.title));
-      const bgs = withMedia ? [] : imageDefaults;
+      const bgs = withMedia ? [] : page === 'production' ? sectionItems.map((item, i) => item.image || imageDefaults[i]) : imageDefaults;
       // Podcast bento: a 2×2 feature tile, then singles; the last tile widens to close the final row.
       const stFill4 = 1 + ((4 - ((n + 3) % 4)) % 4);
       const stOdd2 = (n - 1) % 2 === 1;
@@ -138,7 +140,7 @@ export default async function ManagedPage({ page }: { page: PageKey }) {
               return cards;
             })()}
           </div> : <div className="pm-grid" style={{ '--cols': cols } as React.CSSProperties}>
-            {section.items.map((item, i) => {
+            {sectionItems.map((item, i) => {
               const bg = withMedia ? '' : bgs[i];
               const cls = 'pm-cell' + (bg ? ` has-bg fx-${(i + si * 3) % 7}` : '');
               const body = <>

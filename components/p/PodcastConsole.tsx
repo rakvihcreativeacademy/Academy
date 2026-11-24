@@ -1,50 +1,51 @@
 'use client';
-import { useState } from 'react';
-import { ArrowUpRight } from 'lucide-react';
+
+import { useState, type CSSProperties } from 'react';
+import { Check, Headphones, Mic2, Video } from 'lucide-react';
 import Link from '@/components/SiteLink';
+import styles from './PodcastConsole.module.css';
 
 export type ConsoleItem = { title: string; description: string; image: string; href: string };
 
-const FALLBACK = 'Studio, crew and post-production handled end to end — you just show up and talk.';
-
-/**
- * Podcast services as a studio mixing console: a lit display on top shows the selected service;
- * each service is a channel strip (knob, signal LED, level meter, fader and a scribble-strip label).
- * Hover / focus / tap a channel to bring it up on the display.
- */
 export default function PodcastConsole({ items }: { items: ConsoleItem[] }) {
-  const [on, setOn] = useState(0);
-  const cur = items[on] ?? items[0];
-  if (!cur) return null;
-  const ch = (i: number) => String(i + 1).padStart(2, '0');
+  const [selected, setSelected] = useState(0);
+  const current = items[selected] ?? items[0];
+  if (!current) return null;
 
-  return <div className="pc" data-v>
-    <div className="pc-screen" aria-live="polite">
-      <div className="pc-shot" key={cur.image + on}><img src={cur.image} alt="" loading="lazy" decoding="async" /></div>
-      <div className="pc-read" key={on}>
-        <span className="pc-ch"><i aria-hidden="true" />CH {ch(on)} · On air</span>
-        <h3>{cur.title}</h3>
-        <p>{cur.description || FALLBACK}</p>
-        <Link href={cur.href} className="pc-cta">Book this service <ArrowUpRight size={15} /></Link>
+  return <div className={styles.studio}>
+    <div className={styles.intro} data-v>
+      <p>A space for your voice. A team for your vision.</p>
+      <span>Recording, production and post-production — all in one place.</span>
+    </div>
+    <div className={styles.layout}>
+      <div className={styles.feature} data-v>
+        <div className={styles.photo}>
+          {items.map((item, index) => <img key={`${item.title}-${index}`} src={item.image} alt={selected === index ? item.title : ''} aria-hidden={selected !== index} className={`${styles.frame} ${selected === index ? styles.visible : ''}`} loading="lazy" decoding="async" />)}
+          <span className={styles.photoLabel}><Mic2 size={16} /> RAKVIH Podcast Studio</span>
+        </div>
+        <div className={styles.detail} aria-live="polite">
+          <p className={styles.eyebrow}>Your next great conversation starts here</p>
+          <div key={selected} className={styles.copy}><h3>{current.title}</h3>
+          <p>{current.description || 'Bring your ideas. We’ll help you capture clear sound, beautiful visuals and a finished episode you’re proud to share.'}</p></div>
+          <Link href={current.href} className={styles.book}>Enquire about this service</Link>
+        </div>
       </div>
-      <div className="pc-vu" aria-hidden="true">
-        {Array.from({ length: 2 }, (_, c) => <span key={c} className="pc-vu-col">
-          {Array.from({ length: 14 }, (_, k) => <i key={k} style={{ '--k': k, '--c': c } as React.CSSProperties} />)}
-        </span>)}
-        <small>L&nbsp;&nbsp;R</small>
+      <div className={styles.services}>
+        <div className={styles.listHeading} data-v><h3>Make it your own.</h3><p>Explore what we can help you create.</p></div>
+        <div className={styles.options} aria-label="Explore podcast services">
+          {items.map((item, index) => <button key={item.title} type="button" data-v style={{ '--d': `${(index % 4) * 80}ms` } as CSSProperties} aria-pressed={selected === index} className={`${styles.option} ${selected === index ? styles.active : ''}`} onPointerEnter={(event) => { if (event.pointerType === 'mouse') setSelected(index); }} onFocus={() => setSelected(index)} onClick={() => setSelected(index)}>
+            <span className={styles.optionIcon}>{/video|camera|youtube/i.test(item.title) ? <Video size={19} /> : /edit|mix|audio/i.test(item.title) ? <Headphones size={19} /> : <Mic2 size={19} />}</span>
+            <span>{item.title}</span>
+            <span className={styles.check}>{selected === index && <Check size={17} />}</span>
+          </button>)}
+        </div>
+        <div className={styles.help} data-v><div><strong>Have a format in mind?</strong><p>Ask about hourly, half-day or full-day sessions.</p></div><Link href="#enquire">Let’s talk</Link></div>
       </div>
     </div>
-
-    <div className="pc-desk" role="tablist" aria-label="Podcast services">
-      {items.map((it, i) => <button key={it.title} type="button" role="tab" aria-selected={i === on}
-        className={'pc-strip' + (i === on ? ' on' : '')} onMouseEnter={() => setOn(i)} onFocus={() => setOn(i)} onClick={() => setOn(i)}>
-        <span className="pc-num">{ch(i)}</span>
-        <span className="pc-knob" aria-hidden="true" />
-        <span className="pc-led" aria-hidden="true" />
-        <span className="pc-meter" aria-hidden="true">{Array.from({ length: 10 }, (_, k) => <i key={k} style={{ '--k': k } as React.CSSProperties} />)}</span>
-        <span className="pc-fader" aria-hidden="true"><b /></span>
-        <span className="pc-tape">{it.title}</span>
-      </button>)}
+    <div className={styles.steps}>
+      <div data-v><Mic2 size={23} /><span><strong>Record with confidence</strong><small>A professional space for your ideas.</small></span></div>
+      <div data-v style={{ '--d': '100ms' } as CSSProperties}><Video size={23} /><span><strong>Bring your story to life</strong><small>Audio and video production support.</small></span></div>
+      <div data-v style={{ '--d': '200ms' } as CSSProperties}><Headphones size={23} /><span><strong>Leave ready to share</strong><small>Editing that makes every episode shine.</small></span></div>
     </div>
   </div>;
 }

@@ -1,0 +1,53 @@
+{
+  "method": "Built-in image_gen",
+  "images": [
+    {
+      "file": "public/images/production/corporate-video.webp",
+      "prompt": "A professional Indian camera crew filming a business spokesperson in a modern office, cinema camera and softbox visibly in frame. Use case: photorealistic-natural. Generate a single premium editorial photograph for a creative production website card, landscape 3:2. Realistic adult people, credible professional equipment, warm natural lighting, olive, charcoal and subtle golden accents, refined Indian creative studio aesthetic. Distinct composition that makes the activity immediately clear. No text overlays, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/production/product-advertisement.webp",
+      "prompt": "Behind the scenes of a premium skincare product advertisement, unbranded amber bottle on a stone pedestal, cinematographer with macro cinema camera, studio softboxes. Use case: photorealistic-natural. Generate a single premium editorial photograph for a creative production website card, landscape 3:2. Realistic adult people, credible professional equipment, warm natural lighting, olive, charcoal and subtle golden accents, refined Indian creative studio aesthetic. Distinct composition that makes the activity immediately clear. No text overlays, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/production/brand-film.webp",
+      "prompt": "Indian artisan at work in a contemporary craft workshop, small professional film crew capturing their brand story with cinema camera and boom microphone. Use case: photorealistic-natural. Generate a single premium editorial photograph for a creative production website card, landscape 3:2. Realistic adult people, credible professional equipment, warm natural lighting, olive, charcoal and subtle golden accents, refined Indian creative studio aesthetic. Distinct composition that makes the activity immediately clear. No text overlays, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/production/event-coverage.webp",
+      "prompt": "Indian professional event videographer operating a shoulder camera at a lively elegant business conference, stage and audience in background. Use case: photorealistic-natural. Generate a single premium editorial photograph for a creative production website card, landscape 3:2. Realistic adult people, credible professional equipment, warm natural lighting, olive, charcoal and subtle golden accents, refined Indian creative studio aesthetic. Distinct composition that makes the activity immediately clear. No text overlays, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/production/wedding-film.webp",
+      "prompt": "Indian wedding cinematographer filming a bride and groom in elegant traditional clothing in an outdoor floral wedding setting, camera gimbal in foreground. Use case: photorealistic-natural. Generate a single premium editorial photograph for a creative production website card, landscape 3:2. Realistic adult people, credible professional equipment, warm natural lighting, olive, charcoal and subtle golden accents, refined Indian creative studio aesthetic. Distinct composition that makes the activity immediately clear. No text overlays, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/production/social-reels.webp",
+      "prompt": "Indian female social media videographer filming a vertical short food video with smartphone on gimbal at a cafe, chef plating food. Use case: photorealistic-natural. Generate a single premium editorial photograph for a creative production website card, landscape 3:2. Realistic adult people, credible professional equipment, warm natural lighting, olive, charcoal and subtle golden accents, refined Indian creative studio aesthetic. Distinct composition that makes the activity immediately clear. No text overlays, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/production/documentary.webp",
+      "prompt": "Indian documentary filmmaker interviewing an older craftsman in his workshop, professional camera and boom microphone visible, candid storytelling. Use case: photorealistic-natural. Generate a single premium editorial photograph for a creative production website card, landscape 3:2. Realistic adult people, credible professional equipment, warm natural lighting, olive, charcoal and subtle golden accents, refined Indian creative studio aesthetic. Distinct composition that makes the activity immediately clear. No text overlays, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/production/commercial-photo.webp",
+      "prompt": "Professional commercial photographer photographing an unbranded luxury wristwatch on a tabletop studio set, macro lens, reflector and precise lighting. Use case: photorealistic-natural. Generate a single premium editorial photograph for a creative production website card, landscape 3:2. Realistic adult people, credible professional equipment, warm natural lighting, olive, charcoal and subtle golden accents, refined Indian creative studio aesthetic. Distinct composition that makes the activity immediately clear. No text overlays, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/production/share-idea.webp",
+      "prompt": "Indian client and creative producer discussing a film idea in a bright studio meeting space, client gesturing with moodboard photos laid on table. Use case: photorealistic-natural. Generate a single premium editorial photograph for a creative production website card, landscape 3:2. Realistic adult people, credible professional equipment, warm natural lighting, olive, charcoal and subtle golden accents, refined Indian creative studio aesthetic. Distinct composition that makes the activity immediately clear. No text overlays, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/production/plan-together.webp",
+      "prompt": "Overhead oblique view of Indian producer and director planning a shoot at a desk with visual storyboard cards, calendar sheet without readable text, camera lens and laptop. Use case: photorealistic-natural. Generate a single premium editorial photograph for a creative production website card, landscape 3:2. Realistic adult people, credible professional equipment, warm natural lighting, olive, charcoal and subtle golden accents, refined Indian creative studio aesthetic. Distinct composition that makes the activity immediately clear. No text overlays, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/production/shoot-edit.webp",
+      "prompt": "Indian editor at dual monitor workstation, one screen showing a video editing timeline and the other an on-set film shot, cinema camera on desk. Use case: photorealistic-natural. Generate a single premium editorial photograph for a creative production website card, landscape 3:2. Realistic adult people, credible professional equipment, warm natural lighting, olive, charcoal and subtle golden accents, refined Indian creative studio aesthetic. Distinct composition that makes the activity immediately clear. No text overlays, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/production/deliver.webp",
+      "prompt": "Indian creative producer showing a finished brand film on a laptop to a smiling business client, reviewing final video together in a refined studio. Use case: photorealistic-natural. Generate a single premium editorial photograph for a creative production website card, landscape 3:2. Realistic adult people, credible professional equipment, warm natural lighting, olive, charcoal and subtle golden accents, refined Indian creative studio aesthetic. Distinct composition that makes the activity immediately clear. No text overlays, no logos, no watermark, no collage."
+    }
+  ]
+}
