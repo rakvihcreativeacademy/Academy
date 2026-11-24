@@ -2564,21 +2564,21 @@ html.js .pm-site :is(.st-card,.cr-card)[data-v]{transition:opacity .9s var(--pm-
   .pm-sec .pm-head-row.pm-head-row--ci>div:last-child:not(:first-child){padding-bottom:0}
 }
 
-/* Programmes: the photo stays put; only the course list beside it scrolls (snapping row by row, faded at the edges) */
+/* Programmes (desktop): the block pins under the header and the page scroll walks through the course list
+   (from anywhere — photo or list); after the last course the page continues to the next section */
 @media(min-width:901px){
-  .pm-sec .cs{--cs-h:clamp(460px,calc(100svh - var(--pm-head) - 190px),600px);align-items:stretch!important;height:var(--cs-h)}
+  .cs-pin{--cs-h:clamp(460px,calc(100svh - var(--pm-head) - 190px),600px);height:calc(var(--cs-h) + var(--cs-extra,0px))}
+  .cs-pin>.cs{position:sticky!important;top:calc(var(--pm-head) + 20px)!important}
+  .pm-sec .cs{align-items:stretch!important;height:var(--cs-h)}
   .pm-sec .cs-viewer{position:relative!important;top:auto!important;height:var(--cs-h);display:flex}
   .pm-sec .cs-frame{aspect-ratio:auto!important;max-height:none!important;height:100%!important;flex:1}
-  .pm-sec .cs-list{align-self:stretch!important;height:var(--cs-h);overflow-y:auto;overscroll-behavior:contain;scroll-snap-type:y proximity;scroll-behavior:smooth;
-    padding:0 10px 40% 0;border-top:0!important;outline:0;scrollbar-width:thin;scrollbar-color:rgba(252,204,15,.55) transparent;
-    -webkit-mask:linear-gradient(180deg,transparent 0,#000 26px,#000 calc(100% - 70px),transparent 100%);mask:linear-gradient(180deg,transparent 0,#000 26px,#000 calc(100% - 70px),transparent 100%)}
-  .pm-sec .cs-list>li{scroll-snap-align:start}
-  .pm-sec .cs-list::-webkit-scrollbar{width:4px}
-  .pm-sec .cs-list::-webkit-scrollbar-thumb{background:rgba(252,204,15,.5);border-radius:4px}
-  .pm-sec .cs-list::-webkit-scrollbar-track{background:rgba(239,235,223,.06);border-radius:4px}
-  :root[data-theme="light"] .pm-sec .cs-list{scrollbar-color:rgba(79,87,35,.55) transparent}
-  :root[data-theme="light"] .pm-sec .cs-list::-webkit-scrollbar-thumb{background:rgba(79,87,35,.55)}
+  .pm-sec .cs-list{position:relative;align-self:stretch!important;height:var(--cs-h);overflow:hidden;scroll-behavior:auto;padding:0 14px 30% 0;border-top:0!important;
+    -webkit-mask:linear-gradient(180deg,transparent 0,#000 22px,#000 calc(100% - 70px),transparent 100%);mask:linear-gradient(180deg,transparent 0,#000 22px,#000 calc(100% - 70px),transparent 100%)}
+  /* slim progress rail on the right of the list */
+  .pm-sec .cs::after{content:"";position:absolute;right:0;top:12px;bottom:12px;width:3px;border-radius:3px;
+    background:linear-gradient(180deg,var(--pm-sun) 0 calc(var(--cs-p,0) * 100%),color-mix(in srgb,currentColor 10%,transparent) 0)}
 }
+
 
 
 /* Courses page: each programme photo matches the height of its content column exactly */
@@ -2990,3 +2990,28 @@ html.js .pm-site :is(.gp-card)[data-v]{transition:opacity .9s var(--pm-ease) var
 @media(min-width:901px){
   .pm-hero-simple-bottom .pm-hx-side{position:relative;z-index:3;margin-bottom:-46px}
 }
+
+/* videography (desktop): the picture starts right at the top of the section — no dark band */
+@media(min-width:900px){.pm-vg .pm-hx-bg{top:0!important}}
+
+/* home hero: both buttons on one line, like the videography section */
+@media(min-width:901px){
+  .pm-hero-simple-bottom{grid-template-columns:minmax(0,1fr) auto!important}
+  .pm-hero-simple-bottom .pm-hx-side{display:grid;gap:16px;justify-items:start;max-width:none}
+  .pm-hero-simple-bottom .pm-hx-side .pm-row{display:flex;flex-wrap:nowrap;align-items:center;gap:10px;margin:0}
+  .pm-hero-simple-bottom .pm-hx-side .pm-row>.pm-btn{flex:0 0 auto;height:48px;white-space:nowrap;width:auto}
+}
+
+/* live course (desktop): much tighter top and bottom */
+@media(min-width:901px){
+  .pm-live-sec{padding:32px 0 36px!important}
+  .pm-live-wrap{gap:20px!important}
+}
+
+/* careers banner: a soft pistachio green */
+.pm-bn--mosaic .pm-bn-ground{background:
+  radial-gradient(45% 60% at 78% 45%,rgba(214,236,170,.30),transparent 70%),
+  radial-gradient(50% 60% at 8% 10%,rgba(252,204,15,.10),transparent 70%),
+  linear-gradient(155deg,#5f7a3c 0%,#3f5527 48%,#24331a 100%)!important}
+/* the viewfinder plate fills the whole section (no band under the header) while its REC/timecode stay below the header */
+@media(min-width:900px){.pm-vg .pm-hx-vf{width:max(100cqw,calc((100cqh + 36px) * 1.7908));top:calc(50% + 18px)}.pm-vg .pm-vg-head{top:calc(var(--pm-head) + 52px)!important}}

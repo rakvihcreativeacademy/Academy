@@ -74,15 +74,15 @@ export default async function Home() {
       </div>
     </section>
 
-    {/* (02) — Videography (3D Sony Alpha G Master burst + lens dive) */}
-    <VideographyStage label="(02)" />
+    {/* (01) — Videography (3D Sony Alpha G Master burst + lens dive) */}
+    <VideographyStage label="(01)" />
 
-    {/* (03) — Programmes (above Shoot & Edit) */}
+    {/* (02) — Programmes (above Shoot & Edit) */}
     <section className="pm-sec pm-dark" data-dark>
       <div className="pm-wrap">
         <div className="pm-head-row pm-head-row--ci">
           <div data-v>
-            <p className="pm-label rule">(03) — <b>The Programmes</b></p>
+            <p className="pm-label rule">(02) — <b>The Programmes</b></p>
             <h2 className="pm-h2"><Words text="Eight disciplines." /> <em><Words text="One creative career." start={2} /></em></h2>
           </div>
           <Link href="/courses" className="pm-viewall">
@@ -95,21 +95,21 @@ export default async function Home() {
       </div>
     </section>
 
-    {/* (04) — Shoot & Edit (3D) */}
-    <ShootEdit label="(04)" />
+    {/* (03) — Shoot & Edit (3D) */}
+    <ShootEdit label="(03)" />
 
     {/* Live Course Apply Now Spotlight — sits right under Shoot & Edit */}
     <LiveCourseCard courses={liveCourses} videoEditingOffering={videoEditingOffering} />
 
-    {/* (05) — Video Feeds (YouTube & Instagram, managed from Admin) */}
-    <VideoFeeds feeds={videoFeeds} label="(05)" />
+    {/* (04) — Video Feeds (YouTube & Instagram, managed from Admin) */}
+    <VideoFeeds feeds={videoFeeds} label="(04)" />
 
     {/* Standard */}
     <section className="pm-sec pm-paper">
       <div className="pm-wrap">
         <div className="pm-head-row">
           <div data-v>
-            <p className="pm-label rule">{hasVideoFeeds ? '(06)' : '(05)'} — <b>Why choose RAKVIH Digital?</b></p>
+            <p className="pm-label rule">{hasVideoFeeds ? '(05)' : '(04)'} — <b>Why choose RAKVIH Digital?</b></p>
             <h2 className="pm-h2"><Words text="Everything you need" /> <em><Words text="to grow as a creator." start={3} /></em></h2>
           </div>
         </div>

@@ -1,5 +1,5 @@
 'use client';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, ArrowRight } from 'lucide-react';
 import Link from '@/components/SiteLink';
 import { courses as defaultCourses } from '@/lib/courses';
@@ -39,6 +39,36 @@ export default function CourseIndex({ items }: { items?: CourseIndexItem[] }) {
   const [m, setM] = useState(0); // phone carousel position
   const track = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLOListElement>(null);
+  const pinRef = useRef<HTMLDivElement>(null);
+
+  // Desktop: the section pins while the page scrolls, and that page scroll drives the course list —
+  // wherever the pointer is (photo or list). When the last course is reached the page simply carries on.
+  useEffect(() => {
+    const pin = pinRef.current, l = listRef.current; if (!pin || !l) return;
+    const mq = window.matchMedia('(min-width: 901px)');
+    let extra = 0, raf = 0;
+    const measure = () => {
+      if (!mq.matches) { pin.style.removeProperty('--cs-extra'); extra = 0; return; }
+      extra = Math.max(0, l.scrollHeight - l.clientHeight);
+      pin.style.setProperty('--cs-extra', `${extra}px`);
+    };
+    const sync = () => {
+      raf = 0;
+      if (!mq.matches || !extra) return;
+      const head = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--pm-head')) || 84;
+      const p = Math.min(1, Math.max(0, (head + 20 - pin.getBoundingClientRect().top) / extra));
+      l.scrollTop = p * extra;
+      pin.style.setProperty('--cs-p', p.toFixed(4));
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(sync); };
+    const onResize = () => { measure(); onScroll(); };
+    measure(); sync();
+    const ro = new ResizeObserver(onResize); ro.observe(l);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onResize);
+    mq.addEventListener('change', onResize);
+    return () => { cancelAnimationFrame(raf); ro.disconnect(); window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onResize); mq.removeEventListener('change', onResize); };
+  }, []);
   // the course list scrolls on its own beside the fixed photo; the photo follows the row at the top of the list
   const onList = () => {
     const l = listRef.current; if (!l) return;
@@ -63,7 +93,7 @@ export default function CourseIndex({ items }: { items?: CourseIndexItem[] }) {
     if (t && el) el.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
   };
   const activeLive = c.live;
-  return <div className="cs" data-v>
+  return <div className="cs-pin" ref={pinRef}><div className="cs" data-v>
     <div className="cs-viewer" aria-live="polite">
       <div className={'cs-frame' + (activeLive ? ' is-live' : '')}>
         {list.map((x, i) => <img key={x.slug} src={x.image} alt={i === safeIndex ? x.imageAlt : ''} className={i === safeIndex ? 'on' : ''} loading={i < 2 ? 'eager' : 'lazy'} decoding="async" />)}
@@ -84,7 +114,7 @@ export default function CourseIndex({ items }: { items?: CourseIndexItem[] }) {
         </div>
       </div>
     </div>
-    <ol className="cs-list" ref={listRef} onScroll={onList} data-lenis-prevent tabIndex={0} aria-label="Courses">
+    <ol className="cs-list" ref={listRef} onScroll={onList} aria-label="Courses">
       {list.map((x, i) => {
         const live = x.live;
         return <li key={x.slug} style={{ '--k': i } as React.CSSProperties}>
@@ -130,5 +160,5 @@ export default function CourseIndex({ items }: { items?: CourseIndexItem[] }) {
       </div>
       <span className="cs-swipe" aria-hidden="true">Swipe <ArrowRight size={13} /></span>
     </div>
-  </div>;
+  </div></div>;
 }
