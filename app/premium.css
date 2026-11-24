@@ -3188,3 +3188,7 @@ html.js .pm-site :is(.gp-card)[data-v]{transition:opacity .9s var(--pm-ease) var
     font-size:11.5px;line-height:1.25!important;transform:none!important;-webkit-line-clamp:unset;overflow:visible}
   .pc-strip.on{border-color:rgba(252,204,15,.7);box-shadow:0 0 0 1px rgba(252,204,15,.35)}
 }
+
+/* floating WhatsApp button always sits above page content (chapter bars, banners, pinned sections),
+   but below the header (80) and the open mobile menu (79) */
+.wa-fab,.pm-site~.wa-fab,.pm-site .wa-fab{z-index:75!important}
