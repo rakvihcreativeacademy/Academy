@@ -58,7 +58,7 @@ export default function Masthead() {
   return <>
     <header className="pm-head">
       <Link href="/" className="pm-brand" aria-label={`${site.name} — home`}>
-        <span className="pm-lockup"><span className="pm-lockup-row"><img className="pm-mark" src="/brand/rakvih-mark.png" alt="" width={331} height={373} /><span className="pm-wordmark-txt"><b>RAKVIH</b><small>Solutions Private Limited</small></span></span><span className="pm-lockup-name">Rakvih <i>Digital</i></span></span>
+        <span className="pm-lockup"><img className="pm-logo-full" src="/brand/rakvih-logo.png" alt="RAKVIH Solutions Private Limited" width={1052} height={373} /><span className="pm-lockup-name">Rakvih <i>Digital</i></span></span>
       </Link>
       <nav className="pm-nav" aria-label="Main" ref={capsule} onMouseLeave={home}>
         <span className={'pm-nav-pill' + (glide ? ' glide' : '')} aria-hidden="true" style={pill ? { transform: `translateX(${pill.x}px)`, width: pill.w, opacity: 1 } : { opacity: 0 }} />

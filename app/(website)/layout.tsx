@@ -35,7 +35,7 @@ export default function WebsiteLayout({ children }: { children: React.ReactNode 
         </div>
         <div className="pm-foot-grid">
           <div className="pm-foot-about">
-            <Link href="/" className="pm-brand" aria-label={`${site.name} — home`}><span className="pm-lockup"><span className="pm-lockup-row"><img className="pm-mark" src="/brand/rakvih-mark.png" alt="" width={331} height={373} /><span className="pm-wordmark-txt"><b>RAKVIH</b><small>Solutions Private Limited</small></span></span><span className="pm-lockup-name">Rakvih <i>Digital</i></span></span></Link>
+            <Link href="/" className="pm-brand" aria-label={`${site.name} — home`}><span className="pm-lockup"><img className="pm-logo-full" src="/brand/rakvih-logo.png" alt="RAKVIH Solutions Private Limited" width={1052} height={373} /><span className="pm-lockup-name">Rakvih <i>Digital</i></span></span></Link>
             <p>{site.promise} {site.name} brings creative education, a premium podcast studio, production services and technology solutions together under one brand.</p>
             <p style={{ fontSize: 12 }}>{site.parent}</p>
             <div className="pm-foot-social">{site.social.filter(s => s.href).map(s => <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer">{socialIcons[s.label]} {s.label}</a>)}</div>
