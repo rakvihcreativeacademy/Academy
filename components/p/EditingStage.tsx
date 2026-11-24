@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { ArrowUpRight } from 'lucide-react';
 import Link from '@/components/SiteLink';
 import styles from './EditingStage.module.css';
 
@@ -9,6 +10,12 @@ const frames = [
   { src: '/images/editing-frames/city-film.webp', alt: 'Rainy city street at blue hour' },
   { src: '/images/editing-frames/dance-film.webp', alt: 'Dancer moving through a sunlit heritage courtyard' },
   { src: '/images/editing-frames/ocean-film.webp', alt: 'Ocean waves breaking on a dramatic rocky coastline' },
+];
+
+const steps = [
+  { title: 'Cut', text: 'Pacing, rhythm and story structure' },
+  { title: 'Colour', text: 'Grading that sets the mood' },
+  { title: 'Sound', text: 'Mixing, music and sound design' },
 ];
 
 export default function EditingStage() {
@@ -48,10 +55,16 @@ export default function EditingStage() {
         </div>
         <div className={styles.hud} aria-hidden="true"><span><i /> Edit suite</span><span>4K / 24 FPS</span></div>
         <div className={styles.copy}>
-          <p className={styles.label}>Every frame has a purpose.</p>
+          <p className={styles.label}><i aria-hidden="true" />Every frame has a purpose.</p>
           <h2 id="editing-stage-title">Find the story.<br /><em>Make the cut.</em></h2>
-          <p>Editing, colour and sound. Turn raw footage into something unforgettable.</p>
-          <Link href="/courses#video-editing">Explore video editing</Link>
+          <p className={styles.lead}>Editing, colour and sound. Turn raw footage into something unforgettable.</p>
+          <ul className={styles.steps}>
+            {steps.map((step, i) => <li key={step.title} className={i === Math.min(active, steps.length - 1) ? styles.stepOn : ''}>
+              <span>{String(i + 1).padStart(2, '0')}</span>
+              <div><b>{step.title}</b><small>{step.text}</small></div>
+            </li>)}
+          </ul>
+          <Link href="/courses#video-editing" className={styles.cta}>Explore video editing <ArrowUpRight size={17} aria-hidden="true" /></Link>
         </div>
         <div className={styles.track} aria-hidden="true"><span>V1</span><i /><i /><i /><i /><b /></div>
       </div>
