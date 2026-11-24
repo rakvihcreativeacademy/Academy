@@ -72,12 +72,10 @@ export default function CourseIndex({ items }: { items?: CourseIndexItem[] }) {
   // the course list scrolls on its own beside the fixed photo; the photo follows the row at the top of the list
   const onList = () => {
     const l = listRef.current; if (!l) return;
-    const rows = Array.from(l.children) as HTMLElement[];
-    if (l.scrollTop + l.clientHeight >= l.scrollHeight - 4) { setA(rows.length - 1); return; }
-    const top = l.scrollTop + 8;
-    let i = rows.findIndex(r => r.offsetTop + r.offsetHeight / 2 > top);
-    if (i < 0) i = rows.length - 1;
-    setA(i);
+    const rows = l.children.length, max = l.scrollHeight - l.clientHeight;
+    if (!rows || max <= 0) return;
+    // each course gets an equal share of the scroll, so the photo steps 01 → 08 evenly
+    setA(Math.min(rows - 1, Math.round((l.scrollTop / max) * (rows - 1))));
   };
   const safeIndex = Math.min(a, list.length - 1);
   const c = list[safeIndex];

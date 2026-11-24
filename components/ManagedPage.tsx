@@ -1,5 +1,5 @@
 import Link from '@/components/SiteLink';
-import { ArrowUpRight, Mic, Play } from 'lucide-react';
+import { ArrowUpRight, Mic } from 'lucide-react';
 import Banner from '@/components/v/Banner';
 import FormSection from '@/components/v/FormSection';
 import CourseListing from '@/components/CourseListing';
@@ -13,6 +13,7 @@ import type { Project } from '@/lib/types';
 import { itemImages } from '@/lib/item-images';
 import ChapterNav, { type Chapter } from '@/components/p/ChapterNav';
 import ShootEdit from '@/components/p/ShootEdit';
+import PodcastConsole from '@/components/p/PodcastConsole';
 
 const labels = { courses: 'Courses', 'podcast-studio': 'Podcast Studio', production: 'Production', projects: 'Student Work', careers: 'Careers' };
 const tones = ['pm-paper', 'pm-dark', 'pm-paper2'];
@@ -75,8 +76,9 @@ export default async function ManagedPage({ page }: { page: PageKey }) {
               <h2 className="pm-h2">{section.title}</h2>
             </div>
           </div>
-          {sv ? <div className={`${sv}-grid` + (sv === 'st' && n >= 6 ? ' st-bento' : '')} style={{ '--cols': cols } as React.CSSProperties}>
-            {section.items.map((item, i) => {
+          {sv === 'tl' ? <PodcastConsole items={section.items.map((it, i) => ({ title: it.title, description: it.description, image: it.image || variantImgs[i], href: it.href || '#enquire' }))} />
+          : sv ? <div className={`${sv}-grid` + (sv === 'st' && n >= 6 ? ' st-bento' : '')} style={{ '--cols': cols } as React.CSSProperties}>
+            {(() => { const cards = section.items.map((item, i) => {
               const img = item.image || variantImgs[i];
               const num = String(i + 1).padStart(2, '0');
               const details = item.details.filter(Boolean);
@@ -88,16 +90,6 @@ export default async function ManagedPage({ page }: { page: PageKey }) {
                 <h3>{item.title}</h3>
                 {item.description && <p>{item.description}</p>}
                 <span className="gp-foot"><Mic size={14} strokeWidth={2} /> Book a session <ArrowUpRight size={14} /></span>
-              </> : sv === 'tl' ? <>
-                <span className="tl-n">{num}</span>
-                <span className="tl-play" aria-hidden="true"><Play size={14} fill="currentColor" /></span>
-                <span className="tl-copy">
-                  <span className="tl-ep">Episode {num}</span>
-                  <h3>{item.title}</h3>
-                  {item.description && <p>{item.description}</p>}
-                </span>
-                <span className="tl-wave" aria-hidden="true">{Array.from({ length: 22 }, (_, k) => <i key={k} style={{ '--k': k } as React.CSSProperties} />)}</span>
-                <span className="tl-thumb" aria-hidden="true"><img src={img} alt="" loading="lazy" decoding="async" /></span>
               </> : sv === 'st' ? <>
                 <span className="st-media" aria-hidden="true"><img src={img} alt="" loading="lazy" decoding="async" /></span>
                 <span className="st-glow" aria-hidden="true" />
@@ -138,9 +130,11 @@ export default async function ManagedPage({ page }: { page: PageKey }) {
                 </span>
               </>;
               const props = { id: item.slug || undefined, className: `${sv}-card` + (hero ? ' st-hero' : '') + (bento && i === n - 1 ? ` st-last-${stFill4}` + (stOdd2 ? ' st-last2' : '') : ''), 'data-v': '', style: { '--d': `${(i % 4) * 80}ms` } as React.CSSProperties };
-              const href = item.href || (sv === 'gp' || sv === 'tl' ? '#enquire' : sv === 'cr' ? '/admissions' : '');
+              const href = item.href || (sv === 'gp' ? '#enquire' : sv === 'cr' ? '/admissions' : '');
               return href ? <Link key={i} href={href} {...props}>{body}</Link> : <article key={i} {...props}>{body}</article>;
-            })}
+            });
+              return cards;
+            })()}
           </div> : <div className="pm-grid" style={{ '--cols': cols } as React.CSSProperties}>
             {section.items.map((item, i) => {
               const bg = withMedia ? '' : bgs[i];

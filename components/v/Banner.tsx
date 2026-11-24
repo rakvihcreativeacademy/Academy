@@ -5,9 +5,9 @@ import ViewfinderHud from '@/components/p/ViewfinderHud';
 const SCENES: Record<string, string> = { About: '01', Courses: '02', 'Podcast Studio': '03', Production: '04', 'Student Work': '05', Careers: '06', Contact: '07' };
 
 /** Each inner page opens with its own banner design (all compact, all on the dark "film" ground). */
-type Variant = 'split' | 'reel' | 'onair' | 'cine' | 'mosaic' | 'compact';
+type Variant = 'split' | 'reel' | 'onair' | 'cine' | 'mosaic' | 'compact' | 'careers';
 const VARIANTS: Record<string, Variant> = {
-  About: 'split', Courses: 'reel', 'Podcast Studio': 'onair', Production: 'cine', 'Student Work': 'mosaic', Careers: 'mosaic', Contact: 'compact',
+  About: 'split', Courses: 'reel', 'Podcast Studio': 'onair', Production: 'cine', 'Student Work': 'mosaic', Careers: 'careers', Contact: 'compact',
 };
 const REEL = ['/images/academy-editing.webp', '/images/course-cinematography.webp', '/images/academy-photography.webp', '/images/academy-filmmaking.webp', '/images/course-motion-graphics.webp', '/images/course-lighting-sound.webp', '/images/course-content-creation.webp', '/images/course-ai-creative.webp'];
 const POOL = ['/images/academy-editing.webp', '/images/course-motion-graphics.webp', '/images/academy-photography.webp', '/images/course-cinematography.webp', '/images/academy-studio.webp', '/images/course-content-creation.webp'];
@@ -21,9 +21,26 @@ export default function Banner({ crumb, eyebrow, title, italic, lede, image, ima
 }) {
   const v = VARIANTS[crumb] ?? 'cine';
   const n = title.split(' ').length;
-  const fullBleed = v === 'onair' || v === 'cine';
+  const fullBleed = v === 'onair' || v === 'cine' || v === 'careers';
+  // home-page style: title bottom-left, description + buttons on the right, no breadcrumb / eyebrow
+  const homeLayout = v === 'onair' || v === 'careers';
   const extras = POOL.filter(p => p !== image).slice(0, 2);
   const img = <img src={image} alt={imageAlt} fetchPriority="high" decoding="async" style={{ objectPosition: position }} />;
+
+  if (homeLayout) return <section className={`pm-banner pm-bn pm-bn--${v} pm-bn--home`} data-hero data-dark>
+    <div className="pm-banner-frame"><div className="pm-banner-media">{img}</div></div>
+    <div className="pm-banner-inner">
+      <div className="pm-bn-copy">
+        {v === 'onair' && <span className="pm-bn-onair" aria-hidden="true"><i />On air · Studio 01</span>}
+        <div data-v><h1 className="pm-h1"><Words text={title} />{italic && <> <em><Words text={italic} start={n} /></em></>}</h1></div>
+      </div>
+      <div className="pm-bn-side" data-v>
+        {lede && <p className="pm-lede">{lede}</p>}
+        {children && <div className="pm-row on-dark">{children}</div>}
+      </div>
+    </div>
+    {v === 'onair' && <div className="pm-bn-wave" aria-hidden="true">{Array.from({ length: 64 }, (_, k) => <i key={k} style={{ '--k': k } as React.CSSProperties} />)}</div>}
+  </section>;
 
   return <section className={`pm-banner pm-bn pm-bn--${v}`} data-hero data-dark>
     {fullBleed && <div className="pm-banner-frame">
@@ -35,7 +52,6 @@ export default function Banner({ crumb, eyebrow, title, italic, lede, image, ima
     <div className="pm-banner-inner">
       <div className="pm-bn-copy">
         <nav className="pm-crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><i aria-hidden="true" /><span aria-current="page">{crumb}</span></nav>
-        {v === 'onair' && <span className="pm-bn-onair" aria-hidden="true"><i />On air · Studio 01</span>}
         <div data-v>
           <h1 className="pm-h1"><Words text={title} />{italic && <> <em><Words text={italic} start={n} /></em></>}</h1>
         </div>
@@ -65,6 +81,5 @@ export default function Banner({ crumb, eyebrow, title, italic, lede, image, ima
       {v === 'cine' && side && <div className="pm-banner-side">{side}</div>}
     </div>
 
-    {v === 'onair' && <div className="pm-bn-wave" aria-hidden="true">{Array.from({ length: 64 }, (_, k) => <i key={k} style={{ '--k': k } as React.CSSProperties} />)}</div>}
   </section>;
 }
