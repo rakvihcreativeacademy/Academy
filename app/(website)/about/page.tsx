@@ -23,7 +23,7 @@ export default function About() {
       <div className="pm-wrap pm-split">
         <figure className="pm-plate" data-v>
           <div className="pm-plate-img"><img src="/images/academy-editing.webp" alt="Illustration of a student editing video" loading="lazy" data-parallax="0.05" /></div>
-          <figcaption><span>Plate 01 — The edit suite</span><span>RAKVIH Solutions Pvt. Ltd.</span></figcaption>
+          <figcaption><span>Plate 01 — The edit suite </span><span>RAKVIH Solutions Pvt. Ltd.</span></figcaption>
         </figure>
         <div className="pm-stack">
           <div data-v>
