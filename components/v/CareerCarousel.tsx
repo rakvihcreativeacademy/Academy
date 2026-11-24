@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 const roles = [
-  { title: 'Video Editor', img: '/images/academy-editing.webp', text: 'Shape raw footage into stories — for films, brands, YouTube channels and social media.', tone: 'green' },
+  { title: 'Video Editor', img: '/images/banners/editing-colour.webp', text: 'Shape raw footage into stories — for films, brands, YouTube channels and social media.', tone: 'green' },
   { title: 'Cinematographer', img: '/images/course-cinematography.webp', text: 'Design the look of a film with light, lenses, framing and camera movement.', tone: 'amber' },
   { title: 'Photographer', img: '/images/academy-photography.webp', text: 'Create portraits, product, event and wedding images with your own visual style.', tone: 'olive' },
   { title: 'Motion Graphics Designer', img: '/images/course-motion-graphics.webp', text: 'Bring titles, logos and ideas to life with animation and visual effects.', tone: 'green' },

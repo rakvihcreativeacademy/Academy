@@ -1,7 +1,7 @@
 import { careerImage } from './career-images';
 /** Picks a fitting academy photograph for a content item by keyword, falling back to a rotating set. */
 const I = {
-  edit: '/images/academy-editing.webp', cine: '/images/course-cinematography.webp', photo: '/images/academy-photography.webp',
+  edit: '/images/banners/editing-colour.webp', cine: '/images/course-cinematography.webp', photo: '/images/academy-photography.webp',
   film: '/images/academy-filmmaking.webp', motion: '/images/course-motion-graphics.webp', sound: '/images/course-lighting-sound.webp',
   content: '/images/course-content-creation.webp', ai: '/images/course-ai-creative.webp', studio: '/images/academy-studio.webp',
 };

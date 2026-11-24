@@ -10,7 +10,7 @@ const productionImages: Record<string, string> = {
   'Podcast production': '/images/podcast/multi-camera.webp',
   'Social media reels': '/images/production/social-reels.webp',
   'Documentary production': '/images/production/documentary.webp',
-  'Video editing services': '/images/academy-editing.webp',
+  'Video editing services': '/images/banners/editing-colour.webp',
   'Commercial photography': '/images/production/commercial-photo.webp',
   'Share your idea': '/images/production/share-idea.webp',
   'Plan together': '/images/production/plan-together.webp',

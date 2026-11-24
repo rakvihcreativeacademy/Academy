@@ -1,0 +1,17 @@
+{
+  "method": "Built-in image_gen",
+  "images": [
+    {
+      "file": "public/images/editing-frames/mountain-film.webp",
+      "prompt": "A cinematic aerial establishing frame of mist drifting between dramatic green Western Ghats mountain ridges at sunrise, winding river, soft golden light. Single photorealistic film frame for a video-editing timeline showcase, landscape 16:9. Professional cinema colour grading, refined olive and amber tones, convincing natural photographic detail. No text, logos, watermark or collage."
+    },
+    {
+      "file": "public/images/editing-frames/portrait-film.webp",
+      "prompt": "A cinematic close-up film still of an adult Indian woman standing beside a rain-streaked cafe window, thoughtful expression, warm interior and cool street bokeh, natural skin detail, shallow depth of field. Single photorealistic film frame for a video-editing timeline showcase, landscape 16:9. Professional cinema colour grading, refined olive and amber tones, convincing natural photographic detail. No text, logos, watermark or collage."
+    },
+    {
+      "file": "public/images/editing-frames/city-film.webp",
+      "prompt": "A cinematic wide film still of an Indian coastal city street at blue hour after rain, warm shop lights reflecting on wet pavement, one cyclist passing, beautiful atmospheric depth. Single photorealistic film frame for a video-editing timeline showcase, landscape 16:9. Professional cinema colour grading, refined olive and amber tones, convincing natural photographic detail. No text, logos, watermark or collage."
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 import { ArrowUpRight } from 'lucide-react';
 import Link from '@/components/SiteLink';
 import { formatInr, type CourseOffering } from '@/lib/payments';
+import { courseImages } from '@/lib/course-images';
 
 export type LiveCourseCardItem = {
   slug: string;
@@ -8,6 +9,8 @@ export type LiveCourseCardItem = {
   description: string;
   highlights: string[];
   href: string;
+  image?: string;
+  imageAlt?: string;
   batchLabel?: string;
   durationLabel?: string;
   priceInr?: number;
@@ -58,44 +61,49 @@ export default function LiveCourseCard({
             const batch = isVideoEditing && videoEditingOffering ? videoEditingOffering.batch_label : (course.batchLabel || 'Next batch enrolling now');
             const duration = isVideoEditing && videoEditingOffering ? videoEditingOffering.duration_label : course.durationLabel;
             const bullets = course.highlights.filter(Boolean).slice(0, 6);
+            const img = course.image || courseImages[course.slug]?.src || '/images/banners/editing-colour.webp';
+            const imgAlt = course.imageAlt || courseImages[course.slug]?.alt || course.title;
 
             return (
-              <article key={course.slug || course.title} className="pm-live-card" data-v>
-                <div className="pm-live-card-top">
-                  <span className="pm-live-badge"><i aria-hidden="true" />Live Now</span>
-                  {duration && <span className="pm-live-meta">{duration}</span>}
+              <article key={course.slug || course.title} className="pm-lc" data-v>
+                <div className="pm-lc-media">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={img} alt={imgAlt} loading="lazy" />
+                  <span className="pm-live-badge pm-lc-badge"><i aria-hidden="true" />Live Now</span>
+                  {duration && <span className="pm-lc-duration">{duration}</span>}
                 </div>
 
-                <h3 className="pm-live-title">{course.title}</h3>
-                <p className="pm-live-sub">{course.description}</p>
+                <div className="pm-lc-body">
+                  <h3 className="pm-lc-title">{course.title}</h3>
+                  <p className="pm-lc-sub">{course.description}</p>
+                  {bullets.length > 0 && (
+                    <div className="pm-lc-skills">
+                      <span className="pm-lc-label">What you&apos;ll learn</span>
+                      <ul>
+                        {bullets.map((point, idx) => (
+                          <li key={idx}><SparkleMark />{point}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
 
-                {fee ? (
-                  <div className="pm-live-price">
-                    <span>{batch}</span>
-                    <strong>{formatInr(fee)}</strong>
-                  </div>
-                ) : null}
-
-                {bullets.length > 0 && (
-                  <ul className="pm-live-list">
-                    {bullets.map((point, idx) => (
-                      <li key={idx}>
-                        <SparkleMark />
-                        <span>{point}</span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-
-                <div className="pm-live-foot">
-                  <Link href={course.href || `/admissions?course=${encodeURIComponent(course.title)}`} className="pm-live-cta">
+                <aside className="pm-lc-aside">
+                  {fee ? (
+                    <div className="pm-lc-fee">
+                      <span className="pm-lc-label">Course fee</span>
+                      <strong>{formatInr(fee)}</strong>
+                    </div>
+                  ) : null}
+                  <p className="pm-lc-batch"><i aria-hidden="true" />{batch}</p>
+                  <Link href={course.href || `/admissions?course=${encodeURIComponent(course.title)}`} className="pm-lc-cta">
                     <span>Apply Now</span>
-                    <ArrowUpRight size={16} />
+                    <ArrowUpRight size={17} />
                   </Link>
-                  <Link href={`/courses#${course.slug || 'course-list'}`} className="pm-live-more">
+                  <Link href={`/courses#${course.slug || 'course-list'}`} className="pm-lc-more">
                     Explore full curriculum
                   </Link>
-                </div>
+                </aside>
               </article>
             );
           })}

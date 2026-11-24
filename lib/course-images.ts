@@ -1,6 +1,6 @@
 /** Editorial illustrations used consistently in the catalogue and curriculum. */
 export const courseImages: Record<string, { src: string; alt: string }> = {
-  'video-editing': { src: '/images/academy-editing.webp', alt: 'Illustration of a video editor working with editing and colour grading software' },
+  'video-editing': { src: '/images/banners/editing-colour.webp', alt: 'Colourist grading a film using a professional control panel' },
   cinematography: { src: '/images/course-cinematography.webp', alt: 'Illustration of a cinematographer adjusting a professional cinema camera' },
   photography: { src: '/images/academy-photography.webp', alt: 'Illustration of a photographer practising camera techniques' },
   filmmaking: { src: '/images/academy-filmmaking.webp', alt: 'Illustration of a film crew working together on a production' },

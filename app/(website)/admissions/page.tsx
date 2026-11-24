@@ -35,7 +35,7 @@ export default async function Admissions() {
         symbol: String(idx + 1).padStart(2, '0'),
         tag: fallback?.tag || 'Creative discipline',
         title: it.title,
-        image: it.image || courseImages[slug]?.src || '/images/academy-editing.webp',
+        image: it.image || courseImages[slug]?.src || '/images/banners/editing-colour.webp',
         live: resolveCourseStatus(it) === 'live',
       };
     });

@@ -1,6 +1,7 @@
 import Link from '@/components/SiteLink';
 import { ArrowUpRight } from 'lucide-react';
 import Hero from '@/components/p/Hero';
+import EditingStage from '@/components/p/EditingStage';
 import VideographyStage from '@/components/p/VideographyStage';
 import CourseIndex, { type CourseIndexItem } from '@/components/p/CourseIndex';
 import LiveCourseCard, { type LiveCourseCardItem } from '@/components/p/LiveCourseCard';
@@ -23,7 +24,6 @@ export default async function Home() {
     getVideoEditingOffering(),
     getPublicVideoFeeds(),
   ]);
-  const hasVideoFeeds = videoFeeds.settings.section_enabled && (videoFeeds.youtube.length > 0 || videoFeeds.instagram.length > 0);
 
   const cmsItems = courseDoc.sections.flatMap(s => s.items);
   const activeItems = cmsItems.filter(it => isCourseEnabled(it));
@@ -39,7 +39,7 @@ export default async function Home() {
       symbol: String(idx + 1).padStart(2, '0'),
       description: it.description,
       skills: fallback?.skills ?? it.details.filter(Boolean).slice(0, 3),
-      image: it.image || imgFallback?.src || '/images/academy-editing.webp',
+      image: it.image || imgFallback?.src || '/images/banners/editing-colour.webp',
       imageAlt: imgFallback?.alt || it.title,
       live: resolveCourseStatus(it) === 'live',
     };
@@ -54,6 +54,7 @@ export default async function Home() {
         title: it.title,
         description: it.description,
         highlights: it.details.filter(Boolean).slice(0, 6),
+        image: it.image || undefined,
         href: it.href || `/admissions?course=${encodeURIComponent(it.title)}`,
       };
     });
@@ -74,15 +75,14 @@ export default async function Home() {
       </div>
     </section>
 
-    {/* (01) — Videography (3D Sony Alpha G Master burst + lens dive) */}
-    <VideographyStage label="(01)" />
+    <EditingStage />
 
-    {/* (02) — Programmes (above Shoot & Edit) */}
+    {/* Programmes */}
     <section className="pm-sec pm-dark" data-dark>
       <div className="pm-wrap">
         <div className="pm-head-row pm-head-row--ci">
           <div data-v>
-            <p className="pm-label rule">(02) — <b>The Programmes</b></p>
+            <p className="pm-label rule">(01) — <b>The Programmes</b></p>
             <h2 className="pm-h2"><Words text="Eight disciplines." /> <em><Words text="One creative career." start={2} /></em></h2>
           </div>
           <Link href="/courses" className="pm-viewall">
@@ -95,26 +95,24 @@ export default async function Home() {
       </div>
     </section>
 
-    {/* (03) — Shoot & Edit (3D) */}
-    <ShootEdit label="(03)" />
-
-    {/* Live Course Apply Now Spotlight — sits right under Shoot & Edit */}
     <LiveCourseCard courses={liveCourses} videoEditingOffering={videoEditingOffering} />
 
-    {/* (04) — Video Feeds (YouTube & Instagram, managed from Admin) */}
-    <VideoFeeds feeds={videoFeeds} label="(04)" />
+    <VideographyStage label="(03)" />
 
     {/* Standard */}
     <section className="pm-sec pm-paper">
       <div className="pm-wrap">
         <div className="pm-head-row">
           <div data-v>
-            <p className="pm-label rule">{hasVideoFeeds ? '(05)' : '(04)'} — <b>Why choose RAKVIH Digital?</b></p>
+            <p className="pm-label rule">(04) — <b>Why choose RAKVIH Digital?</b></p>
             <h2 className="pm-h2"><Words text="Everything you need" /> <em><Words text="to grow as a creator." start={3} /></em></h2>
           </div>
         </div>
         <Pillars />
       </div>
     </section>
+    <ShootEdit label="(05)" />
+
+    <VideoFeeds feeds={videoFeeds} label="(06)" />
   </main>;
 }

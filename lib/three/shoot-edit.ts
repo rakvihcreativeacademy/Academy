@@ -16,7 +16,7 @@ const smooth = (v: number) => { v = clamp01(v); return v * v * (3 - 2 * v); };
 const ease3 = (v: number) => { v = clamp01(v); return v < .5 ? 4 * v * v * v : 1 - Math.pow(-2 * v + 2, 3) / 2; };
 const IMAGES = [
   '/images/course-cinematography.webp', '/images/academy-filmmaking.webp', '/images/academy-photography.webp',
-  '/images/course-lighting-sound.webp', '/images/academy-editing.webp', '/images/course-motion-graphics.webp',
+  '/images/course-lighting-sound.webp', '/images/banners/editing-colour.webp', '/images/course-motion-graphics.webp',
   '/images/course-content-creation.webp', '/images/academy-studio.webp',
 ];
 const IMG_ASPECT = 1.5;

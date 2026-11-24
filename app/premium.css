@@ -3021,7 +3021,8 @@ html.js .pm-site :is(.gp-card)[data-v]{transition:opacity .9s var(--pm-ease) var
   radial-gradient(50% 60% at 10% 10%,rgba(195,204,143,.16),transparent 70%),
   linear-gradient(155deg,#14302b 0%,#0f2220 50%,#0a1514 100%)!important}
 /* Contact — warm terracotta dusk */
-.pm-bn--compact .pm-bn-ground{background:
+.pm-bn--compact .pm-bn-ground,
+.pm-bn--career-contact-tone .pm-bn-ground{background:
   radial-gradient(42% 70% at 82% 50%,rgba(255,150,90,.26),transparent 70%),
   radial-gradient(50% 60% at 6% 100%,rgba(252,204,15,.12),transparent 70%),
   linear-gradient(150deg,#3b1c12 0%,#26120c 50%,#160b08 100%)!important}
@@ -3203,3 +3204,76 @@ html.js .pm-site :is(.gp-card)[data-v]{transition:opacity .9s var(--pm-ease) var
   .pm-head .pm-brand img.pm-logo-full{height:36px!important}
   .pm-head .pm-lockup:has(.pm-logo-full) .pm-lockup-name{font-size:8px!important;letter-spacing:.38em!important;text-indent:.38em}
 }
+
+/* live course: cinematic rectangle banner (image | details | fee panel) */
+.pm-live-grid,.pm-live-grid.multi{grid-template-columns:1fr!important;justify-items:center;gap:22px}
+.pm-lc{position:relative;width:min(100%,1140px);display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.35fr) 280px;border-radius:20px;overflow:hidden;background:linear-gradient(180deg,#12140d,#0c0d09);border:1px solid rgba(239,235,223,.1);box-shadow:0 40px 80px -40px rgba(0,0,0,.9),0 0 0 1px rgba(252,204,15,.06);transition:transform .4s var(--pm-ease),border-color .4s var(--pm-ease)}
+.pm-lc::before{content:"";position:absolute;inset:0 0 auto;height:2px;background:linear-gradient(90deg,transparent,#fccc0f 30%,#fccc0f 70%,transparent);opacity:.75;z-index:2}
+.pm-lc:hover{transform:translateY(-3px);border-color:rgba(252,204,15,.3)}
+.pm-lc-media{position:relative;min-height:340px;overflow:hidden}
+.pm-lc-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--pm-ease)}
+.pm-lc:hover .pm-lc-media img{transform:scale(1.04)}
+.pm-lc-media::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 55%,rgba(12,13,9,.9)),linear-gradient(0deg,rgba(0,0,0,.55),transparent 40%)}
+.pm-lc-badge{position:absolute;top:18px;left:18px;z-index:1;background:rgba(8,10,6,.72)!important;backdrop-filter:blur(8px)}
+.pm-lc-duration{position:absolute;left:18px;bottom:18px;z-index:1;font:500 12.5px/1.3 var(--pm-sans);color:#f6f3ea;padding:7px 12px;border-radius:999px;background:rgba(8,10,6,.6);border:1px solid rgba(239,235,223,.16);backdrop-filter:blur(8px)}
+.pm-lc-body{display:flex;flex-direction:column;justify-content:center;gap:14px;padding:clamp(28px,3vw,42px) clamp(22px,2.6vw,36px);min-width:0}
+.pm-lc-title{margin:0;font:650 clamp(26px,2.5vw,34px)/1.1 var(--pm-display);letter-spacing:-.03em;color:#fff}
+.pm-lc-sub{margin:0;max-width:44ch;font:400 15px/1.55 var(--pm-sans);color:rgba(239,235,223,.68)}
+.pm-lc-label{display:block;font:600 10.5px/1 var(--pm-sans);letter-spacing:.16em;text-transform:uppercase;color:rgba(239,235,223,.5)}
+.pm-lc-skills{display:grid;gap:12px;margin-top:8px}
+.pm-lc-skills ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.pm-lc-skills li{display:inline-flex;align-items:center;gap:7px;padding:8px 13px 8px 10px;border-radius:999px;background:rgba(239,235,223,.05);border:1px solid rgba(239,235,223,.1);font:500 13px/1.2 var(--pm-sans);color:#efebdf}
+.pm-lc-skills .pm-live-star{width:13px;height:13px;margin:0;color:#fccc0f;filter:none}
+.pm-lc-aside{display:flex;flex-direction:column;justify-content:center;gap:16px;padding:clamp(28px,3vw,40px) clamp(22px,2.4vw,32px);background:linear-gradient(180deg,rgba(252,204,15,.07),rgba(252,204,15,.02));border-left:1px solid rgba(239,235,223,.08)}
+.pm-lc-fee{display:grid;gap:10px}
+.pm-lc-fee strong{font:700 clamp(32px,3vw,40px)/1 var(--pm-display);letter-spacing:-.035em;color:#fccc0f}
+.pm-lc-batch{display:flex;align-items:center;gap:8px;margin:0;font:500 13px/1.35 var(--pm-sans);color:rgba(239,235,223,.72)}
+.pm-lc-batch i{flex:none;width:7px;height:7px;border-radius:50%;background:#4ade80;box-shadow:0 0 0 4px rgba(74,222,128,.18)}
+.pm-lc-cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:52px;margin-top:4px;border-radius:12px;background:#fccc0f;color:#0b0c08;font:650 15.5px/1 var(--pm-sans);box-shadow:0 14px 30px -14px rgba(252,204,15,.8);transition:transform .25s var(--pm-ease),background .25s,box-shadow .25s}
+.pm-lc-cta:hover{transform:translateY(-1px);background:#ffd83d;box-shadow:0 18px 36px -12px rgba(252,204,15,.85)}
+.pm-lc-more{text-align:center;font:500 13px/1 var(--pm-sans);color:rgba(239,235,223,.6);text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(239,235,223,.25);transition:color .2s}
+.pm-lc-more:hover{color:#fccc0f}
+:root[data-theme="light"] .pm-site .pm-lc{background:#fffdf7;border-color:rgba(20,21,14,.1);box-shadow:0 30px 60px -34px rgba(20,21,14,.4)}
+:root[data-theme="light"] .pm-site .pm-lc-media::after{background:linear-gradient(90deg,transparent 60%,rgba(255,253,247,.85)),linear-gradient(0deg,rgba(0,0,0,.4),transparent 40%)}
+:root[data-theme="light"] .pm-site .pm-lc-title{color:#14150e}
+:root[data-theme="light"] .pm-site :is(.pm-lc-sub,.pm-lc-batch,.pm-lc-more){color:#55544a}
+:root[data-theme="light"] .pm-site .pm-lc-label{color:#7a786b}
+:root[data-theme="light"] .pm-site .pm-lc-skills li{background:#f4f1e6;border-color:rgba(20,21,14,.08);color:#24251b}
+:root[data-theme="light"] .pm-site .pm-lc-skills .pm-live-star{color:#b08d00}
+:root[data-theme="light"] .pm-site .pm-lc-aside{background:linear-gradient(180deg,rgba(252,204,15,.16),rgba(252,204,15,.05));border-left-color:rgba(20,21,14,.08)}
+:root[data-theme="light"] .pm-site .pm-lc-fee strong{color:#4f5723}
+:root[data-theme="light"] .pm-site .pm-lc-cta:hover{background:#14150e;color:#fccc0f}
+@media(max-width:1020px){
+  .pm-lc{grid-template-columns:minmax(0,1fr) 260px}
+  .pm-lc-media{grid-column:1/-1;min-height:0;aspect-ratio:21/9}
+  .pm-lc-media::after{background:linear-gradient(0deg,rgba(12,13,9,.85),transparent 55%)}
+}
+@media(max-width:700px){
+  .pm-lc{grid-template-columns:1fr}
+  .pm-lc-media{aspect-ratio:16/10}
+  .pm-lc-aside{border-left:0;border-top:1px solid rgba(239,235,223,.08)}
+}
+
+/* Production banner: bottom-aligned copy with the enquiry action at the right. */
+.pm-bn--production .pm-banner-inner{grid-template-columns:minmax(0,1fr) auto!important;align-items:end!important;align-content:end!important;padding-bottom:clamp(28px,4vw,56px)!important}
+.pm-bn--production .pm-bn-copy{max-width:940px}
+.pm-bn--production .pm-bn-copy .pm-lede{margin-top:22px;max-width:54ch}
+.pm-bn--production .pm-production-action{justify-content:flex-end;align-self:end;margin:0}
+@media(max-width:700px){.pm-bn--production .pm-banner-inner{grid-template-columns:minmax(0,1fr)!important;gap:22px!important}.pm-bn--production .pm-production-action{justify-self:end}.pm-bn--production .pm-bn-copy .pm-lede{margin-top:16px}}
+
+.pm-bn--production{justify-content:flex-end!important}
+.pm-bn--production .pm-banner-inner{width:100%;max-width:none;margin:0;grid-template-columns:minmax(0,1fr) minmax(240px,380px)!important;transform:none;opacity:1}
+.pm-bn--production .pm-bn-copy{align-self:end;justify-self:start}
+.pm-bn--production .pm-bn-copy .pm-h1{margin:0}
+.pm-production-side{display:grid;justify-items:end;gap:24px;align-self:end;text-align:right}
+.pm-production-side .pm-lede{margin:0;max-width:38ch}
+@media(max-width:700px){.pm-bn--production .pm-banner-inner{grid-template-columns:minmax(0,1fr)!important}.pm-production-side{gap:18px;width:100%}.pm-production-side .pm-lede{max-width:44ch}}
+
+/* Match the Careers banner backdrop to Contact, after the mosaic overrides. */
+.pm-bn.pm-bn--career-contact-tone .pm-bn-ground{background:
+  radial-gradient(42% 70% at 82% 50%,rgba(255,150,90,.26),transparent 70%),
+  radial-gradient(50% 60% at 6% 100%,rgba(252,204,15,.12),transparent 70%),
+  linear-gradient(150deg,#3b1c12 0%,#26120c 50%,#160b08 100%)!important}
+
+/* Home counts lead directly into the editing showcase. */
+.pm-home .pm-stats-band{padding-bottom:16px!important}

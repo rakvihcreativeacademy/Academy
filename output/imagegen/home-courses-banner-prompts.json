@@ -1,0 +1,21 @@
+{
+  "method": "Built-in image_gen",
+  "images": [
+    {
+      "file": "public/images/banners/editing-timeline.webp",
+      "prompt": "Wide over-the-shoulder view of a young Indian woman video editor at a sophisticated dual ultrawide monitor workstation, cinematic footage preview and detailed multitrack video timeline, tactile editing keyboard, olive shirt, warm studio practical lighting. Single photorealistic editorial website hero photograph, landscape 16:9, wide establishing shot with subjects and key equipment near centre-right and usable darker visual space on left for headline. Rich natural colours, subtle yellow accents, authentic equipment, believable human anatomy. No logos, no watermark, no text overlays, no collage. This must be a fresh banner scene, not a stock classroom photograph."
+    },
+    {
+      "file": "public/images/banners/editing-colour.webp",
+      "prompt": "Side profile of an Indian male professional colourist working with a physical colour grading control panel with three trackballs, large screen displaying a cinematic landscape and colour wheels, moody premium post production room, different composition from a desk portrait. Single photorealistic editorial website hero photograph, landscape 16:9, wide establishing shot with subjects and key equipment near centre-right and usable darker visual space on left for headline. Rich natural colours, subtle yellow accents, authentic equipment, believable human anatomy. No logos, no watermark, no text overlays, no collage. This must be a fresh banner scene, not a stock classroom photograph."
+    },
+    {
+      "file": "public/images/banners/editing-collaboration.webp",
+      "prompt": "Two adult Indian creative professionals reviewing a finished film at a large editing monitor in a premium bright studio, one seated editor making a cut while director points to footage, visible timeline and film preview, natural candid collaboration. Single photorealistic editorial website hero photograph, landscape 16:9, wide establishing shot with subjects and key equipment near centre-right and usable darker visual space on left for headline. Rich natural colours, subtle yellow accents, authentic equipment, believable human anatomy. No logos, no watermark, no text overlays, no collage. This must be a fresh banner scene, not a stock classroom photograph."
+    },
+    {
+      "file": "public/images/banners/podcast-banner.webp",
+      "prompt": "Wide premium Indian podcast recording session, woman host and male guest conversing across a wooden desk with two professional boom microphones, cinema cameras at edges, acoustic wall panels, warm lamps, refined olive and charcoal interior. Single photorealistic editorial website hero photograph, landscape 16:9, wide establishing shot with subjects and key equipment near centre-right and usable darker visual space on left for headline. Rich natural colours, subtle yellow accents, authentic equipment, believable human anatomy. No logos, no watermark, no text overlays, no collage. This must be a fresh banner scene, not a stock classroom photograph."
+    }
+  ]
+}

@@ -8,7 +8,7 @@ import Words from '@/components/v/Words';
 
 const slides = [
   { src: '/images/academy-filmmaking.webp', alt: 'Illustration of students working together on a professional film camera', title: 'Filmmaking', sub: 'Cinematography & direction' },
-  { src: '/images/academy-editing.webp', alt: 'Illustration of a student editing and colour grading video', title: 'Video editing', sub: 'Editing, grading & reels' },
+  { src: '/images/banners/editing-colour.webp', alt: 'Colourist grading a film using a professional control panel', title: 'Video editing', sub: 'Editing, grading & reels' },
   { src: '/images/academy-studio.webp', alt: 'Illustration of a podcast studio with microphones and armchairs', title: 'Podcast studio', sub: 'Record, film & produce' },
 ];
 const DURATION = 6000;

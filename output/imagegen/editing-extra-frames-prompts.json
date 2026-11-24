@@ -1,0 +1,13 @@
+{
+  "method": "Built-in image_gen",
+  "images": [
+    {
+      "file": "public/images/editing-frames/dance-film.webp",
+      "prompt": "A cinematic film still of an adult Indian contemporary dancer moving across a sunlit heritage courtyard, flowing olive fabric, graceful action, beautiful architectural shadows. Single photorealistic cinema frame for a premium video editing showcase, landscape 16:9, sophisticated natural colour grading with subtle olive and gold accents. No text, logo, watermark or collage."
+    },
+    {
+      "file": "public/images/editing-frames/ocean-film.webp",
+      "prompt": "A cinematic aerial film still of turquoise ocean waves breaking against a dramatic rocky Indian coastline, golden evening sunlight, natural sea spray, atmospheric depth. Single photorealistic cinema frame for a premium video editing showcase, landscape 16:9, sophisticated natural colour grading with subtle olive and gold accents. No text, logo, watermark or collage."
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 /** Role-specific artwork: each career keeps its own image even when cards are reordered. */
 export const careerImages: Record<string, string> = {
-  'video editor': '/images/academy-editing.webp',
+  'video editor': '/images/banners/editing-colour.webp',
   cinematographer: '/images/course-cinematography.webp',
   'camera operator': '/images/careers/camera-operator.webp',
   photographer: '/images/academy-photography.webp',

@@ -2,7 +2,7 @@ import { ArrowUpRight } from 'lucide-react';
 import Link from '@/components/SiteLink';
 import { offers } from '@/lib/site';
 
-const offerImages = ['/images/academy-editing.webp', '/images/academy-studio.webp', '/images/academy-filmmaking.webp', '/images/course-cinematography.webp', '/images/course-ai-creative.webp'];
+const offerImages = ['/images/banners/editing-colour.webp', '/images/academy-studio.webp', '/images/academy-filmmaking.webp', '/images/course-cinematography.webp', '/images/course-ai-creative.webp'];
 
 /** "What we offer" — photo bento; the photo stays put, hover only changes the text colours. */
 export default function Offers() {

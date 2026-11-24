@@ -3,13 +3,9 @@ import { useEffect, useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import Link from '@/components/SiteLink';
 import { site } from '@/lib/site';
+import { bannerImages } from '@/lib/banner-images';
 
-const plates = [
-  { src: '/images/academy-filmmaking.webp', alt: 'Filmmaking on set with cinema lighting' },
-  { src: '/images/academy-photography.webp', alt: 'Editorial studio photography session' },
-  { src: '/images/academy-editing.webp', alt: 'Post-production video editing suite' },
-  { src: '/images/academy-studio.webp', alt: 'Broadcast podcast and audio studio' },
-];
+const plates = bannerImages.map((image, index) => index === 0 ? { src: '/images/banners/home-editing-first-v2.webp', alt: 'Professional editor cutting a film in a cinematic editing studio' } : image);
 const HOLD = 5600;
 
 /**
