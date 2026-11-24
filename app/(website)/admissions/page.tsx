@@ -76,7 +76,6 @@ export default async function Admissions() {
       <div className="pm-wrap">
         <div className="pm-head-row">
           <div><p className="pm-label rule" style={{ marginBottom: 18 }}>Programmes status</p><h2 className="pm-h2">Video Editing is <em>live now.</em></h2></div>
-          <p className="pm-lede">Professional Video Editing is open for direct online enrollment above. Live and upcoming programmes are managed from the admin panel.</p>
         </div>
         <div className="ap-courses">
           {activeCourses.map(c => {

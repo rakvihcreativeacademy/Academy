@@ -8,6 +8,7 @@ import VideoFeeds from '@/components/p/VideoFeeds';
 import Words from '@/components/v/Words';
 import Pillars from '@/components/p/Pillars';
 import ShootEdit from '@/components/p/ShootEdit';
+import StatsStrip from '@/components/p/StatsStrip';
 import { courses as staticCourses } from '@/lib/courses';
 import { courseImages } from '@/lib/course-images';
 import { getPageContent } from '@/lib/cms/server';
@@ -65,11 +66,11 @@ export default async function Home() {
     {/* Key stats strip */}
     <section className="pm-sec pm-paper pm-stats-band">
       <div className="pm-wrap">
-        <div className="pm-stats">
-          <div data-v><strong className="pm-num">{String(disciplineCount).padStart(2, '0')}</strong><span>Professional courses</span></div>
-          <div data-v><strong className="pm-num">01</strong><span>Premium podcast studio</span></div>
-          <div data-v><strong className="pm-num">{productionServices.length}</strong><span>Production services</span></div>
-        </div>
+        <StatsStrip stats={[
+          { value: disciplineCount, label: 'Professional courses', note: 'Editing, cinema, photo, motion & AI', href: '/courses', icon: 'course' },
+          { value: 1, label: 'Premium podcast studio', note: 'Multi-camera, treated, ready to record', href: '/podcast-studio', icon: 'mic' },
+          { value: productionServices.length, label: 'Production services', note: 'From brand films to social reels', href: '/production', icon: 'clap' },
+        ]} />
       </div>
     </section>
 
@@ -84,10 +85,11 @@ export default async function Home() {
             <p className="pm-label rule">(03) — <b>The Programmes</b></p>
             <h2 className="pm-h2"><Words text="Eight disciplines." /> <em><Words text="One creative career." start={2} /></em></h2>
           </div>
-          <div className="pm-stack" style={{ gap: 14 }}>
-            <p className="pm-lede">From editing and cinematography to motion graphics, sound and AI tools. Choose a discipline — or combine them.</p>
-            <Link href="/courses" className="pm-link" style={{ alignSelf: 'flex-start' }}>View all courses <ArrowUpRight size={14} /></Link>
-          </div>
+          <Link href="/courses" className="pm-viewall">
+            <span className="pm-viewall-count">{String(disciplineCount).padStart(2, '0')}</span>
+            <span className="pm-viewall-t">View all courses</span>
+            <span className="pm-viewall-go"><ArrowUpRight size={16} /></span>
+          </Link>
         </div>
         <CourseIndex items={courseIndexItems} />
       </div>
@@ -110,7 +112,6 @@ export default async function Home() {
             <p className="pm-label rule">{hasVideoFeeds ? '(06)' : '(05)'} — <b>Why choose RAKVIH Digital?</b></p>
             <h2 className="pm-h2"><Words text="Everything you need" /> <em><Words text="to grow as a creator." start={3} /></em></h2>
           </div>
-          <p className="pm-lede">Practical learning, professional tools, a real studio and a portfolio at the end of it.</p>
         </div>
         <Pillars />
       </div>

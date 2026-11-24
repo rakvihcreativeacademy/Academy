@@ -201,7 +201,6 @@ export default function CourseListing({
           <div><p className="pm-label rule" style={{ marginBottom: 28 }}>{section.eyebrow}</p><h2 className="pm-h2">{section.title}</h2></div>
           {si === 0 ? (
             <div className="pm-stack" style={{ gap: 16 }}>
-              {section.description && <p className="pm-lede">{section.description}</p>}
               <div className="pm-csearch" role="search" aria-label="Search and filter courses">
                 <label className="pm-csearch-in">
                   <Search size={15} className="pm-csearch-ico" />
@@ -236,7 +235,7 @@ export default function CourseListing({
                 <span className="pm-label" role="status">{shown} of {total} {shown === 1 ? 'course' : 'courses'}</span>
               )}
             </div>
-          ) : section.description ? <p className="pm-lede">{section.description}</p> : <span />}
+          ) : null}
         </div>
         <div>
           {section.items.map((item, i) => {
@@ -295,7 +294,7 @@ export default function CourseListing({
                     <Link href={item.href || `/admissions?course=${encodeURIComponent(item.title)}`} className="pm-btn">Apply now <ArrowUpRight size={15} /></Link>
                   ) : <>
                     <span className="pm-soon-btn" aria-disabled="true"><Clock size={15} /> Coming soon</span>
-                    <Link href={item.href || `/admissions?course=${encodeURIComponent(item.title)}`} className="pm-btn ghost">Notify me <ArrowUpRight size={15} /></Link>
+                    <Link href={`/contact?type=admission&notify=1&course=${encodeURIComponent(item.title)}#enquire`} className="pm-btn ghost">Notify me <ArrowUpRight size={15} /></Link>
                   </>}
                 </div>
               </div>

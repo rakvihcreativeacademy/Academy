@@ -1,5 +1,5 @@
 import Link from '@/components/SiteLink';
-import { ArrowUpRight, Mic } from 'lucide-react';
+import { ArrowUpRight, Mic, Play } from 'lucide-react';
 import Banner from '@/components/v/Banner';
 import FormSection from '@/components/v/FormSection';
 import CourseListing from '@/components/CourseListing';
@@ -17,7 +17,7 @@ import ShootEdit from '@/components/p/ShootEdit';
 const labels = { courses: 'Courses', 'podcast-studio': 'Podcast Studio', production: 'Production', projects: 'Student Work', careers: 'Careers' };
 const tones = ['pm-paper', 'pm-dark', 'pm-paper2'];
 /** Pages with their own card design + hover motion (everything else uses the shared photo tile). */
-const cardVariants: Partial<Record<PageKey, 'st' | 'cr'>> = { 'podcast-studio': 'st', careers: 'cr' };
+const cardVariants: Partial<Record<PageKey, 'st' | 'cr' | 'gp' | 'tl'>> = { 'podcast-studio': 'st', careers: 'cr' };
 
 /** CMS-driven inner page rendered as numbered editorial chapters. Content comes from the admin workspace. */
 export default async function ManagedPage({ page }: { page: PageKey }) {
@@ -65,23 +65,40 @@ export default async function ManagedPage({ page }: { page: PageKey }) {
       const stOdd2 = (n - 1) % 2 === 1;
       const variantImgs = withMedia ? itemImages(section.items.map(it => it.title)) : bgs;
       const cols = n <= 4 ? Math.max(n, 1) : [4, 5, 3].find(c => n % c === 0) ?? 4;
+      // Podcast Studio gives each chapter its own look: live-studio bento → guest passes → episode tracklist
+      const sv = page === 'podcast-studio' ? (['st', 'gp', 'tl'] as const)[Math.min(si, 2)] : variant;
       return <section className={`pm-sec ${tone}`} key={si} id={`ch-${si + 1}`} data-dark={dark || undefined}>
         <div className="pm-wrap">
           <div className="pm-head-row">
             <div data-v>
-              <p className="pm-label rule" style={{ marginBottom: 20 }}>({String(si + 1).padStart(2, '0')}) — <b>{section.eyebrow}</b></p>
+              <p className="pm-label rule">({String(si + 1).padStart(2, '0')}) — <b>{section.eyebrow}</b></p>
               <h2 className="pm-h2">{section.title}</h2>
             </div>
-            {section.description ? <p className="pm-lede">{section.description}</p> : <span />}
           </div>
-          {variant ? <div className={`${variant}-grid` + (variant === 'st' && n >= 6 ? ' st-bento' : '')} style={{ '--cols': cols } as React.CSSProperties}>
+          {sv ? <div className={`${sv}-grid` + (sv === 'st' && n >= 6 ? ' st-bento' : '')} style={{ '--cols': cols } as React.CSSProperties}>
             {section.items.map((item, i) => {
               const img = item.image || variantImgs[i];
               const num = String(i + 1).padStart(2, '0');
               const details = item.details.filter(Boolean);
-              const bento = variant === 'st' && n >= 6;
+              const bento = sv === 'st' && n >= 6;
               const hero = bento && i === 0;
-              const body = variant === 'st' ? <>
+              const body = sv === 'gp' ? <>
+                <span className="gp-top"><span className="gp-label">Guest pass · {num}</span><span className="gp-live" aria-hidden="true"><i />Rec</span></span>
+                <span className="gp-avatar" aria-hidden="true"><span className="gp-ring" /><img src={img} alt="" loading="lazy" decoding="async" /></span>
+                <h3>{item.title}</h3>
+                {item.description && <p>{item.description}</p>}
+                <span className="gp-foot"><Mic size={14} strokeWidth={2} /> Book a session <ArrowUpRight size={14} /></span>
+              </> : sv === 'tl' ? <>
+                <span className="tl-n">{num}</span>
+                <span className="tl-play" aria-hidden="true"><Play size={14} fill="currentColor" /></span>
+                <span className="tl-copy">
+                  <span className="tl-ep">Episode {num}</span>
+                  <h3>{item.title}</h3>
+                  {item.description && <p>{item.description}</p>}
+                </span>
+                <span className="tl-wave" aria-hidden="true">{Array.from({ length: 22 }, (_, k) => <i key={k} style={{ '--k': k } as React.CSSProperties} />)}</span>
+                <span className="tl-thumb" aria-hidden="true"><img src={img} alt="" loading="lazy" decoding="async" /></span>
+              </> : sv === 'st' ? <>
                 <span className="st-media" aria-hidden="true"><img src={img} alt="" loading="lazy" decoding="async" /></span>
                 <span className="st-glow" aria-hidden="true" />
                 <span className="st-top">
@@ -100,19 +117,29 @@ export default async function ManagedPage({ page }: { page: PageKey }) {
                   <span className="st-eq" aria-hidden="true">{Array.from({ length: hero ? 14 : 9 }, (_, k) => <i key={k} style={{ '--k': k } as React.CSSProperties} />)}</span>
                 </span>
               </> : <>
-                <span className="cr-n" aria-hidden="true">{num}</span>
-                <span className="cr-media" aria-hidden="true"><img src={img} alt="" loading="lazy" decoding="async" /></span>
-                <span className="cr-body">
-                  <span className="cr-step">Path {num}</span>
-                  <h3>{item.title}</h3>
-                  {item.description && <p>{item.description}</p>}
-                  {details.length > 0 && <ul>{details.map((d, j) => <li key={j}>{d}</li>)}</ul>}
+                <span className="cr-flip">
+                  <span className="cr-face cr-front">
+                    <span className="cr-media" aria-hidden="true"><img src={img} alt="" loading="lazy" decoding="async" /></span>
+                    <span className="cr-body">
+                      <span className="cr-step">Path {num}</span>
+                      <h3>{item.title}</h3>
+                    </span>
+                    <span className="cr-hint" aria-hidden="true">Hover to explore</span>
+                  </span>
+                  <span className="cr-face cr-back">
+                    <span className="cr-back-bg" aria-hidden="true"><img src={img} alt="" loading="lazy" decoding="async" /></span>
+                    <span className="cr-n" aria-hidden="true">{num}</span>
+                    <span className="cr-step">Path {num}</span>
+                    <h3>{item.title}</h3>
+                    <p>{item.description || 'Build this career with hands-on training, real projects and a portfolio that shows what you can do.'}</p>
+                    {details.length > 0 && <ul>{details.map((d, j) => <li key={j}>{d}</li>)}</ul>}
+                    <span className="cr-cta">Start your journey <ArrowUpRight size={15} /></span>
+                  </span>
                 </span>
-                <span className="cr-go" aria-hidden="true"><ArrowUpRight size={16} /></span>
-                <span className="cr-line" aria-hidden="true" />
               </>;
-              const props = { id: item.slug || undefined, className: `${variant}-card` + (hero ? ' st-hero' : '') + (bento && i === n - 1 ? ` st-last-${stFill4}` + (stOdd2 ? ' st-last2' : '') : ''), 'data-v': '', style: { '--d': `${(i % 4) * 80}ms` } as React.CSSProperties };
-              return item.href ? <Link key={i} href={item.href} {...props}>{body}</Link> : <article key={i} {...props}>{body}</article>;
+              const props = { id: item.slug || undefined, className: `${sv}-card` + (hero ? ' st-hero' : '') + (bento && i === n - 1 ? ` st-last-${stFill4}` + (stOdd2 ? ' st-last2' : '') : ''), 'data-v': '', style: { '--d': `${(i % 4) * 80}ms` } as React.CSSProperties };
+              const href = item.href || (sv === 'gp' || sv === 'tl' ? '#enquire' : sv === 'cr' ? '/admissions' : '');
+              return href ? <Link key={i} href={href} {...props}>{body}</Link> : <article key={i} {...props}>{body}</article>;
             })}
           </div> : <div className="pm-grid" style={{ '--cols': cols } as React.CSSProperties}>
             {section.items.map((item, i) => {
@@ -137,13 +164,16 @@ export default async function ManagedPage({ page }: { page: PageKey }) {
 
     {page === 'projects' && <section className="pm-sec pm-paper" id="showcase">
       <div className="pm-wrap">
-        <div className="pm-head-row"><div><p className="pm-label rule" style={{ marginBottom: 28 }}>Student showcase</p><h2 className="pm-h2">Work by <em>our students.</em></h2></div><span /></div>
+        <div className="pm-head-row"><div><p className="pm-label rule" style={{ marginBottom: 28 }}>Student showcase</p><h2 className="pm-h2">Work by <em>our students.</em></h2></div></div>
         {projects.length
           ? <div className="project-grid">{projects.map(p => <Link key={p.id} href={'/projects/' + p.id}><BrandCard project={p} /></Link>)}</div>
           : <div className="pm-empty"><p className="pm-label">Darkroom</p><h3>Student work is <em>developing.</em></h3><p className="pm-small">Approved, published student projects will appear here.</p></div>}
       </div>
     </section>}
 
+    {page === 'courses' && doc.enquiry.enabled && <div className="pm-divider-sec pm-paper" aria-hidden="true">
+      <div className="pm-wrap pm-divider"><i /><span><img src="/brand/rakvih-mark.png" alt="" width={331} height={373} />Still deciding? Talk to us</span><i /></div>
+    </div>}
     {doc.enquiry.enabled && <FormSection eyebrow="Get in touch" title={doc.enquiry.title} sub={doc.enquiry.description}
       courseOptions={courseOptions} type={page === 'podcast-studio' ? 'studio' : page === 'production' ? 'production' : 'admission'} />}
   </main>;

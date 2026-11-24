@@ -226,7 +226,7 @@ export default function VideographyStage({ label = '(02)' }: { label?: string })
           <h2 id="vg-title" className="pm-hx-title">Frame every story <em>through cinema optics.</em></h2>
         </div>
         <div className="pm-hx-side">
-          <p>Master full-frame cinematography, manual exposure, lens craft and visual storytelling — from capturing dramatic light on set to grading the final cut.</p>
+          <p className="pm-vg-blurb">Full-frame cinematography, lens craft and light — from the set to the final grade.</p>
           <div className="pm-row on-dark">
             <Link href="/courses#cinematography" className="pm-btn" tabIndex={act2 ? undefined : -1}>Explore Cinematography <ArrowUpRight size={15} /></Link>
             <Link href="/courses" className="pm-btn ghost on-dark" tabIndex={act2 ? undefined : -1}>All Programmes</Link>

@@ -104,7 +104,6 @@ export default function VideoFeeds({ feeds, label }: { feeds: PublicVideoFeeds; 
               <Words text="Watch our" /> <em><Words text="latest reels & films." start={2} /></em>
             </h2>
           </div>
-          {settings.section_subtitle && <p className="pm-lede">{settings.section_subtitle}</p>}
         </div>
 
         {youtube.length > 0 && (

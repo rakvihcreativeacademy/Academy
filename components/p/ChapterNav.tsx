@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
+import { ArrowDownRight, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export type Chapter = { id: string; label: string };
 
@@ -12,6 +13,18 @@ export default function ChapterNav({ items, title }: { items: Chapter[]; title?:
   const bar = useRef<HTMLElement>(null);
   const track = useRef<HTMLDivElement>(null);
   const progress = useRef<HTMLSpanElement>(null);
+  const [edge, setEdge] = useState({ l: false, r: false });
+
+  // show the scroll arrows only when more chapters are hidden on that side
+  useEffect(() => {
+    const t = track.current; if (!t) return;
+    const check = () => setEdge({ l: t.scrollLeft > 4, r: t.scrollLeft + t.clientWidth < t.scrollWidth - 4 });
+    check();
+    t.addEventListener('scroll', check, { passive: true });
+    const ro = new ResizeObserver(check); ro.observe(t);
+    return () => { t.removeEventListener('scroll', check); ro.disconnect(); };
+  }, [items]);
+  const nudge = (dir: 1 | -1) => { const t = track.current; if (t) t.scrollBy({ left: dir * t.clientWidth * 0.6, behavior: 'smooth' }); };
 
   useEffect(() => {
     const targets = items.map(i => document.getElementById(i.id)).filter(Boolean) as HTMLElement[];
@@ -51,18 +64,25 @@ export default function ChapterNav({ items, title }: { items: Chapter[]; title?:
     e.preventDefault();
     const head = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--pm-head')) || 84;
     const offset = -(head + (bar.current?.offsetHeight ?? 56) + 12);
-    if (window.__lenis) window.__lenis.scrollTo(el, { offset });
-    else window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY + offset, behavior: 'smooth' });
+    // layout position (ignores reveal transforms still in flight), so the jump lands exactly on the chapter
+    let top = 0; for (let n: HTMLElement | null = el; n; n = n.offsetParent as HTMLElement | null) top += n.offsetTop;
+    setActive(id);
+    if (window.__lenis) window.__lenis.scrollTo(top + offset);
+    else window.scrollTo({ top: top + offset, behavior: 'smooth' });
     history.replaceState(null, '', '#' + id);
   };
 
   return <nav className="pm-chapters" ref={bar} aria-label={title ?? 'On this page'}>
     <div className="pm-wrap pm-chapters-in">
       {title && <span className="pm-chapters-title">{title}</span>}
-      <div className="pm-chapters-track" ref={track}>
-        {items.map((c, i) => <a key={c.id} href={'#' + c.id} data-id={c.id} className={c.id === active ? 'on' : ''} aria-current={c.id === active ? 'location' : undefined} onClick={e => go(e, c.id)}>
-          <span className="pm-num">{String(i + 1).padStart(2, '0')}</span>{c.label}
-        </a>)}
+      <div className={'pm-chapters-rail' + (edge.l ? ' can-l' : '') + (edge.r ? ' can-r' : '')}>
+        <button type="button" className="pm-chapters-arrow l" aria-label="Show previous" tabIndex={edge.l ? 0 : -1} onClick={() => nudge(-1)}><ChevronLeft size={16} /></button>
+        <div className="pm-chapters-track" ref={track}>
+          {items.map((c, i) => <a key={c.id} href={'#' + c.id} data-id={c.id} className={c.id === active ? 'on' : ''} aria-current={c.id === active ? 'location' : undefined} onClick={e => go(e, c.id)}>
+            <span className="pm-num">{String(i + 1).padStart(2, '0')}</span>{c.label}<ArrowDownRight size={13} className="pm-chapters-go" aria-hidden="true" />
+          </a>)}
+        </div>
+        <button type="button" className="pm-chapters-arrow r" aria-label="Show more" tabIndex={edge.r ? 0 : -1} onClick={() => nudge(1)}><ChevronRight size={16} /></button>
       </div>
     </div>
     <span className="pm-chapters-progress" ref={progress} aria-hidden="true" />

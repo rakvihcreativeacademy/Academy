@@ -115,6 +115,53 @@ function cover(src: THREE.Texture, w: number, h: number) {
   return t;
 }
 
+/** A dark photo studio as an environment map: softboxes and strip lights give the metal real highlights. */
+function studioEnvironment(renderer: THREE.WebGLRenderer) {
+  const env = new THREE.Scene();
+  env.background = new THREE.Color(0x060606);
+  const box = (w: number, h: number, pos: [number, number, number], color: number, power: number) => {
+    const mat = new THREE.MeshBasicMaterial({ color, side: THREE.DoubleSide });
+    mat.color.multiplyScalar(power);
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), mat);
+    m.position.set(...pos); m.lookAt(0, 0, 0); env.add(m);
+  };
+  box(5, 3, [-4, 4.5, 4], 0xfff1dc, 7);      // big key softbox, front-left high
+  box(0.7, 5, [5, 1, 2.5], 0xe8eeff, 4.5);   // tall strip, right
+  box(0.6, 5, [-4.5, 1, -4], 0xffffff, 5);   // rim strip, back-left
+  box(0.6, 4, [4, 1.5, -4.5], 0xffd27a, 3);  // warm kicker, back-right (brand gold)
+  box(4, 4, [0, 7, 0], 0xffffff, 1.6);       // overhead
+  box(9, 1.2, [0, -0.4, 7], 0x2a2a28, 1);    // faint bounce card
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  const tex = pmrem.fromScene(env, 0.02).texture;
+  pmrem.dispose();
+  env.traverse(o => { const m = o as THREE.Mesh; if (m.isMesh) { m.geometry.dispose(); (m.material as THREE.Material).dispose(); } });
+  return tex;
+}
+
+/** Re-dress the model's materials like a modern cinema camera: anodised black aluminium, satin steel, coated glass. */
+function cineMaterial(src: THREE.MeshStandardMaterial): THREE.Material {
+  const base = { name: src.name, map: src.map ?? null, normalMap: src.normalMap ?? null, envMapIntensity: 1.2 };
+  const P = (o: THREE.MeshPhysicalMaterialParameters) => new THREE.MeshPhysicalMaterial({ ...base, ...o });
+  switch (src.name) {
+    case 'body': return P({ color: 0x1c1d20, metalness: 0.88, roughness: 0.36, clearcoat: 0.35, clearcoatRoughness: 0.28 });
+    case 'panel': return P({ color: 0x2b2d31, metalness: 0.8, roughness: 0.48 });
+    case 'alu_black': case 'matte': return P({ color: 0x17181b, metalness: 0.92, roughness: 0.32, clearcoat: 0.2, clearcoatRoughness: 0.3 });
+    case 'steel': return P({ color: 0x8e949c, metalness: 1, roughness: 0.28 });
+    case 'dark_steel': return P({ color: 0x2e3135, metalness: 1, roughness: 0.3 });
+    case 'red': return P({ color: 0xd2231a, metalness: 0.25, roughness: 0.28, clearcoat: 0.9, clearcoatRoughness: 0.12 });
+    case 'lens_black': return P({ color: 0x121315, metalness: 0.6, roughness: 0.38, clearcoat: 0.35, clearcoatRoughness: 0.3 });
+    case 'ring_zoom': case 'ring_focus': case 'ring_iris': return P({ color: 0x8a8a8a, metalness: 0.15, roughness: 0.72 });
+    case 'glass_a': case 'glass_b': return P({
+      color: 0x04050a, metalness: 0, roughness: 0.03, clearcoat: 1, clearcoatRoughness: 0.02, envMapIntensity: 2.6,
+      iridescence: 1, iridescenceIOR: 1.65, iridescenceThicknessRange: [260, 720], specularIntensity: 1, ior: 1.7,
+    });
+    case 'rubber': case 'bellows': case 'flock': case 'cable': return P({ color: 0x0c0c0d, metalness: 0, roughness: 0.82, sheen: 0.4, sheenRoughness: 0.6, sheenColor: new THREE.Color(0x3a3a3a) });
+    case 'plastic': return P({ color: 0x101012, metalness: 0, roughness: 0.42, clearcoat: 0.3 });
+    case 'screen': return P({ color: 0x0a0a0a, roughness: 0.05, metalness: 0, clearcoat: 1, emissive: 0xffffff, emissiveMap: src.map ?? null, emissiveIntensity: 0.9, map: null });
+    default: { src.envMapIntensity = 1.2; return src; }
+  }
+}
+
 /**
  * "Shoot & Edit": a 3D cinema camera on a tripod (/3d/camera_with_tripod.glb) starts recording;
  * the frames it captures fly out of the lens and land as clips on an editing timeline; then the
@@ -123,12 +170,16 @@ function cover(src: THREE.Texture, w: number, h: number) {
 export function mountShootEdit(canvas: HTMLCanvasElement): ShootEdit {
   const stage = createStage(canvas, { fov: 30, exposure: 1.05 });
   const { scene, camera } = stage;
-  scene.environmentIntensity = 0.95;
+  // photographic studio lighting: softbox reflections in the metal + a key, a cool fill and two rims
+  const studio = studioEnvironment(stage.renderer);
+  scene.environment = studio;
+  scene.environmentIntensity = 1;
 
-  const key = new THREE.DirectionalLight(0xfff0d8, 2.8); key.position.set(-2.5, 3, 3.5); scene.add(key);
-  const fill = new THREE.DirectionalLight(0xc6d0ff, 0.75); fill.position.set(3, 0.5, 2.5); scene.add(fill);
-  const rim = new THREE.DirectionalLight(0xfccc0f, 3.4); rim.position.set(1.5, 2, -3); scene.add(rim);
-  const rim2 = new THREE.DirectionalLight(0xc3cc8f, 1.5); rim2.position.set(-3, 0.4, -2); scene.add(rim2);
+  const key = new THREE.DirectionalLight(0xfff3e2, 3.2); key.position.set(-2.8, 3.6, 3.4); scene.add(key);
+  const fill = new THREE.DirectionalLight(0xd4ddff, 0.55); fill.position.set(3.2, 0.6, 2.6); scene.add(fill);
+  const top = new THREE.SpotLight(0xffffff, 26, 9, 0.5, 0.65, 1.4); top.position.set(-1.1, 4.2, 1.2); top.target.position.set(-1.2, 0.2, 0); scene.add(top, top.target);
+  const rim = new THREE.DirectionalLight(0xffd36b, 2.6); rim.position.set(1.6, 2.2, -3); scene.add(rim);
+  const rim2 = new THREE.DirectionalLight(0xbfd2ff, 1.6); rim2.position.set(-3.2, 0.8, -2.2); scene.add(rim2);
 
   const world = new THREE.Group(); scene.add(world);
   const bk = bokeh(60, { x: 7, y: 3.5, z: 2.5, z0: -1.2 }, 0.14); scene.add(bk.points);
@@ -136,6 +187,8 @@ export function mountShootEdit(canvas: HTMLCanvasElement): ShootEdit {
 
   // ── cine camera on a tripod (/3d/camera_with_tripod.glb) ──
   const camRig = new THREE.Group(); world.add(camRig);
+  const contact = new THREE.Mesh(new THREE.PlaneGeometry(1.9, 1.9), new THREE.MeshBasicMaterial({ map: radialTexture('rgba(0,0,0,.78)', 'rgba(0,0,0,0)'), transparent: true, depthWrite: false, toneMapped: false }));
+  contact.rotation.x = -Math.PI / 2; contact.position.y = -1.195; camRig.add(contact);
   const tripod = new THREE.Group(); camRig.add(tripod);
   const body = new THREE.Group(); camRig.add(body);
   const recLedMats: THREE.MeshStandardMaterial[] = [];
@@ -226,13 +279,18 @@ export function mountShootEdit(canvas: HTMLCanvasElement): ShootEdit {
     const tripodBox = new THREE.Box3();
     const glassBox = new THREE.Box3();
 
+    const upgraded = new Map<THREE.Material, THREE.Material>();
     m.traverse(o => {
       const mm = o as THREE.Mesh;
       if (!mm.isMesh) return;
+      const swap = (mat: THREE.Material) => {
+        if (!upgraded.has(mat)) upgraded.set(mat, cineMaterial(mat as THREE.MeshStandardMaterial));
+        return upgraded.get(mat)!;
+      };
+      mm.material = Array.isArray(mm.material) ? mm.material.map(swap) : swap(mm.material);
       const mats = Array.isArray(mm.material) ? mm.material : [mm.material];
       mats.forEach(mat => {
         const std = mat as THREE.MeshStandardMaterial;
-        if ('envMapIntensity' in std) std.envMapIntensity = 1.35;
         if (std.map) std.map.anisotropy = 8;
         if (o.name.endsWith('__led') || std.name === 'led') {
           std.emissive.set(0xff2a1a);
@@ -326,7 +384,7 @@ export function mountShootEdit(canvas: HTMLCanvasElement): ShootEdit {
     body.rotation.x = -0.02 + Math.sin(t * 0.6) * 0.004;
     const ledGlow = rec ? (Math.sin(t * 6) > 0 ? 4.5 : 0.7) : 0.08;
     for (const lm of recLedMats) lm.emissiveIntensity = ledGlow;
-    (beam.material as THREE.MeshBasicMaterial).opacity = recAmt * pull * (0.11 + Math.sin(t * 2.2) * 0.02);
+    (beam.material as THREE.MeshBasicMaterial).opacity = recAmt * pull * (0.06 + Math.sin(t * 2.2) * 0.012);
 
     tl.position.y = (narrow ? -0.62 : -0.18) - (1 - panelIn) * 0.35;
     panelMat.opacity = panelIn;

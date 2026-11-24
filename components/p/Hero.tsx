@@ -42,8 +42,6 @@ export default function Hero() {
 
     <div className="pm-wrap pm-hero-simple-inner">
       <div className="pm-hero-simple-top" aria-hidden="true">
-        <span>{site.name}</span>
-        <span>{site.location}</span>
         <span>Editing · Cinema · Photo · Design</span>
       </div>
 
@@ -53,7 +51,7 @@ export default function Hero() {
           <h1 className="pm-hx-title">Turn your creativity <em>into your career.</em></h1>
         </div>
         <div className="pm-hx-side">
-          <p>Professional training in video editing, cinematography, photography and filmmaking — with a premium podcast studio and real production work under one roof.</p>
+          <p className="pm-hero-blurb">Hands-on training in editing, cinema &amp; photography, with a premium podcast studio.</p>
           <div className="pm-row on-dark">
             <Link href="/courses" className="pm-btn">Explore Our Courses <ArrowUpRight size={15} /></Link>
             <Link href="/podcast-studio#enquire" className="pm-btn ghost on-dark">Book Our Podcast Studio</Link>

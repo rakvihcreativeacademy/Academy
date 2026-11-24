@@ -63,6 +63,7 @@ export default function EnquiryForm({
 }) {
   const [type, setType] = useState<EnquiryType>(initialType);
   const [course, setCourse] = useState(initialCourse);
+  const [prefill, setPrefill] = useState('');
 
   useEffect(() => {
     if (!fromUrl) return;
@@ -71,6 +72,11 @@ export default function EnquiryForm({
     if (t && t in enquiryTypes) setType(t);
     const c = q.get('course');
     if (c) setCourse(c);
+    // "Notify me" from the courses page lands here with the course pre-selected and a ready message
+    if (c && q.get('notify')) {
+      setType('admission');
+      setPrefill(`Please notify me as soon as ${c} opens for enrolment. I'd like to know the batch dates, duration and fees.`);
+    }
   }, [fromUrl]);
 
   const [busy, setBusy] = useState(false);
@@ -120,7 +126,11 @@ export default function EnquiryForm({
     );
   }
 
-  const options = type === 'admission' && courseOptions ? courseOptions : optionsFor[type];
+  const baseOptions = type === 'admission' && courseOptions ? courseOptions : optionsFor[type];
+  // match the requested course to an option (options may carry a suffix such as "(Live — Enrolling Now)")
+  const matched = type === 'admission' && course ? baseOptions.find(o => o === course) ?? baseOptions.find(o => o.toLowerCase().startsWith(course.toLowerCase())) : undefined;
+  const options = type === 'admission' && course && !matched ? [course, ...baseOptions] : baseOptions;
+  const selected = type === 'admission' ? (matched ?? course) : '';
 
   return (
     <form className="panel enquiry-form" onSubmit={onSubmit}>
@@ -169,7 +179,7 @@ export default function EnquiryForm({
 
       <label>
         {interestLabel[type]}
-        <select name="interest" key={type + course} defaultValue={type === 'admission' ? course : ''} required>
+        <select name="interest" key={type + course} defaultValue={selected} required>
           <option value="">Select what you’re interested in</option>
           {options.map(c => <option key={c} value={c}>{c}</option>)}
         </select>
@@ -201,6 +211,8 @@ export default function EnquiryForm({
         Message / details
         <textarea
           name="message"
+          key={prefill}
+          defaultValue={prefill}
           rows={3}
           maxLength={3000}
           placeholder="Tell us about your goals, preferred schedule, or project details"

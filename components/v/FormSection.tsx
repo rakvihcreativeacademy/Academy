@@ -14,6 +14,7 @@ export default function FormSection({
   course,
   allowTypeSwitch,
   courseOptions,
+  fromUrl,
   note,
   formTitle = 'A little about you.',
 }: {
@@ -27,6 +28,7 @@ export default function FormSection({
   course?: string;
   allowTypeSwitch?: boolean;
   courseOptions?: string[];
+  fromUrl?: boolean;
   points?: string[];
   note?: string;
   formTitle?: string;
@@ -60,7 +62,7 @@ export default function FormSection({
             <div><p className="pm-label"><span className="pm-dot" /> Direct enquiry</p><h3>{formTitle}</h3></div>
             <img src="/brand/rakvih-mark-128.png" alt="" />
           </header>
-          <EnquiryForm type={type} course={course} allowTypeSwitch={allowTypeSwitch} courseOptions={courseOptions} />
+          <EnquiryForm type={type} course={course} allowTypeSwitch={allowTypeSwitch} courseOptions={courseOptions} fromUrl={fromUrl} />
           <p className="pm-fine">Beginners welcome — no creative experience needed.</p>
         </div>
       </div>

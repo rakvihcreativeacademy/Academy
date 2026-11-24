@@ -33,15 +33,16 @@ export default function Motion() {
     const bar = document.querySelector<HTMLElement>('.scroll-progress');
     const parallax = reduce ? [] : Array.from(document.querySelectorAll<HTMLElement>('[data-parallax]'));
     let scrolled = false, raf = 0, overMedia: boolean | null = null;
+    const mediaEls = Array.from(document.querySelectorAll<HTMLElement>(MEDIA));
     const update = () => {
       raf = 0;
       const y = window.scrollY, vh = window.innerHeight, max = root.scrollHeight - vh;
       const s = y > 40;
       if (s !== scrolled) { scrolled = s; root.classList.toggle('scrolled', s); }
       // header tone: over film/photo sections it keeps its dark glass; elsewhere it follows the theme
-      const probe = document.elementsFromPoint(window.innerWidth / 2, (parseFloat(getComputedStyle(root).getPropertyValue('--pm-head')) || 84) + 6)
-        .find(el => !el.closest('.pm-head, .pm-chapters, .scroll-progress, .wa-fab'));
-      const onMedia = !!probe?.closest(MEDIA);
+      // geometry, not hit-testing: during a page cross-fade the hit-test lands on the transition overlay
+      const probeY = (parseFloat(getComputedStyle(root).getPropertyValue('--pm-head')) || 84) + 6;
+      const onMedia = mediaEls.some(el => { const r = el.getBoundingClientRect(); return r.height > 0 && r.top <= probeY && r.bottom > probeY; });
       if (onMedia !== overMedia) { overMedia = onMedia; root.classList.toggle('hdr-media', onMedia); }
       if (bar) bar.style.transform = `scaleX(${max > 0 ? (y / max).toFixed(4) : 0})`;
       for (const el of parallax) {
@@ -53,6 +54,11 @@ export default function Motion() {
     };
     const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
     update();
+    // re-check once the page has settled (fonts, images, the page cross-fade, back/forward cache)
+    const settle = [60, 300, 900].map(ms => window.setTimeout(update, ms));
+    const onShow = () => { overMedia = null; update(); };
+    window.addEventListener('load', onShow); window.addEventListener('pageshow', onShow);
+    cleanups.push(() => { settle.forEach(clearTimeout); window.removeEventListener('load', onShow); window.removeEventListener('pageshow', onShow); });
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
     cleanups.push(() => { window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll); cancelAnimationFrame(raf); });

@@ -40,7 +40,6 @@ export default function About() {
       <div className="pm-wrap">
         <div className="pm-head-row">
           <div data-v><p className="pm-label rule">(02) — <b>What we offer</b></p><h2 className="pm-h2"><Words text="One place to learn," /> <em><Words text="create and grow." start={4} /></em></h2></div>
-          <p className="pm-lede">Training, a professional studio, real production work, creative services and technology — under one brand.</p>
         </div>
         <Offers />
       </div>
@@ -63,7 +62,6 @@ export default function About() {
       <div className="pm-wrap">
         <div className="pm-head-row">
           <div data-v><p className="pm-label rule">(04) — <b>Why choose RAKVIH Digital?</b></p><h2 className="pm-h2"><Words text="What makes our learning" /> <em><Words text="different." start={4} /></em></h2></div>
-          <p className="pm-lede">Ten reasons students choose to learn with us.</p>
         </div>
         <div className="pm-grid" style={{ '--cols': 5 } as React.CSSProperties}>
           {whyUs.map((w, i) => <div key={w.title} className="pm-cell" data-v style={{ '--d': `${(i % 5) * 70}ms`, minHeight: 190 } as React.CSSProperties}>

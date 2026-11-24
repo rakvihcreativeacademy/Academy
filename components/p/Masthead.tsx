@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { ArrowUpRight, House, LogIn } from 'lucide-react';
+import { ArrowUpRight, House, LogIn, GraduationCap, Mic, Clapperboard, Briefcase, MessageCircle } from 'lucide-react';
 import Link from '@/components/SiteLink';
 import { nav, site } from '@/lib/site';
 import { ThemeButton, ThemeSwitch } from '@/components/p/ThemeToggle';
@@ -9,6 +9,7 @@ const useIso = typeof window === 'undefined' ? useEffect : useLayoutEffect;
 // '/projects' (Student Work) is hidden from the header for now — the page itself still works. Remove it here to show it again.
 const hiddenInHeader = new Set(['/about', '/projects']);
 const headerNav = nav.filter(l => !hiddenInHeader.has(l.href));
+const NAV_ICONS: Record<string, typeof House> = { '/': House, '/courses': GraduationCap, '/podcast-studio': Mic, '/production': Clapperboard, '/careers': Briefcase, '/contact': MessageCircle };
 
 /** Masthead: brand · glass nav capsule (with a dedicated Home button and a sliding active pill) · Apply. */
 export default function Masthead() {
@@ -57,13 +58,14 @@ export default function Masthead() {
   return <>
     <header className="pm-head">
       <Link href="/" className="pm-brand" aria-label={`${site.name} — home`}>
-        <span className="pm-logo-lockup"><img className="pm-logo" src="/brand/rakvih-logo.png" alt="RAKVIH Solutions Private Limited" width={1052} height={374} /><span className="pm-logo-name">Rakvih <b>Digital</b></span></span>
+        <span className="pm-lockup"><span className="pm-lockup-row"><img className="pm-mark" src="/brand/rakvih-mark.png" alt="" width={331} height={373} /><span className="pm-wordmark-txt"><b>RAKVIH</b><small>Solutions Private Limited</small></span></span><span className="pm-lockup-name">Rakvih <i>Digital</i></span></span>
       </Link>
       <nav className="pm-nav" aria-label="Main" ref={capsule} onMouseLeave={home}>
         <span className={'pm-nav-pill' + (glide ? ' glide' : '')} aria-hidden="true" style={pill ? { transform: `translateX(${pill.x}px)`, width: pill.w, opacity: 1 } : { opacity: 0 }} />
         {headerNav.map(l => <Link key={l.href} href={l.href} className={(active(l.href) ? 'active ' : '') + (l.href === '/' ? 'home' : '') + (l.href === '/production' ? ' has-badge' : '')}
           aria-current={active(l.href) ? 'page' : undefined} onMouseEnter={e => place(e.currentTarget)} onFocus={e => place(e.currentTarget)}>
-          {l.href === '/' ? <><House size={14} strokeWidth={1.6} />Home</> : l.href === '/production' ? <span className="pm-nav-stack"><span>{l.label}</span><small className="pm-nav-badge">Upcoming</small></span> : l.label}
+          {(() => { const Icon = NAV_ICONS[l.href]; return Icon ? <Icon size={14} strokeWidth={1.7} className="pm-nav-ico" aria-hidden="true" /> : null; })()}
+          {l.href === '/production' ? <span className="pm-nav-stack"><span>{l.label}</span><small className="pm-nav-badge">Upcoming</small></span> : l.label}
         </Link>)}
       </nav>
       <div className="pm-head-actions">
