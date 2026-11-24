@@ -1,3 +1,4 @@
+import { careerImage } from './career-images';
 /** Picks a fitting academy photograph for a content item by keyword, falling back to a rotating set. */
 const I = {
   edit: '/images/academy-editing.webp', cine: '/images/course-cinematography.webp', photo: '/images/academy-photography.webp',
@@ -17,6 +18,8 @@ const rules: [RegExp, string][] = [
 ];
 const pool = Object.values(I);
 export function itemImage(title: string, index: number) {
+  const roleImage = careerImage(title);
+  if (roleImage) return roleImage;
   for (const [re, src] of rules) if (re.test(title)) return src;
   return pool[index % pool.length];
 }
@@ -25,6 +28,8 @@ export function itemImage(title: string, index: number) {
 export function itemImages(titles: string[]) {
   const out: string[] = [];
   titles.forEach((t, i) => {
+    const roleImage = careerImage(t);
+    if (roleImage) { out.push(roleImage); return; }
     let src = itemImage(t, i);
     if (src === out[i - 1]) {
       const start = pool.indexOf(src);

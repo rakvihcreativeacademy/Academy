@@ -1,0 +1,25 @@
+{
+  "method": "Built-in image_gen",
+  "prompts": [
+    {
+      "slug": "portfolio-development",
+      "output": "public/images/careers/portfolio-development.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: one standalone 4:3 landscape photo for a creative academy career support card. A young Indian creative student and an experienced female mentor at a bright wooden studio desk carefully selecting printed stills and viewing a video showreel on a laptop. Printed portraits, storyboard thumbnails and a neatly organised portfolio spread across the table. Over-the-shoulder three-quarter composition focused on the curation process. Match the existing RAKVIH imagery: premium candid editorial photography, fictional Indian adults, warm amber natural light, muted olive and cream palette, wood and gentle greenery, realistic skin and equipment. Centered clear subjects and role-specific action that remain readable at small card sizes. No text, captions, logos, watermarks, collages, decorative borders or brand marks."
+    },
+    {
+      "slug": "practical-project-experience",
+      "output": "public/images/careers/practical-project-experience.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: one standalone 4:3 landscape photo for a creative academy career support card. Three young Indian creative students collaborating on a small product video shoot in a teaching studio: one student operates a tripod-mounted mirrorless camera, another adjusts a small LED light and a third arranges a ceramic product on a tabletop. Candid teamwork and hands-on learning clearly visible, medium-wide composition. Match the existing RAKVIH imagery: premium candid editorial photography, fictional Indian adults, warm amber natural light, muted olive and cream palette, wood and gentle greenery, realistic skin and equipment. Centered clear subjects and role-specific action that remain readable at small card sizes. No text, captions, logos, watermarks, collages, decorative borders or brand marks."
+    },
+    {
+      "slug": "career-guidance",
+      "output": "public/images/careers/career-guidance.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: one standalone 4:3 landscape photo for a creative academy career support card. An Indian creative career adviser in an olive blazer having a friendly one-to-one mentoring conversation with a young student across a desk in a warm light-filled office. Adviser points to a plain notebook with simple abstract diagrams while student listens. Emphasis on supportive conversation and planning a creative career, no interview or hiring handshake. Match the existing RAKVIH imagery: premium candid editorial photography, fictional Indian adults, warm amber natural light, muted olive and cream palette, wood and gentle greenery, realistic skin and equipment. Centered clear subjects and role-specific action that remain readable at small card sizes. No text, captions, logos, watermarks, collages, decorative borders or brand marks."
+    },
+    {
+      "slug": "placement-assistance",
+      "output": "public/images/careers/placement-assistance.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: one standalone 4:3 landscape photo for a creative academy career support card. A young Indian creative graduate practising an interview with an academy placement adviser across a clean wooden desk. An open laptop displays an abstract portfolio thumbnail grid; a folder and plain resume pages sit on the desk. Candid, reassuring interview preparation and opportunity guidance in a creative studio office, not a job offer, no handshake or certificates. Match the existing RAKVIH imagery: premium candid editorial photography, fictional Indian adults, warm amber natural light, muted olive and cream palette, wood and gentle greenery, realistic skin and equipment. Centered clear subjects and role-specific action that remain readable at small card sizes. No text, captions, logos, watermarks, collages, decorative borders or brand marks."
+    }
+  ]
+}

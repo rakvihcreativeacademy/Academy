@@ -1,0 +1,30 @@
+{
+  "method": "Built-in image_gen",
+  "prompts": [
+    {
+      "role": "camera-operator",
+      "output": "public/images/careers/camera-operator.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: individual career card photograph for RAKVIH creative academy. Create ONE standalone landscape 4:3 editorial photo, no collage. A young Indian woman operating a shoulder-mounted broadcast video camera on a small documentary location shoot, outdoors at a Bengaluru street courtyard. Side three-quarter view, one hand on focus, practical camera rig, clear professional camera operator activity. No still photography posing. Style: premium natural documentary photography, warm afternoon amber light, muted olive clothing and cream/wood surroundings, tactile realistic skin and equipment, contemporary Indian creative workplace. Composition: medium environmental view, subject and role-specific equipment readable in a centered crop at small card sizes, candid purposeful action. Each person is fictional. No captions, readable writing, logos, watermarks or decorative borders."
+    },
+    {
+      "role": "film-production-assistant",
+      "output": "public/images/careers/film-production-assistant.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: individual career card photograph for RAKVIH creative academy. Create ONE standalone landscape 4:3 editorial photo, no collage. An Indian film production assistant with a headset and walkie-talkie organising labelled-unreadable equipment cases and a coiled cable beside a studio set, holding a plain clipboard. Candid working moment, not looking at camera, small crew softly blurred in background. Style: premium natural documentary photography, warm afternoon amber light, muted olive clothing and cream/wood surroundings, tactile realistic skin and equipment, contemporary Indian creative workplace. Composition: medium environmental view, subject and role-specific equipment readable in a centered crop at small card sizes, candid purposeful action. Each person is fictional. No captions, readable writing, logos, watermarks or decorative borders."
+    },
+    {
+      "role": "assistant-director",
+      "output": "public/images/careers/assistant-director.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: individual career card photograph for RAKVIH creative academy. Create ONE standalone landscape 4:3 editorial photo, no collage. An Indian woman assistant director on a film set giving clear hand cues to an actor off frame, holding a blank clapperboard at her side and wearing a communications headset. The camera and lighting crew are softly blurred behind her. Strong visual focus on coordinating a scene, not operating a camera. Style: premium natural documentary photography, warm afternoon amber light, muted olive clothing and cream/wood surroundings, tactile realistic skin and equipment, contemporary Indian creative workplace. Composition: medium environmental view, subject and role-specific equipment readable in a centered crop at small card sizes, candid purposeful action. Each person is fictional. No captions, readable writing, logos, watermarks or decorative borders."
+    },
+    {
+      "role": "video-production-executive",
+      "output": "public/images/careers/video-production-executive.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: individual career card photograph for RAKVIH creative academy. Create ONE standalone landscape 4:3 editorial photo, no collage. An Indian video production executive planning a shoot at a studio desk with a laptop displaying an abstract storyboard grid, printed shot planning thumbnails, a calendar and camera equipment softly blurred behind. Professional work meeting with one colleague, distinct office planning composition, no camera operation. Style: premium natural documentary photography, warm afternoon amber light, muted olive clothing and cream/wood surroundings, tactile realistic skin and equipment, contemporary Indian creative workplace. Composition: medium environmental view, subject and role-specific equipment readable in a centered crop at small card sizes, candid purposeful action. Each person is fictional. No captions, readable writing, logos, watermarks or decorative borders."
+    },
+    {
+      "role": "freelance-video-creator",
+      "output": "public/images/careers/freelance-video-creator.webp",
+      "prompt": "Use case: photorealistic-natural. Asset type: individual career card photograph for RAKVIH creative academy. Create ONE standalone landscape 4:3 editorial photo, no collage. An independent Indian male freelance video creator filming a small handmade ceramic product for a client in a compact home studio, using a mirrorless camera on a tabletop tripod and one softbox. He adjusts the product composition. Wide environmental portrait, visibly practical solo client video production, no selfie or phone talking-head. Style: premium natural documentary photography, warm afternoon amber light, muted olive clothing and cream/wood surroundings, tactile realistic skin and equipment, contemporary Indian creative workplace. Composition: medium environmental view, subject and role-specific equipment readable in a centered crop at small card sizes, candid purposeful action. Each person is fictional. No captions, readable writing, logos, watermarks or decorative borders."
+    }
+  ]
+}
