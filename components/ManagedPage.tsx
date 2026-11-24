@@ -1,5 +1,5 @@
 import Link from '@/components/SiteLink';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Mic } from 'lucide-react';
 import Banner from '@/components/v/Banner';
 import FormSection from '@/components/v/FormSection';
 import CourseListing from '@/components/CourseListing';
@@ -16,6 +16,8 @@ import ShootEdit from '@/components/p/ShootEdit';
 
 const labels = { courses: 'Courses', 'podcast-studio': 'Podcast Studio', production: 'Production', projects: 'Student Work', careers: 'Careers' };
 const tones = ['pm-paper', 'pm-dark', 'pm-paper2'];
+/** Pages with their own card design + hover motion (everything else uses the shared photo tile). */
+const cardVariants: Partial<Record<PageKey, 'st' | 'cr'>> = { 'podcast-studio': 'st', careers: 'cr' };
 
 /** CMS-driven inner page rendered as numbered editorial chapters. Content comes from the admin workspace. */
 export default async function ManagedPage({ page }: { page: PageKey }) {
@@ -34,6 +36,7 @@ export default async function ManagedPage({ page }: { page: PageKey }) {
     }
   }
   const b = doc.banner;
+  const variant = cardVariants[page];
   const short = (t: string) => t.replace(/^Professional\s+/i, '').replace(/\s*&\s*/g, ' & ');
   const chapters: Chapter[] = page === 'courses'
     ? doc.sections.flatMap((s, si) => s.items.map((it, i) => ({ id: it.slug || `course-${si}-${i}`, label: short(it.title) })))
@@ -57,6 +60,10 @@ export default async function ManagedPage({ page }: { page: PageKey }) {
       const withMedia = section.items.some(i => i.image);
       const n = section.items.length;
       const bgs = withMedia ? [] : itemImages(section.items.map(it => it.title));
+      // Podcast bento: a 2×2 feature tile, then singles; the last tile widens to close the final row.
+      const stFill4 = 1 + ((4 - ((n + 3) % 4)) % 4);
+      const stOdd2 = (n - 1) % 2 === 1;
+      const variantImgs = withMedia ? itemImages(section.items.map(it => it.title)) : bgs;
       const cols = n <= 4 ? Math.max(n, 1) : [4, 5, 3].find(c => n % c === 0) ?? 4;
       return <section className={`pm-sec ${tone}`} key={si} id={`ch-${si + 1}`} data-dark={dark || undefined}>
         <div className="pm-wrap">
@@ -67,7 +74,47 @@ export default async function ManagedPage({ page }: { page: PageKey }) {
             </div>
             {section.description ? <p className="pm-lede">{section.description}</p> : <span />}
           </div>
-          <div className="pm-grid" style={{ '--cols': cols } as React.CSSProperties}>
+          {variant ? <div className={`${variant}-grid` + (variant === 'st' && n >= 6 ? ' st-bento' : '')} style={{ '--cols': cols } as React.CSSProperties}>
+            {section.items.map((item, i) => {
+              const img = item.image || variantImgs[i];
+              const num = String(i + 1).padStart(2, '0');
+              const details = item.details.filter(Boolean);
+              const bento = variant === 'st' && n >= 6;
+              const hero = bento && i === 0;
+              const body = variant === 'st' ? <>
+                <span className="st-media" aria-hidden="true"><img src={img} alt="" loading="lazy" decoding="async" /></span>
+                <span className="st-glow" aria-hidden="true" />
+                <span className="st-top">
+                  <span className="st-onair"><i />{hero ? 'Live studio' : 'On air'}</span>
+                  <span className="st-n">{num}<small>/{String(n).padStart(2, '0')}</small></span>
+                </span>
+                <span className="st-panel">
+                  <span className="st-mic" aria-hidden="true"><Mic size={hero ? 20 : 16} strokeWidth={1.8} /></span>
+                  <span className="st-copy">
+                    <h3>{item.title}</h3>
+                    {(item.description || details.length > 0) && <span className="st-more"><span>
+                      {item.description && <p>{item.description}</p>}
+                      {details.length > 0 && <ul>{details.map((d, j) => <li key={j}>{d}</li>)}</ul>}
+                    </span></span>}
+                  </span>
+                  <span className="st-eq" aria-hidden="true">{Array.from({ length: hero ? 14 : 9 }, (_, k) => <i key={k} style={{ '--k': k } as React.CSSProperties} />)}</span>
+                </span>
+              </> : <>
+                <span className="cr-n" aria-hidden="true">{num}</span>
+                <span className="cr-media" aria-hidden="true"><img src={img} alt="" loading="lazy" decoding="async" /></span>
+                <span className="cr-body">
+                  <span className="cr-step">Path {num}</span>
+                  <h3>{item.title}</h3>
+                  {item.description && <p>{item.description}</p>}
+                  {details.length > 0 && <ul>{details.map((d, j) => <li key={j}>{d}</li>)}</ul>}
+                </span>
+                <span className="cr-go" aria-hidden="true"><ArrowUpRight size={16} /></span>
+                <span className="cr-line" aria-hidden="true" />
+              </>;
+              const props = { id: item.slug || undefined, className: `${variant}-card` + (hero ? ' st-hero' : '') + (bento && i === n - 1 ? ` st-last-${stFill4}` + (stOdd2 ? ' st-last2' : '') : ''), 'data-v': '', style: { '--d': `${(i % 4) * 80}ms` } as React.CSSProperties };
+              return item.href ? <Link key={i} href={item.href} {...props}>{body}</Link> : <article key={i} {...props}>{body}</article>;
+            })}
+          </div> : <div className="pm-grid" style={{ '--cols': cols } as React.CSSProperties}>
             {section.items.map((item, i) => {
               const bg = withMedia ? '' : bgs[i];
               const cls = 'pm-cell' + (bg ? ` has-bg fx-${(i + si * 3) % 7}` : '');
@@ -83,7 +130,7 @@ export default async function ManagedPage({ page }: { page: PageKey }) {
                 ? <Link key={i} id={item.slug || undefined} href={item.href} className={cls} data-v style={{ '--d': `${(i % 4) * 70}ms` } as React.CSSProperties}>{body}<ArrowUpRight size={18} className="arrow" /></Link>
                 : <article key={i} id={item.slug || undefined} className={cls} data-v style={{ '--d': `${(i % 4) * 70}ms` } as React.CSSProperties}>{body}</article>;
             })}
-          </div>
+          </div>}
         </div>
       </section>;
     })}

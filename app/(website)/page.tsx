@@ -16,19 +16,6 @@ import { getVideoEditingOffering } from '@/lib/payments-server';
 import { getPublicVideoFeeds } from '@/lib/video-feeds-server';
 import { productionServices } from '@/lib/site';
 
-const steps = [
-  { t: 'Learn the craft', d: 'Practical classes with experienced trainers — the fundamentals of light, frame, sound and story.' },
-  { t: 'Hands-on practice', d: 'Professional cameras, lighting and industry software, with individual attention as you go.' },
-  { t: 'Real projects', d: 'Short films, promotional videos, photography assignments, interviews and digital content.' },
-  { t: 'Your portfolio', d: 'Leave with finished work that shows what you can do — plus guidance on freelancing and careers.' },
-];
-const sheet = [
-  { src: '/images/academy-filmmaking.webp', n: '12A' }, { src: '/images/academy-photography.webp', n: '13' },
-  { src: '/images/course-lighting-sound.webp', n: '13A' }, { src: '/images/academy-editing.webp', n: '14' },
-  { src: '/images/course-motion-graphics.webp', n: '14A' }, { src: '/images/course-cinematography.webp', n: '15' },
-  { src: '/images/course-content-creation.webp', n: '15A' }, { src: '/images/course-ai-creative.webp', n: '16' },
-];
-
 export default async function Home() {
   const [courseDoc, videoEditingOffering, videoFeeds] = await Promise.all([
     getPageContent('courses'),
@@ -82,7 +69,6 @@ export default async function Home() {
           <div data-v><strong className="pm-num">{String(disciplineCount).padStart(2, '0')}</strong><span>Professional courses</span></div>
           <div data-v><strong className="pm-num">01</strong><span>Premium podcast studio</span></div>
           <div data-v><strong className="pm-num">{productionServices.length}</strong><span>Production services</span></div>
-          <div data-v><strong className="pm-num">04</strong><span>Steps to a finished portfolio</span></div>
         </div>
       </div>
     </section>
@@ -93,12 +79,12 @@ export default async function Home() {
     {/* (03) — Programmes (above Shoot & Edit) */}
     <section className="pm-sec pm-dark" data-dark>
       <div className="pm-wrap">
-        <div className="pm-head-row">
+        <div className="pm-head-row pm-head-row--ci">
           <div data-v>
             <p className="pm-label rule">(03) — <b>The Programmes</b></p>
             <h2 className="pm-h2"><Words text="Eight disciplines." /> <em><Words text="One creative career." start={2} /></em></h2>
           </div>
-          <div className="pm-stack" style={{ gap: 24 }}>
+          <div className="pm-stack" style={{ gap: 14 }}>
             <p className="pm-lede">From editing and cinematography to motion graphics, sound and AI tools. Choose a discipline — or combine them.</p>
             <Link href="/courses" className="pm-link" style={{ alignSelf: 'flex-start' }}>View all courses <ArrowUpRight size={14} /></Link>
           </div>
@@ -110,38 +96,18 @@ export default async function Home() {
     {/* (04) — Shoot & Edit (3D) */}
     <ShootEdit label="(04)" />
 
-    {/* (05) — Method */}
-    <section className="pm-sec pm-paper2" style={{ overflow: 'hidden' }}>
-      <div className="pm-wrap">
-        <div className="pm-head-row">
-          <div data-v>
-            <p className="pm-label rule">(05) — <b>The Method</b></p>
-            <h2 className="pm-h2"><Words text="From your first class" /> <em><Words text="to a finished portfolio." start={4} /></em></h2>
-          </div>
-          <p className="pm-lede">Learn · Practise · Create. Every programme follows the same four movements, so you leave with work — not just notes.</p>
-        </div>
-        <div className="pm-steps">
-          {steps.map((s, i) => <article key={s.t} data-v style={{ '--d': `${i * 90}ms` } as React.CSSProperties}>
-            <span className="n pm-num">{String(i + 1).padStart(2, '0')}</span><h3>{s.t}</h3><p>{s.d}</p>
-          </article>)}
-        </div>
-      </div>
-      <div className="pm-sheet" aria-hidden="true" data-no-reveal>
-        <div className="pm-sheet-track">
-          {[...sheet, ...sheet].map((f, i) => <figure key={i} className={'pm-frame' + (i % 8 === 3 ? ' pick' : '')} style={{ margin: 0 }}><img src={f.src} alt="" loading="lazy" /><small>▸ {f.n} &nbsp; RAKVIH 400</small></figure>)}
-        </div>
-      </div>
-    </section>
+    {/* Live Course Apply Now Spotlight — sits right under Shoot & Edit */}
+    <LiveCourseCard courses={liveCourses} videoEditingOffering={videoEditingOffering} />
 
-    {/* (06) — Video Feeds (YouTube & Instagram, managed from Admin) */}
-    <VideoFeeds feeds={videoFeeds} label="(06)" />
+    {/* (05) — Video Feeds (YouTube & Instagram, managed from Admin) */}
+    <VideoFeeds feeds={videoFeeds} label="(05)" />
 
     {/* Standard */}
     <section className="pm-sec pm-paper">
       <div className="pm-wrap">
         <div className="pm-head-row">
           <div data-v>
-            <p className="pm-label rule">{hasVideoFeeds ? '(07)' : '(06)'} — <b>Why choose RAKVIH Digital?</b></p>
+            <p className="pm-label rule">{hasVideoFeeds ? '(06)' : '(05)'} — <b>Why choose RAKVIH Digital?</b></p>
             <h2 className="pm-h2"><Words text="Everything you need" /> <em><Words text="to grow as a creator." start={3} /></em></h2>
           </div>
           <p className="pm-lede">Practical learning, professional tools, a real studio and a portfolio at the end of it.</p>
@@ -149,8 +115,5 @@ export default async function Home() {
         <Pillars />
       </div>
     </section>
-
-    {/* Live Course Apply Now Spotlight (homepage only) */}
-    <LiveCourseCard courses={liveCourses} videoEditingOffering={videoEditingOffering} />
   </main>;
 }

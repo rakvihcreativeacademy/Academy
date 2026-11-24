@@ -2372,9 +2372,219 @@ html.js .pm-site :is(.pm-grid,.bento,.acc,.pm-covers,.pm-steps,.pm-contacts,.ap-
 .pm-csearch-sel svg{position:absolute;right:9px;pointer-events:none;color:var(--pm-mute)}
 @media(max-width:520px){.pm-csearch{max-width:100%}.pm-csearch-in input:not(#_){font-size:16px!important}}
 
+/* ── Clean, consistent section header & description alignment (excludes hero & banner sections) ── */
+.pm-sec .pm-head-row{grid-template-columns:minmax(0,1.25fr) minmax(0,440px)!important;align-items:end!important;gap:20px clamp(32px,5vw,72px)!important;margin-bottom:clamp(28px,3vw,42px)!important}
+.pm-sec .pm-head-row>div:first-child{min-width:0}
+.pm-sec .pm-head-row>p,
+.pm-sec .pm-head-row>div:last-child:not(:first-child){width:100%;max-width:440px!important;justify-self:end;padding-bottom:4px}
+.pm-sec .pm-head-row>.pm-stack{gap:14px!important}
+.pm-sec .pm-head-row .pm-lede{max-width:none;line-height:1.58}
+@media(max-width:860px){
+  .pm-sec .pm-head-row{grid-template-columns:minmax(0,1fr)!important;align-items:start!important;gap:14px!important}
+  .pm-sec .pm-head-row>p,
+  .pm-sec .pm-head-row>div:last-child:not(:first-child){max-width:56ch!important;justify-self:start;padding-bottom:0}
+}
 
 
 
 
 
 
+
+
+/* ════════ Podcast Studio cards — "Live Studio" bento ════════
+   A magazine-style bento: one large feature tile and photo tiles in full colour with a warm lamp glow.
+   Each tile has a frosted "mixing desk" panel (mic + title + waveform). On hover a gold/amber light runs
+   around the edge, the ON AIR light goes red, the mic pulses, the waveform plays and the details slide open. */
+@property --st-ang{syntax:'<angle>';inherits:false;initial-value:0deg}
+.st-grid{display:grid;grid-template-columns:repeat(var(--cols,4),minmax(0,1fr));gap:16px}
+.st-grid.st-bento{grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(260px,auto)}
+.st-bento .st-hero{grid-column:span 2;grid-row:span 2}
+.st-bento .st-last-2{grid-column:span 2}
+.st-bento .st-last-3{grid-column:span 3}
+.st-bento .st-last-4{grid-column:span 4}
+.st-card{position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;gap:16px;min-height:320px;padding:16px;border-radius:24px;color:#f4efe2;background:#14110b;outline:1px solid rgba(255,255,255,.09);outline-offset:-1px;box-shadow:0 26px 50px -34px rgba(0,0,0,.75);transition:transform .7s var(--pm-ease),box-shadow .6s var(--pm-ease)}
+.st-bento .st-card{min-height:0}
+.st-bento .st-hero{padding:22px}
+.st-media{position:absolute;inset:0;z-index:-3}
+.st-media img{width:100%;height:100%;object-fit:cover;filter:brightness(.78) saturate(1.08);transform:scale(1.04);transition:transform 1.8s var(--pm-ease),filter .8s var(--pm-ease)}
+.st-card::before{content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(180deg,rgba(10,8,5,.42) 0%,rgba(10,8,5,0) 28%,rgba(10,8,5,.08) 52%,rgba(10,8,5,.82) 100%)}
+.st-glow{position:absolute;inset:-25%;z-index:-1;pointer-events:none;background:radial-gradient(34% 30% at 22% 18%,rgba(255,168,64,.42),transparent 70%),radial-gradient(30% 26% at 85% 90%,rgba(252,204,15,.18),transparent 70%);mix-blend-mode:screen;opacity:.5;transition:opacity .7s,transform 1.4s var(--pm-ease)}
+.st-card::after{content:"";position:absolute;inset:0;z-index:4;pointer-events:none;border-radius:inherit;padding:1.6px;background:conic-gradient(from var(--st-ang),transparent 0deg,transparent 210deg,rgba(252,204,15,.95) 285deg,#ff7a3d 330deg,transparent 360deg);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);opacity:0;transition:opacity .5s}
+
+.st-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.st-onair,.st-n{display:inline-flex;align-items:center;gap:8px;padding:7px 11px;border-radius:999px;background:rgba(12,10,6,.45);border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.st-onair{font:700 9.5px/1 var(--pm-mono);letter-spacing:.17em;text-transform:uppercase;color:rgba(255,255,255,.78);transition:background .4s,border-color .4s,color .4s,box-shadow .4s}
+.st-onair i{width:7px;height:7px;border-radius:50%;background:#ff5a47;box-shadow:0 0 0 3px rgba(255,90,71,.18);transition:background .4s,box-shadow .4s}
+.st-n{font:600 11.5px/1 var(--pm-mono);letter-spacing:.06em;color:#fff}
+.st-n small{font-size:inherit;opacity:.5;margin-left:1px}
+
+.st-panel{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:12px 14px;padding:14px 16px 14px 14px;border-radius:18px;background:rgba(16,13,8,.42);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);transform:translateY(6px);transition:transform .7s var(--pm-ease),background .5s}
+.st-mic{position:relative;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:var(--pm-sun);background:rgba(252,204,15,.14);border:1px solid rgba(252,204,15,.38);transition:background .4s,color .4s}
+.st-mic::before,.st-mic::after{content:"";position:absolute;inset:-1px;border-radius:50%;border:1.5px solid rgba(252,204,15,.6);opacity:0}
+.st-hero .st-mic{width:54px;height:54px}
+.st-copy{display:grid;min-width:0}
+.st-copy h3{margin:0;font:600 clamp(17px,1.3vw,20px)/1.2 var(--pm-serif);letter-spacing:-.022em;color:#fff}
+.st-hero .st-copy h3{font-size:clamp(26px,2.5vw,38px);line-height:1.06;letter-spacing:-.035em}
+.st-more{display:grid;grid-template-rows:0fr;transition:grid-template-rows .65s var(--pm-ease)}
+.st-more>span{min-height:0;overflow:hidden;display:grid;gap:8px}
+.st-more>span>:first-child{margin-top:8px}
+.st-more p{margin:0;font-size:13px;line-height:1.55;color:rgba(255,255,255,.78)}
+.st-hero .st-more p{font-size:14.5px;max-width:46ch}
+.st-more ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.st-more li{padding:5px 10px;border-radius:999px;font-size:11.5px;background:rgba(255,255,255,.1);color:#fff}
+.st-hero .st-more{grid-template-rows:1fr}
+.st-eq{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;height:22px;border-top:1px solid rgba(255,255,255,.1);padding-top:12px;box-sizing:content-box}
+.st-eq i{width:3px;height:6px;border-radius:3px;background:rgba(255,255,255,.38);transition:background .4s}
+.st-eq i:nth-child(3n){height:12px}.st-eq i:nth-child(3n+2){height:17px}.st-eq i:nth-child(4n){height:9px}
+
+.st-card:is(:hover,:focus-visible){transform:translateY(-6px);box-shadow:0 40px 70px -34px rgba(255,150,40,.38),0 26px 50px -30px rgba(0,0,0,.8)}
+.st-card:is(:hover,:focus-visible)::after{opacity:1;animation:st-spin 3.2s linear infinite}
+.st-card:is(:hover,:focus-visible) .st-media img{transform:scale(1.1);filter:brightness(.9) saturate(1.15)}
+.st-card:is(:hover,:focus-visible) .st-glow{opacity:1;transform:translate(4%,3%)}
+.st-card:is(:hover,:focus-visible) .st-onair{color:#fff;background:#e5352a;border-color:#ff6a5c;box-shadow:0 0 22px rgba(229,53,42,.6)}
+.st-card:is(:hover,:focus-visible) .st-onair i{background:#fff;box-shadow:0 0 10px #fff;animation:st-blink 1.1s steps(1,end) infinite}
+.st-card:is(:hover,:focus-visible) .st-panel{transform:none;background:rgba(16,13,8,.58)}
+.st-card:is(:hover,:focus-visible) .st-mic{background:var(--pm-sun);color:#14110b}
+.st-card:is(:hover,:focus-visible) .st-mic::before{animation:st-ring 1.8s var(--pm-ease) infinite}
+.st-card:is(:hover,:focus-visible) .st-mic::after{animation:st-ring 1.8s var(--pm-ease) .9s infinite}
+.st-card:is(:hover,:focus-visible) .st-more{grid-template-rows:1fr}
+.st-card:is(:hover,:focus-visible) .st-eq i{background:linear-gradient(180deg,var(--pm-sun),#ff7a3d);animation:st-eq .75s ease-in-out infinite alternate;animation-delay:calc(var(--k,0) * -.137s)}
+@keyframes st-spin{to{--st-ang:360deg}}
+@keyframes st-eq{0%{height:4px}30%{height:20px}60%{height:8px}100%{height:16px}}
+@keyframes st-blink{50%{opacity:.25}}
+@keyframes st-ring{0%{transform:scale(1);opacity:.75}100%{transform:scale(1.85);opacity:0}}
+
+@media(max-width:1000px){
+  .st-grid.st-bento{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .st-bento .st-hero{grid-column:span 2;grid-row:span 1;min-height:440px}
+  .st-bento :is(.st-last-2,.st-last-3,.st-last-4){grid-column:auto}
+  .st-bento .st-last2{grid-column:span 2}
+}
+@media(max-width:560px){
+  .st-grid.st-bento{grid-template-columns:minmax(0,1fr);grid-auto-rows:auto}
+  .st-bento .st-hero,.st-bento .st-last2{grid-column:auto}
+  .st-bento .st-hero{min-height:400px}
+  .st-bento .st-card{min-height:290px}
+}
+@media(hover:none){.st-more{grid-template-rows:1fr}.st-panel{transform:none}}
+@media(prefers-reduced-motion:reduce){
+  .st-card::after,.st-mic::before,.st-mic::after,.st-eq i,.st-onair i{animation:none!important}
+  .st-media img,.st-panel,.st-glow,.st-more{transition:none!important}
+}
+
+/* ════════ Careers cards — "Pathway" ════════
+   An editorial card: framed photo in duotone, a giant outlined number behind the copy. On hover the card
+   rises, a light sweep crosses the photo as colour returns, the path line draws across the base and the
+   arrow turns to face up. */
+.cr-grid{display:grid;grid-template-columns:repeat(var(--cols,4),minmax(0,1fr));gap:18px}
+.cr-card{position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;gap:20px;padding:12px 12px 26px;border-radius:22px;color:inherit;background:color-mix(in srgb,currentColor 3.5%,transparent);border:1px solid color-mix(in srgb,currentColor 12%,transparent);transition:transform .7s var(--pm-ease),border-color .45s,background .45s,box-shadow .6s var(--pm-ease)}
+.cr-media{position:relative;display:block;aspect-ratio:16/10;border-radius:14px;overflow:hidden;background:color-mix(in srgb,currentColor 10%,transparent)}
+.cr-media img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) sepia(.35) hue-rotate(28deg) saturate(1.4) contrast(1.05);opacity:.82;transform:scale(1.07);transition:filter .9s var(--pm-ease),opacity .6s,transform 1.3s var(--pm-ease)}
+.cr-media::after{content:"";position:absolute;top:0;bottom:0;left:0;width:45%;background:linear-gradient(100deg,transparent,rgba(255,250,225,.55),transparent);transform:translateX(-140%) skewX(-18deg);pointer-events:none}
+.cr-body{position:relative;display:grid;gap:10px;padding:0 12px}
+.cr-step{display:inline-flex;align-items:center;gap:10px;font:600 10.5px/1 var(--pm-mono);letter-spacing:.14em;text-transform:uppercase;color:color-mix(in srgb,currentColor 60%,transparent)}
+.cr-step::before{content:"";width:16px;height:1.5px;background:currentColor;transition:width .6s var(--pm-ease),background .4s}
+.cr-body h3{margin:0;font:600 clamp(19px,1.5vw,23px)/1.18 var(--pm-serif);letter-spacing:-.025em}
+.cr-body p{margin:0;font-size:13.5px;line-height:1.62;color:color-mix(in srgb,currentColor 68%,transparent)}
+.cr-body ul{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:12.5px;color:color-mix(in srgb,currentColor 68%,transparent)}
+.cr-body ul li::before{content:"↗ ";color:var(--pm-olive)}
+.pm-dark .cr-body ul li::before{color:var(--pm-sun)}
+.cr-n{position:absolute;right:-6px;bottom:-26px;z-index:-1;font:800 clamp(96px,9vw,140px)/1 var(--pm-serif);letter-spacing:-.06em;color:transparent;-webkit-text-stroke:1px color-mix(in srgb,currentColor 16%,transparent);transition:transform .9s var(--pm-ease),-webkit-text-stroke-color .5s}
+.cr-go{position:absolute;top:24px;right:24px;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:#14150e;background:rgba(246,243,234,.88);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transform:rotate(45deg) scale(.85);opacity:0;transition:transform .6s var(--pm-ease),opacity .4s,background .4s}
+.cr-line{position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,var(--pm-olive),var(--pm-sun));transform:scaleX(0);transform-origin:left;transition:transform .8s var(--pm-ease)}
+.cr-card:is(:hover,:focus-visible){transform:translateY(-8px);border-color:color-mix(in srgb,currentColor 22%,transparent);background:color-mix(in srgb,currentColor 6%,transparent);box-shadow:0 30px 56px -34px rgba(0,0,0,.45)}
+.cr-card:is(:hover,:focus-visible) .cr-media img{filter:none;opacity:1;transform:scale(1)}
+.cr-card:is(:hover,:focus-visible) .cr-media::after{transform:translateX(330%) skewX(-18deg);transition:transform 1.1s var(--pm-ease)}
+.cr-card:is(:hover,:focus-visible) .cr-step{color:inherit}
+.cr-card:is(:hover,:focus-visible) .cr-step::before{width:34px;background:var(--pm-sun)}
+.cr-card:is(:hover,:focus-visible) .cr-n{transform:translateY(-14px);-webkit-text-stroke-color:color-mix(in srgb,var(--pm-sun) 70%,transparent)}
+.cr-card:is(:hover,:focus-visible) .cr-go{opacity:1;transform:rotate(0) scale(1);background:var(--pm-sun)}
+.cr-card:is(:hover,:focus-visible) .cr-line{transform:scaleX(1)}
+@media(hover:none){.cr-media img{filter:none;opacity:1;transform:none}.cr-go{opacity:1;transform:none}}
+
+@media(max-width:1000px){.st-grid,.cr-grid{--cols:2!important}}
+@media(max-width:560px){.st-grid,.cr-grid{--cols:1!important}.st-card{min-height:260px}}
+@media(prefers-reduced-motion:reduce){
+  .st-card,.cr-card,.st-media img,.cr-media img,.st-body,.cr-n,.cr-go,.cr-line,.cr-media::after{transition:none!important}
+  .st-card:is(:hover,:focus-visible),.cr-card:is(:hover,:focus-visible){transform:none}
+  .st-card .st-eq i,.st-card .st-onair i{animation:none!important}
+}
+
+/* ════════ Video feeds — compact ════════ */
+.vf-sec .pm-head-row{margin-bottom:clamp(22px,2.4vw,32px)!important}
+.vf-group+.vf-group{margin-top:clamp(26px,3vw,38px);padding-top:clamp(22px,2.6vw,32px)}
+.vf-group-head{margin-bottom:16px}
+.vf-grid,.vf-ig-grid{gap:16px}
+.vf-grid.one{max-width:620px}
+.vf-grid.two{max-width:900px}
+.vf-grid.many{max-width:1040px}
+.vf-yt-card.is-short .vf-media{max-height:400px}
+.vf-ig-grid.one{max-width:320px}
+.vf-ig-grid.two{max-width:660px}
+.vf-ig-grid.many{max-width:1000px}
+.vf-ig-frame{min-height:420px}
+.vf-ig-frame iframe{height:440px}
+.vf-card{border-radius:16px}
+.vf-card-body{gap:6px;padding:14px 16px 16px}
+.vf-card-body h3{font-size:16px}
+.vf-card-body p{font-size:13px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.vf-play{width:52px;height:52px;box-shadow:0 0 0 8px rgba(252,204,15,.2),0 14px 28px -8px rgba(0,0,0,.75)}
+@media(max-width:680px){
+  .vf-grid.one,.vf-grid.two,.vf-grid.many{max-width:520px}
+  .vf-ig-grid.one,.vf-ig-grid.two,.vf-ig-grid.many{max-width:340px}
+  .vf-ig-frame{min-height:400px}
+  .vf-ig-frame iframe{height:420px}
+}
+/* keep the scroll-reveal transition and add the card hover ones (the reveal rule would otherwise replace them) */
+html.js .pm-site :is(.st-card,.cr-card)[data-v]{transition:opacity .9s var(--pm-ease) var(--d,0s),translate 1.15s var(--pm-ease) var(--d,0s),transform .7s var(--pm-ease),box-shadow .6s var(--pm-ease),border-color .45s,background .45s}
+
+/* ════════ Brand logo (RAKVIH Solutions) — original colours everywhere ════════ */
+.pm-brand img.pm-logo{width:auto!important;height:50px!important;max-width:none;object-fit:contain;display:block}
+.pm-foot .pm-brand img.pm-logo{height:56px!important}
+@media(max-width:560px){.pm-head .pm-brand img.pm-logo{height:38px!important}}
+
+/* home stats strip: three figures */
+.pm-stats-band .pm-stats{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+@media(max-width:860px){
+  .pm-stats-band .pm-stats>div:nth-child(3){padding-left:14px!important;border-left:1px solid var(--pm-line)!important}
+  .pm-stats-band .pm-stats>div:nth-child(n+3){border-top:0!important;padding-top:4px!important}
+}
+
+/* Programmes header shares the course grid's columns, so the intro copy starts exactly where the course list starts */
+.pm-sec .pm-head-row.pm-head-row--ci{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)!important;gap:20px clamp(28px,4vw,64px)!important;align-items:end!important}
+.pm-sec .pm-head-row.pm-head-row--ci>div:last-child:not(:first-child){max-width:none!important;justify-self:stretch;padding-bottom:10px}
+.pm-sec .pm-head-row.pm-head-row--ci .pm-lede{max-width:46ch}
+@media(max-width:900px){
+  .pm-sec .pm-head-row.pm-head-row--ci{grid-template-columns:minmax(0,1fr)!important;align-items:start!important;gap:14px!important}
+  .pm-sec .pm-head-row.pm-head-row--ci>div:last-child:not(:first-child){padding-bottom:0}
+}
+
+/* Programmes: the photo fills the full height of the course list — no empty gap beneath it */
+@media(min-width:901px){
+  .pm-sec .cs{align-items:stretch!important}
+  .pm-sec .cs-viewer{position:relative!important;top:auto!important;height:100%;display:flex}
+  .pm-sec .cs-frame{aspect-ratio:auto!important;max-height:none!important;height:100%!important;min-height:520px;flex:1}
+  .pm-sec .cs-list{align-self:stretch!important}
+}
+
+/* Courses page: each programme photo matches the height of its content column exactly */
+@media(min-width:901px){
+  .pm-spread{align-items:stretch!important}
+  .pm-spread .pm-plate{position:relative!important;top:auto!important;display:flex;flex-direction:column;height:100%}
+  .pm-spread .pm-plate-img{aspect-ratio:auto!important;flex:1 1 auto;min-height:380px}
+  .pm-spread .pm-plate-img img{inset:0!important;height:100%!important}
+}
+
+/* logo lockup: transparent logo with the "RAKVIH DIGITAL" name set underneath, centred to the logo width */
+.pm-brand .pm-logo-lockup{display:inline-flex!important;flex-direction:column;align-items:stretch;gap:5px;line-height:1}
+.pm-head .pm-brand img.pm-logo{height:40px!important}
+.pm-foot .pm-brand img.pm-logo{height:52px!important}
+.pm-brand .pm-logo-name{display:block!important;text-align:center;font:700 10.5px/1 var(--pm-sans)!important;letter-spacing:.22em;text-indent:.22em;text-transform:uppercase;white-space:nowrap;color:var(--pm-bone)}
+.pm-brand .pm-logo-name b{font:inherit!important;letter-spacing:inherit!important;white-space:inherit!important;color:var(--pm-sun)}
+.pm-foot .pm-brand .pm-logo-name{font-size:12px!important;letter-spacing:.38em;text-indent:.38em}
+:root[data-theme="light"]:not(.hdr-media) .pm-head .pm-brand .pm-logo-name,
+:root[data-theme="light"] .pm-site .pm-foot .pm-brand .pm-logo-name{color:#14150e}
+:root[data-theme="light"]:not(.hdr-media) .pm-head .pm-brand .pm-logo-name b,
+:root[data-theme="light"] .pm-site .pm-foot .pm-brand .pm-logo-name b{color:#4f5723}
+@media(max-width:560px){.pm-head .pm-brand img.pm-logo{height:32px!important}.pm-head .pm-brand .pm-logo-name{font-size:8.5px!important;letter-spacing:.28em;text-indent:.28em}.pm-brand .pm-logo-lockup{gap:4px}}

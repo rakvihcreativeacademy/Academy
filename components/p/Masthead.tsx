@@ -6,7 +6,9 @@ import { nav, site } from '@/lib/site';
 import { ThemeButton, ThemeSwitch } from '@/components/p/ThemeToggle';
 
 const useIso = typeof window === 'undefined' ? useEffect : useLayoutEffect;
-const headerNav = nav.filter(l => l.href !== '/about');
+// '/projects' (Student Work) is hidden from the header for now — the page itself still works. Remove it here to show it again.
+const hiddenInHeader = new Set(['/about', '/projects']);
+const headerNav = nav.filter(l => !hiddenInHeader.has(l.href));
 
 /** Masthead: brand · glass nav capsule (with a dedicated Home button and a sliding active pill) · Apply. */
 export default function Masthead() {
@@ -55,8 +57,7 @@ export default function Masthead() {
   return <>
     <header className="pm-head">
       <Link href="/" className="pm-brand" aria-label={`${site.name} — home`}>
-        <img src="/brand/rakvih-mark-128.png" alt="" width={40} height={40} />
-        <span className="pm-brand-name"><b>Rakvih <i>Digital</i></b><small>Creative · Media · Tech</small></span>
+        <span className="pm-logo-lockup"><img className="pm-logo" src="/brand/rakvih-logo.png" alt="RAKVIH Solutions Private Limited" width={1052} height={374} /><span className="pm-logo-name">Rakvih <b>Digital</b></span></span>
       </Link>
       <nav className="pm-nav" aria-label="Main" ref={capsule} onMouseLeave={home}>
         <span className={'pm-nav-pill' + (glide ? ' glide' : '')} aria-hidden="true" style={pill ? { transform: `translateX(${pill.x}px)`, width: pill.w, opacity: 1 } : { opacity: 0 }} />
