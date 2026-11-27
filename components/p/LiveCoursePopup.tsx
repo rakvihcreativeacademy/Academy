@@ -8,7 +8,7 @@ import Link from '@/components/SiteLink';
 /**
  * Homepage spotlight popup for the Live Professional Video Editing course.
  * Appears every time the home page loads or refreshes.
- * Split layout: cinematic banner on the left, course highlights + Read More button on the right.
+ * Compact text-only announcement with course highlights and a Read More link.
  */
 export default function LiveCoursePopup() {
   const pathname = usePathname();
@@ -67,31 +67,6 @@ export default function LiveCoursePopup() {
           <X size={18} strokeWidth={2.2} />
         </button>
 
-        {/* Left Side: Live Course Banner */}
-        <div className="pm-promo-media">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/images/banners/home-editing-first-v2.webp"
-            alt="Professional Video Editing studio training at RAKVIH Digital"
-          />
-          <div className="pm-promo-media-shade" aria-hidden="true" />
-          <span className="pm-promo-live-pill">
-            <i aria-hidden="true" />
-            Live Course · Enrolling Now
-          </span>
-          <div className="pm-promo-media-foot">
-            <span>
-              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" style={{ borderRadius: 5, boxShadow: '0 2px 8px rgba(0,0,0,0.4)' }}>
-                <rect width="24" height="24" rx="5" fill="#00005B" />
-                <text x="12" y="16" textAnchor="middle" fill="#9999FF" fontSize="11.5" fontWeight="700" fontFamily="system-ui, -apple-system, sans-serif">Pr</text>
-              </svg>
-              Adobe Premiere Pro
-            </span>
-            <strong>45 days Intensive Studio Program</strong>
-          </div>
-        </div>
-
-        {/* Right Side: Course Contents & Read More CTA */}
         <div className="pm-promo-body">
           <p className="pm-promo-eyebrow">Now Live at RAKVIH Solutions Private Limited</p>
           <h2 id="pm-promo-title" className="pm-promo-title">
@@ -139,9 +114,6 @@ export default function LiveCoursePopup() {
             >
               Read More <ArrowUpRight size={16} />
             </Link>
-            <button type="button" className="pm-promo-dismiss" onClick={close}>
-              Maybe later
-            </button>
           </div>
         </div>
       </div>

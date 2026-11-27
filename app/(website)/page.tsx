@@ -1,28 +1,22 @@
 import Link from '@/components/SiteLink';
 import { ArrowUpRight } from 'lucide-react';
 import Hero from '@/components/p/Hero';
-import EditingStage from '@/components/p/EditingStage';
-import VideographyStage from '@/components/p/VideographyStage';
 import CourseIndex, { type CourseIndexItem } from '@/components/p/CourseIndex';
 import LiveCourseCard, { type LiveCourseCardItem } from '@/components/p/LiveCourseCard';
-import VideoFeeds from '@/components/p/VideoFeeds';
 import Words from '@/components/v/Words';
 import Pillars from '@/components/p/Pillars';
-import ShootEdit from '@/components/p/ShootEdit';
 import StatsStrip from '@/components/p/StatsStrip';
 import { courses as staticCourses } from '@/lib/courses';
 import { courseImages } from '@/lib/course-images';
 import { getPageContent } from '@/lib/cms/server';
 import { isCourseEnabled, resolveCourseStatus } from '@/lib/cms/schema';
 import { getVideoEditingOffering } from '@/lib/payments-server';
-import { getPublicVideoFeeds } from '@/lib/video-feeds-server';
 import { productionServices } from '@/lib/site';
 
 export default async function Home() {
-  const [courseDoc, videoEditingOffering, videoFeeds] = await Promise.all([
+  const [courseDoc, videoEditingOffering] = await Promise.all([
     getPageContent('courses'),
     getVideoEditingOffering(),
-    getPublicVideoFeeds(),
   ]);
 
   const cmsItems = courseDoc.sections.flatMap(s => s.items);
@@ -80,7 +74,6 @@ export default async function Home() {
       </div>
     </section>
 
-    <EditingStage />
 
     {/* Programmes */}
     <section className="pm-sec pm-dark" data-dark>
@@ -102,22 +95,19 @@ export default async function Home() {
 
     <LiveCourseCard courses={liveCourses} videoEditingOffering={videoEditingOffering} />
 
-    <VideographyStage label="(03)" />
 
     {/* Standard */}
     <section className="pm-sec pm-paper">
       <div className="pm-wrap">
         <div className="pm-head-row">
           <div data-v>
-            <p className="pm-label rule">(04) — <b>Why choose RAKVIH Digital?</b></p>
+            <p className="pm-label rule">(02) — <b>Why choose RAKVIH Digital?</b></p>
             <h2 className="pm-h2"><Words text="Everything you need" /> <em><Words text="to grow as a creator." start={3} /></em></h2>
           </div>
         </div>
         <Pillars />
       </div>
     </section>
-    <ShootEdit label="(05)" />
 
-    <VideoFeeds feeds={videoFeeds} label="(06)" />
   </main>;
 }

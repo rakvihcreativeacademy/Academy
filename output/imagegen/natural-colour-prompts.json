@@ -1,0 +1,270 @@
+{
+  "method": "Built-in image_gen",
+  "images": [
+    {
+      "file": "public/images/academy-editing.webp",
+      "scene": "A professional Indian female editor in a cobalt blue shirt editing a film on dual monitors in a neutral white and walnut studio",
+      "prompt": "Use case: photorealistic-natural. A professional Indian female editor in a cobalt blue shirt editing a film on dual monitors in a neutral white and walnut studio. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: neutral daylight with blue and coral accents, navy or white clothes. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/course-ai-creative.webp",
+      "scene": "Indian creative professional in a plum shirt exploring colourful AI concept art on a pen display in a bright neutral office",
+      "prompt": "Use case: photorealistic-natural. Indian creative professional in a plum shirt exploring colourful AI concept art on a pen display in a bright neutral office. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: warm natural wood with burgundy and cream accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/academy-filmmaking.webp",
+      "scene": "Indian film crew wearing varied burgundy, navy and white clothing shooting a dramatic scene on an indoor film set",
+      "prompt": "Use case: photorealistic-natural. Indian film crew wearing varied burgundy, navy and white clothing shooting a dramatic scene on an indoor film set. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: bright neutral studio with violet and soft orange accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/course-lighting-sound.webp",
+      "scene": "Indian audio engineer in a red shirt checking a mixing console beside a lighting technician in a dark navy recording studio",
+      "prompt": "Use case: photorealistic-natural. Indian audio engineer in a red shirt checking a mixing console beside a lighting technician in a dark navy recording studio. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: charcoal and cool blue studio with red accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/course-content-creation.webp",
+      "scene": "Indian female creator in a sky blue shirt filming a video with a smartphone and softbox against a peach studio backdrop",
+      "prompt": "Use case: photorealistic-natural. Indian female creator in a sky blue shirt filming a video with a smartphone and softbox against a peach studio backdrop. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: natural daylight with terracotta, blue and off-white accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/course-motion-graphics.webp",
+      "scene": "Indian motion designer in a violet shirt creating vivid magenta blue and orange 3D animation on a large monitor",
+      "prompt": "Use case: photorealistic-natural. Indian motion designer in a violet shirt creating vivid magenta blue and orange 3D animation on a large monitor. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: neutral grey studio with lilac, navy and soft amber accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/course-cinematography.webp",
+      "scene": "Indian cinematographer in a denim blue shirt operating a professional cinema camera on a set with orange practical lighting",
+      "prompt": "Use case: photorealistic-natural. Indian cinematographer in a denim blue shirt operating a professional cinema camera on a set with orange practical lighting. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: neutral daylight with blue and coral accents, navy or white clothes. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/editing-workstation-real.webp",
+      "scene": "A real professional editing workstation with dual reference displays, multitrack timeline, colour grading trackballs and keyboard, neutral charcoal desk, blue accent lighting, natural warm wood",
+      "prompt": "Use case: photorealistic-natural. A real professional editing workstation with dual reference displays, multitrack timeline, colour grading trackballs and keyboard, neutral charcoal desk, blue accent lighting, natural warm wood. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: warm natural wood with burgundy and cream accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/academy-studio.webp",
+      "scene": "An empty premium podcast studio with navy upholstered chairs, walnut desk, charcoal acoustic panels and warm practical lamps",
+      "prompt": "Use case: photorealistic-natural. An empty premium podcast studio with navy upholstered chairs, walnut desk, charcoal acoustic panels and warm practical lamps. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: bright neutral studio with violet and soft orange accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/academy-photography.webp",
+      "scene": "Indian photographer in a coral shirt photographing a portrait in a white photography studio with a pale blue backdrop",
+      "prompt": "Use case: photorealistic-natural. Indian photographer in a coral shirt photographing a portrait in a white photography studio with a pale blue backdrop. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: charcoal and cool blue studio with red accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/editing-frames/dance-film.webp",
+      "scene": "Cinematic film still of an adult Indian contemporary dancer wearing flowing crimson red fabric in a sunlit heritage courtyard",
+      "prompt": "Use case: photorealistic-natural. Cinematic film still of an adult Indian contemporary dancer wearing flowing crimson red fabric in a sunlit heritage courtyard. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: natural daylight with terracotta, blue and off-white accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/banners/courses-editing-mentor.webp",
+      "scene": "Indian female mentor wearing burgundy guiding a student in blue at a video editing timeline workstation in a bright academy lab",
+      "prompt": "Use case: photorealistic-natural. Indian female mentor wearing burgundy guiding a student in blue at a video editing timeline workstation in a bright academy lab. Single polished editorial photograph for a creative academy website, landscape 16:9. Colour direction: neutral grey studio with lilac, navy and soft amber accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/banners/editing-collaboration.webp",
+      "scene": "Indian editor in rust orange and director in navy reviewing a finished film together at large monitor in a bright wood and white studio",
+      "prompt": "Use case: photorealistic-natural. Indian editor in rust orange and director in navy reviewing a finished film together at large monitor in a bright wood and white studio. Single polished editorial photograph for a creative academy website, landscape 16:9. Colour direction: neutral daylight with blue and coral accents, navy or white clothes. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/banners/home-editing-first-v2.webp",
+      "scene": "Wide photograph of a professional Indian woman video editor in a burgundy blouse working at dual monitors showing footage and multitrack timeline, neutral charcoal post-production studio, subjects centre-right and uncluttered darker left area for headline",
+      "prompt": "Use case: photorealistic-natural. Wide photograph of a professional Indian woman video editor in a burgundy blouse working at dual monitors showing footage and multitrack timeline, neutral charcoal post-production studio, subjects centre-right and uncluttered darker left area for headline. Single polished editorial photograph for a creative academy website, landscape 16:9. Colour direction: warm natural wood with burgundy and cream accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/banners/editing-colour.webp",
+      "scene": "Indian male colourist in a navy shirt operating three trackball grading console, cinematic landscape on display, neutral grey studio with subtle blue lighting",
+      "prompt": "Use case: photorealistic-natural. Indian male colourist in a navy shirt operating three trackball grading console, cinematic landscape on display, neutral grey studio with subtle blue lighting. Single polished editorial photograph for a creative academy website, landscape 16:9. Colour direction: bright neutral studio with violet and soft orange accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/banners/editing-timeline.webp",
+      "scene": "Indian woman video editor in a pale blue shirt at a dual monitor video timeline workstation, modern white editing room",
+      "prompt": "Use case: photorealistic-natural. Indian woman video editor in a pale blue shirt at a dual monitor video timeline workstation, modern white editing room. Single polished editorial photograph for a creative academy website, landscape 16:9. Colour direction: charcoal and cool blue studio with red accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/banners/podcast-banner.webp",
+      "scene": "Woman host wearing blue and male guest wearing warm rust conversing with boom microphones in a navy and walnut podcast studio",
+      "prompt": "Use case: photorealistic-natural. Woman host wearing blue and male guest wearing warm rust conversing with boom microphones in a navy and walnut podcast studio. Single polished editorial photograph for a creative academy website, landscape 16:9. Colour direction: natural daylight with terracotta, blue and off-white accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/careers/freelance-video-creator.webp",
+      "scene": "Indian creative professional demonstrating the role of freelance video creator, realistic relevant professional tools and action clearly visible",
+      "prompt": "Use case: photorealistic-natural. Indian creative professional demonstrating the role of freelance video creator, realistic relevant professional tools and action clearly visible. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: neutral grey studio with lilac, navy and soft amber accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/careers/video-production-executive.webp",
+      "scene": "Indian creative professional demonstrating the role of video production executive, realistic relevant professional tools and action clearly visible",
+      "prompt": "Use case: photorealistic-natural. Indian creative professional demonstrating the role of video production executive, realistic relevant professional tools and action clearly visible. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: neutral daylight with blue and coral accents, navy or white clothes. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/careers/career-guidance.webp",
+      "scene": "Indian creative professional demonstrating the role of career guidance, realistic relevant professional tools and action clearly visible",
+      "prompt": "Use case: photorealistic-natural. Indian creative professional demonstrating the role of career guidance, realistic relevant professional tools and action clearly visible. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: warm natural wood with burgundy and cream accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/careers/portfolio-development.webp",
+      "scene": "Indian creative professional demonstrating the role of portfolio development, realistic relevant professional tools and action clearly visible",
+      "prompt": "Use case: photorealistic-natural. Indian creative professional demonstrating the role of portfolio development, realistic relevant professional tools and action clearly visible. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: bright neutral studio with violet and soft orange accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/careers/camera-operator.webp",
+      "scene": "Indian creative professional demonstrating the role of camera operator, realistic relevant professional tools and action clearly visible",
+      "prompt": "Use case: photorealistic-natural. Indian creative professional demonstrating the role of camera operator, realistic relevant professional tools and action clearly visible. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: charcoal and cool blue studio with red accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/careers/practical-project-experience.webp",
+      "scene": "Indian creative professional demonstrating the role of practical project experience, realistic relevant professional tools and action clearly visible",
+      "prompt": "Use case: photorealistic-natural. Indian creative professional demonstrating the role of practical project experience, realistic relevant professional tools and action clearly visible. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: natural daylight with terracotta, blue and off-white accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/careers/film-production-assistant.webp",
+      "scene": "Indian creative professional demonstrating the role of film production assistant, realistic relevant professional tools and action clearly visible",
+      "prompt": "Use case: photorealistic-natural. Indian creative professional demonstrating the role of film production assistant, realistic relevant professional tools and action clearly visible. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: neutral grey studio with lilac, navy and soft amber accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/careers/assistant-director.webp",
+      "scene": "Indian creative professional demonstrating the role of assistant director, realistic relevant professional tools and action clearly visible",
+      "prompt": "Use case: photorealistic-natural. Indian creative professional demonstrating the role of assistant director, realistic relevant professional tools and action clearly visible. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: neutral daylight with blue and coral accents, navy or white clothes. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/careers/placement-assistance.webp",
+      "scene": "Indian creative professional demonstrating the role of placement assistance, realistic relevant professional tools and action clearly visible",
+      "prompt": "Use case: photorealistic-natural. Indian creative professional demonstrating the role of placement assistance, realistic relevant professional tools and action clearly visible. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: warm natural wood with burgundy and cream accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/production/plan-together.webp",
+      "scene": "Producer and director planning a shoot with visual storyboard cards and calendar at a desk",
+      "prompt": "Use case: photorealistic-natural. Producer and director planning a shoot with visual storyboard cards and calendar at a desk. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: bright neutral studio with violet and soft orange accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/production/commercial-photo.webp",
+      "scene": "Professional Indian creative production team working on commercial photo, the named activity and relevant real equipment clearly visible",
+      "prompt": "Use case: photorealistic-natural. Professional Indian creative production team working on commercial photo, the named activity and relevant real equipment clearly visible. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: charcoal and cool blue studio with red accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/production/product-advertisement.webp",
+      "scene": "Professional Indian creative production team working on product advertisement, the named activity and relevant real equipment clearly visible",
+      "prompt": "Use case: photorealistic-natural. Professional Indian creative production team working on product advertisement, the named activity and relevant real equipment clearly visible. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: natural daylight with terracotta, blue and off-white accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/production/share-idea.webp",
+      "scene": "Client explaining a creative idea to a producer across a desk with moodboard photographs",
+      "prompt": "Use case: photorealistic-natural. Client explaining a creative idea to a producer across a desk with moodboard photographs. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: neutral grey studio with lilac, navy and soft amber accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/production/event-coverage.webp",
+      "scene": "Professional Indian creative production team working on event coverage, the named activity and relevant real equipment clearly visible",
+      "prompt": "Use case: photorealistic-natural. Professional Indian creative production team working on event coverage, the named activity and relevant real equipment clearly visible. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: neutral daylight with blue and coral accents, navy or white clothes. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/production/social-reels.webp",
+      "scene": "Professional Indian creative production team working on social reels, the named activity and relevant real equipment clearly visible",
+      "prompt": "Use case: photorealistic-natural. Professional Indian creative production team working on social reels, the named activity and relevant real equipment clearly visible. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: warm natural wood with burgundy and cream accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/production/deliver.webp",
+      "scene": "Producer showing a client a completed brand film on a laptop, reviewing delivery files together",
+      "prompt": "Use case: photorealistic-natural. Producer showing a client a completed brand film on a laptop, reviewing delivery files together. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: bright neutral studio with violet and soft orange accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/production/brand-film.webp",
+      "scene": "Professional Indian creative production team working on brand film, the named activity and relevant real equipment clearly visible",
+      "prompt": "Use case: photorealistic-natural. Professional Indian creative production team working on brand film, the named activity and relevant real equipment clearly visible. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: charcoal and cool blue studio with red accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/production/shoot-edit.webp",
+      "scene": "Professional video editor working on a multitrack timeline and film preview with cinema camera nearby",
+      "prompt": "Use case: photorealistic-natural. Professional video editor working on a multitrack timeline and film preview with cinema camera nearby. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: natural daylight with terracotta, blue and off-white accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/production/corporate-video.webp",
+      "scene": "Professional Indian creative production team working on corporate video, the named activity and relevant real equipment clearly visible",
+      "prompt": "Use case: photorealistic-natural. Professional Indian creative production team working on corporate video, the named activity and relevant real equipment clearly visible. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: neutral grey studio with lilac, navy and soft amber accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/production/documentary.webp",
+      "scene": "Professional Indian creative production team working on documentary, the named activity and relevant real equipment clearly visible",
+      "prompt": "Use case: photorealistic-natural. Professional Indian creative production team working on documentary, the named activity and relevant real equipment clearly visible. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: neutral daylight with blue and coral accents, navy or white clothes. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/production/wedding-film.webp",
+      "scene": "Professional Indian creative production team working on wedding film, the named activity and relevant real equipment clearly visible",
+      "prompt": "Use case: photorealistic-natural. Professional Indian creative production team working on wedding film, the named activity and relevant real equipment clearly visible. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: warm natural wood with burgundy and cream accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/podcast/educational-institutions.webp",
+      "scene": "Indian professor and adult university student recording an educational discussion at studio microphones",
+      "prompt": "Use case: photorealistic-natural. Indian professor and adult university student recording an educational discussion at studio microphones. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: bright neutral studio with violet and soft orange accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/podcast/interviewers-creators.webp",
+      "scene": "Experienced Indian interviewer holding question cards interviewing a female creator at studio microphones",
+      "prompt": "Use case: photorealistic-natural. Experienced Indian interviewer holding question cards interviewing a female creator at studio microphones. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: charcoal and cool blue studio with red accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/podcast/editing-suite.webp",
+      "scene": "Audio editor at a multitrack podcast editing workstation wearing headphones",
+      "prompt": "Use case: photorealistic-natural. Audio editor at a multitrack podcast editing workstation wearing headphones. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: natural daylight with terracotta, blue and off-white accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/podcast/youtubers-influencers.webp",
+      "scene": "Premium professional podcast studio scene specifically illustrating youtubers influencers, appropriate microphones, studio facilities or adult Indian guests as relevant",
+      "prompt": "Use case: photorealistic-natural. Premium professional podcast studio scene specifically illustrating youtubers influencers, appropriate microphones, studio facilities or adult Indian guests as relevant. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: neutral grey studio with lilac, navy and soft amber accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/podcast/microphones.webp",
+      "scene": "Close-up product photograph of a professional broadcast microphone on a boom arm, studio softly blurred behind",
+      "prompt": "Use case: photorealistic-natural. Close-up product photograph of a professional broadcast microphone on a boom arm, studio softly blurred behind. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: neutral daylight with blue and coral accents, navy or white clothes. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/podcast/video-production.webp",
+      "scene": "Producer operating a vision switcher and multi-view screen in a video podcast control room",
+      "prompt": "Use case: photorealistic-natural. Producer operating a vision switcher and multi-view screen in a video podcast control room. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: warm natural wood with burgundy and cream accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/podcast/multi-camera.webp",
+      "scene": "Wide behind-the-scenes podcast shoot with two cameras on tripods facing a host and guest with microphones",
+      "prompt": "Use case: photorealistic-natural. Wide behind-the-scenes podcast shoot with two cameras on tripods facing a host and guest with microphones. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: bright neutral studio with violet and soft orange accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/podcast/corporate-companies.webp",
+      "scene": "Premium professional podcast studio scene specifically illustrating corporate companies, appropriate microphones, studio facilities or adult Indian guests as relevant",
+      "prompt": "Use case: photorealistic-natural. Premium professional podcast studio scene specifically illustrating corporate companies, appropriate microphones, studio facilities or adult Indian guests as relevant. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: charcoal and cool blue studio with red accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/podcast/business-session.webp",
+      "scene": "Premium professional podcast studio scene specifically illustrating business session, appropriate microphones, studio facilities or adult Indian guests as relevant",
+      "prompt": "Use case: photorealistic-natural. Premium professional podcast studio scene specifically illustrating business session, appropriate microphones, studio facilities or adult Indian guests as relevant. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: natural daylight with terracotta, blue and off-white accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/podcast/studio-lighting.webp",
+      "scene": "Lighting technician adjusting a large studio softbox and LED light for a podcast recording",
+      "prompt": "Use case: photorealistic-natural. Lighting technician adjusting a large studio softbox and LED light for a podcast recording. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: neutral grey studio with lilac, navy and soft amber accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/podcast/audio-recording.webp",
+      "scene": "An Indian female voice artist wearing headphones speaking into a condenser microphone and pop filter",
+      "prompt": "Use case: photorealistic-natural. An Indian female voice artist wearing headphones speaking into a condenser microphone and pop filter. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: neutral daylight with blue and coral accents, navy or white clothes. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/podcast/acoustic-treatment.webp",
+      "scene": "Empty professional recording room with visible sound absorbing fabric wall panels and timber acoustic diffusers",
+      "prompt": "Use case: photorealistic-natural. Empty professional recording room with visible sound absorbing fabric wall panels and timber acoustic diffusers. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: warm natural wood with burgundy and cream accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/podcast/comfortable-environment.webp",
+      "scene": "An inviting empty recording lounge with comfortable upholstered chairs, side table, warm lamp and boom microphones",
+      "prompt": "Use case: photorealistic-natural. An inviting empty recording lounge with comfortable upholstered chairs, side table, warm lamp and boom microphones. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: bright neutral studio with violet and soft orange accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/podcast/marketing-agencies.webp",
+      "scene": "Indian marketing creative team recording a branded podcast with campaign thumbnails on a tablet",
+      "prompt": "Use case: photorealistic-natural. Indian marketing creative team recording a branded podcast with campaign thumbnails on a tablet. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: charcoal and cool blue studio with red accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    },
+    {
+      "file": "public/images/podcast/interview-session.webp",
+      "scene": "Premium professional podcast studio scene specifically illustrating interview session, appropriate microphones, studio facilities or adult Indian guests as relevant",
+      "prompt": "Use case: photorealistic-natural. Premium professional podcast studio scene specifically illustrating interview session, appropriate microphones, studio facilities or adult Indian guests as relevant. Single polished editorial photograph for a creative academy website, landscape 3:2. Colour direction: natural daylight with terracotta, blue and off-white accents. Full natural colour, neutral white balance, believable skin tones. Deliberately varied wardrobe colours and environment, NO green colour grading, NO olive clothing, NO green walls, no green monochrome treatment, no excessive plants. Correct professional equipment, realistic anatomy, attractive candid photographic composition. No text overlay, no logos, no watermark, no collage."
+    }
+  ]
+}

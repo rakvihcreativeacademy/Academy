@@ -95,7 +95,7 @@ README.md
 
 ## Enquiries → WhatsApp
 
-Every enquiry form (home, admissions, podcast studio, production, contact) validates the details, stores them for the admin panel when Supabase is connected, then opens WhatsApp with the details pre-filled to **+91 82963 92047**. Change the number, email, website and social links in `lib/site.ts`.
+Every enquiry form (home, admissions, podcast studio, production, contact) validates the details, stores them for the admin panel when Supabase is connected, then opens WhatsApp with the details pre-filled to **+91 85499 41515**. Change the number, email, website and social links in `lib/site.ts`.
 
 ## Admin panel (`/admin`)
 

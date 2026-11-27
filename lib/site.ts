@@ -13,8 +13,8 @@ export const site = {
   closing: 'Learn the Art. Master the Technology. Create Your Future.',
   location: 'Bengaluru, Karnataka, India',
   /** WhatsApp number that receives every enquiry (digits only, with country code). */
-  whatsapp: '918296392047',
-  whatsappDisplay: '+91 82963 92047',
+  whatsapp: '918549941515',
+  whatsappDisplay: '+91 85499 41515',
   email: '', // TODO: official email (hidden on the site until set)
   website: '', // TODO: website domain (hidden on the site until set)
   social: [ // TODO: placeholder links — replace with the real RAKVIH Digital profiles
