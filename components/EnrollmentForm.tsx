@@ -12,7 +12,7 @@ declare global {
   }
 }
 
-const MODES = ['In-studio (Bengaluru)', 'Live Online', 'Weekend Batch'];
+const DEFAULT_LEARNING_MODE = 'In-studio (Bengaluru)';
 const GENDERS = ['Male', 'Female', 'Non-binary', 'Prefer not to say'];
 const OCCUPATIONS = ['Student', 'Working Professional', 'Freelancer', 'Content Creator', 'Business Owner', 'Other'];
 const EXPERIENCE_LEVELS = ['Complete Beginner', 'Some Basic Editing', 'Intermediate', 'Advanced'];
@@ -68,7 +68,6 @@ export default function EnrollmentForm({
   const [education, setEducation] = useState('');
   const [occupation, setOccupation] = useState(OCCUPATIONS[0]);
   const [experienceLevel, setExperienceLevel] = useState(EXPERIENCE_LEVELS[0]);
-  const [learningMode, setLearningMode] = useState(MODES[0]);
   const [emergencyContactName, setEmergencyContactName] = useState('');
   const [emergencyContactPhone, setEmergencyContactPhone] = useState('');
   const [goals, setGoals] = useState('');
@@ -151,7 +150,7 @@ export default function EnrollmentForm({
           education,
           occupation,
           experienceLevel,
-          learningMode,
+          learningMode: DEFAULT_LEARNING_MODE,
           emergencyContactName,
           emergencyContactPhone,
           goals,
@@ -174,7 +173,7 @@ export default function EnrollmentForm({
         image: '/brand/rakvih-mark-128.png',
         order_id: orderData.orderId,
         prefill: { name, email, contact: phone },
-        notes: { course: 'Professional Video Editing', mode: learningMode },
+        notes: { course: 'Professional Video Editing', mode: DEFAULT_LEARNING_MODE },
         theme: { color: '#4f5723' },
         modal: {
           ondismiss: () => setBusyState(false),
@@ -332,7 +331,7 @@ export default function EnrollmentForm({
     </fieldset>
 
     <fieldset className="pm-enroll-group">
-      <legend>04 · Background &amp; batch</legend>
+      <legend>04 · Background</legend>
       <div className="pm-pay-row">
         <label>
           Highest qualification *
@@ -345,17 +344,11 @@ export default function EnrollmentForm({
           </select>
         </label>
       </div>
-      <div className="pm-pay-row">
+      <div className="pm-pay-row single">
         <label>
           Video editing experience *
           <select value={experienceLevel} onChange={e => setExperienceLevel(e.target.value)}>
             {EXPERIENCE_LEVELS.map(l => <option key={l} value={l}>{l}</option>)}
-          </select>
-        </label>
-        <label>
-          Preferred batch mode *
-          <select value={learningMode} onChange={e => setLearningMode(e.target.value)}>
-            {MODES.map(m => <option key={m} value={m}>{m}</option>)}
           </select>
         </label>
       </div>

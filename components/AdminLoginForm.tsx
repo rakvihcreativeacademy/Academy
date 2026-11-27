@@ -16,7 +16,7 @@ export default function AdminLoginForm({ next, disabled }: { next: string; disab
     try { const r = await authenticate(new FormData(e.currentTarget)); if (r?.error) setError(r.error); }
     finally { setBusy(false); }
   }}>
-    <input type="hidden" name="mode" value="signin" />
+    <input type="hidden" name="mode" value="admin" />
     <input type="hidden" name="next" value={next} />
     <label className="al2-field">
       <span>Admin email</span>

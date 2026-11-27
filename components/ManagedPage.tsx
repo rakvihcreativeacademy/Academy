@@ -9,6 +9,7 @@ import { getVideoEditingOffering } from '@/lib/payments-server';
 import type { PageKey } from '@/lib/cms/schema';
 import { configured } from '@/lib/supabase/config';
 import { createPublicClient } from '@/lib/supabase/public';
+import { createClient as createServerClient } from '@/lib/supabase/server';
 import type { Project } from '@/lib/types';
 import { podcastImage, podcastItemImage } from '@/lib/podcast-images';
 import { itemImages } from '@/lib/item-images';
@@ -27,6 +28,16 @@ export default async function ManagedPage({ page }: { page: PageKey }) {
   const doc = await getPageContent(page);
   const courseDoc = page === 'courses' ? doc : await getPageContent('courses');
   const videoEditingOffering = page === 'courses' ? await getVideoEditingOffering() : undefined;
+  let isLoggedIn = false;
+  if (page === 'courses' && configured) {
+    try {
+      const db = await createServerClient();
+      const { data: { user } } = await db.auth.getUser();
+      isLoggedIn = Boolean(user);
+    } catch {
+      isLoggedIn = false;
+    }
+  }
   const courseOptions = courseDoc.sections.flatMap(s => s.items.map(i => i.title));
   let projects: Project[] = [];
   if (page === 'projects' && configured) {
@@ -57,7 +68,7 @@ export default async function ManagedPage({ page }: { page: PageKey }) {
     <ChapterNav items={chapters} title={page === 'courses' ? 'Programmes' : labels[page]} />
     {page === 'production' && <ShootEdit label="On set" variant="production" />}
 
-    {page === 'courses' ? <CourseListing sections={doc.sections} videoEditingOffering={videoEditingOffering} /> : doc.sections.map((section, si) => {
+    {page === 'courses' ? <CourseListing sections={doc.sections} videoEditingOffering={videoEditingOffering} isLoggedIn={isLoggedIn} /> : doc.sections.map((section, si) => {
       const tone = tones[si % tones.length];
       const dark = tone === 'pm-dark';
       const sectionItems = page === 'production' ? section.items.map(item => ({ ...item, image: productionItemImage(item.title, item.image) })) : section.items;

@@ -3,12 +3,13 @@ import { useEffect, useRef, useState } from 'react';
 import { UploadCloud, X } from 'lucide-react';
 import { toast } from 'sonner';
 import { createClient } from '@/lib/supabase/client';
-export default function LogoUploader({value,onChange,onBusy}:{value:string;onChange:(url:string)=>void;onBusy?:(busy:boolean)=>void}){
+import { createAdminBrowserClient } from '@/lib/supabase/admin-client';
+export default function LogoUploader({value,onChange,onBusy,adminMode=false}:{value:string;onChange:(url:string)=>void;onBusy?:(busy:boolean)=>void;adminMode?:boolean}){
  const [preview,setPreview]=useState('');const [busy,setBusy]=useState(false);const [drag,setDrag]=useState(false);const input=useRef<HTMLInputElement>(null);
  useEffect(()=>()=>{if(preview)URL.revokeObjectURL(preview);},[preview]);
  async function upload(file?:File){if(!file||busy)return;if(!['image/png','image/jpeg','image/svg+xml','image/webp'].includes(file.type)||file.size>2097152){toast.error('Choose PNG, JPG, SVG or WEBP up to 2MB');return;}
  setPreview(URL.createObjectURL(file));setBusy(true);onBusy?.(true);
- try{const db=createClient();const {data:{user}}=await db.auth.getUser();if(!user)throw new Error('Please sign in first');
+ try{const db=adminMode?createAdminBrowserClient():createClient();const {data:{user}}=await db.auth.getUser();if(!user)throw new Error('Please sign in first');
  const extension=({'image/png':'png','image/jpeg':'jpg','image/svg+xml':'svg','image/webp':'webp'} as Record<string,string>)[file.type];
  const path=`${user.id}/${Date.now()}-${crypto.randomUUID()}.${extension}`;
  const {error}=await db.storage.from('project-logos').upload(path,file,{contentType:file.type,upsert:false});if(error)throw error;

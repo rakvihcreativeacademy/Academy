@@ -1,20 +1,13 @@
 "use server";
 import { z } from 'zod';
 import { revalidatePath } from 'next/cache';
-import { configured } from '@/lib/supabase/config';
-import { createClient } from '@/lib/supabase/server';
+import { requireAdmin } from '@/lib/cms/server';
 import { createServiceClient } from '@/lib/supabase/service';
 
 type Result = { ok: true } | { ok: false; error: string };
 
 async function adminDb() {
-  if (!configured) throw new Error('Supabase is not connected.');
-  const db = await createClient();
-  const { data: { user } } = await db.auth.getUser();
-  if (!user) throw new Error('Please sign in again.');
-  const { data: isAdmin } = await db.rpc('is_admin');
-  if (!isAdmin) throw new Error('Your account does not have admin access.');
-  return { db, user };
+  return requireAdmin();
 }
 
 const OfferingSchema = z.object({

@@ -3,10 +3,17 @@ import { createClient } from '@/lib/supabase/server';
 import { projectSchema, type ProjectInput } from '@/lib/validation';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
-async function session(){const db=await createClient();const {data:{user}}=await db.auth.getUser();if(!user)throw new Error('Please sign in');return {db,user};}
-export async function saveProject(input:ProjectInput,id?:string){
+import { requireAdmin } from '@/lib/cms/server';
+async function session(adminMode = false) {
+  if (adminMode) return requireAdmin();
+  const db = await createClient();
+  const { data: { user } } = await db.auth.getUser();
+  if (!user) throw new Error('Please sign in');
+  return { db, user };
+}
+export async function saveProject(input:ProjectInput,id?:string,adminMode = false){
  const parsed=projectSchema.safeParse(input);if(!parsed.success)return {error:parsed.error.issues[0].message};
- try {const {db,user}=await session();if(id&&!z.uuid().safeParse(id).success)return {error:'Invalid project'};
+ try {const {db,user}=await session(adminMode);if(id&&!z.uuid().safeParse(id).success)return {error:'Invalid project'};
  let existing: {user_id:string;logo_url:string|null}|null=null;
  if(id){const {data}=await db.from('projects').select('user_id,logo_url').eq('id',id).single();if(!data)return {error:'Project not found'};existing=data;if(data.user_id!==user.id){const {data:admin}=await db.rpc('is_admin');if(!admin)return {error:'Admin access required'};}}
  if(parsed.data.logo_url&&parsed.data.logo_url!==existing?.logo_url){const prefix=`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/project-logos/${user.id}/`;if(!parsed.data.logo_url.startsWith(prefix))return {error:'Logo must belong to your storage folder'};}

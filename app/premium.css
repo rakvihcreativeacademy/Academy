@@ -2146,6 +2146,7 @@ html.js .pm-site :is(.pm-grid,.bento,.acc,.pm-covers,.pm-steps,.pm-contacts,.ap-
 :root[data-theme="dark"] .pm-pay-form :is(input,select){background:#0d0f09;color:var(--pm-bone);border-color:rgba(239,235,223,.16)}
 .pm-pay-form :is(input,select):focus{border-color:var(--pm-sun);box-shadow:0 0 0 3px rgba(252,204,15,.16)}
 .pm-pay-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pm-pay-row.single{grid-template-columns:1fr}
 @media(max-width:520px){.pm-pay-row{grid-template-columns:1fr}}
 .pm-pay-error{margin:0;padding:10px 13px;border-radius:10px;background:rgba(217,45,32,.12);border:1px solid rgba(217,45,32,.35);color:#ef4444;font-size:13px;line-height:1.45}
 .pm-pay-submit{width:100%;justify-content:center;margin-top:4px;cursor:pointer}
@@ -3303,7 +3304,8 @@ html.js .pm-site :is(.gp-card)[data-v]{transition:opacity .9s var(--pm-ease) var
 :root[data-theme="dark"] .pm-hl-pills li{background:rgba(252,204,15,.08);border-color:rgba(252,204,15,.26);color:var(--pm-bone)}
 :root[data-theme="dark"] .pm-hl-pills svg{color:var(--pm-sun)}
 
-.pm-details-note{display:inline-flex;align-items:center;gap:7px;margin:2px 0 0;font:500 12.5px/1.45 var(--pm-sans);color:var(--pm-mute)}
+.pm-details-note{display:inline-flex;align-items:flex-start;gap:7px;margin:2px 0 0;font:500 12.5px/1.45 var(--pm-sans);color:var(--pm-mute)}
+.pm-details-note svg{flex:0 0 auto;margin-top:2px}
 .pm-details-note svg{color:var(--pm-olive);flex:none}
 :root[data-theme="dark"] .pm-details-note svg{color:var(--pm-sun)}
 
@@ -3481,12 +3483,12 @@ html.js .pm-site :is(.gp-card)[data-v]{transition:opacity .9s var(--pm-ease) var
   .pm-promo-backdrop{align-items:center!important;padding:12px!important}
   .pm-promo-modal{width:100%!important;max-width:440px;border-radius:22px!important;max-height:calc(100svh - 24px)!important}
   .pm-promo-close{top:12px!important;right:12px!important;width:34px!important;height:34px!important;background:rgba(11,12,8,.78)!important;color:#fff!important;border-color:rgba(255,255,255,.28)!important}
-  .pm-promo-media{min-height:185px!important;height:185px!important}
+  .pm-promo-media{display:none!important}
   .pm-promo-live-pill{top:12px!important;left:12px!important;padding:6px 11px!important;font-size:10px!important}
   .pm-promo-media-foot{left:12px!important;right:12px!important;bottom:12px!important;padding:10px 12px!important;border-radius:12px!important;gap:3px!important}
   .pm-promo-media-foot strong{font-size:14.5px!important}
   .pm-promo-body{padding:18px 18px 20px!important;gap:10px!important}
-  .pm-promo-eyebrow{font-size:10px!important}
+  .pm-promo-eyebrow{font-size:10px!important;line-height:1.25!important}
   .pm-promo-title{font-size:24px!important;line-height:1.1!important}
   .pm-promo-desc{font-size:13.5px!important;line-height:1.5!important}
   .pm-promo-points{gap:9px!important;margin:2px 0 4px!important}
@@ -3498,4 +3500,20 @@ html.js .pm-site :is(.gp-card)[data-v]{transition:opacity .9s var(--pm-ease) var
   .pm-promo-actions{gap:8px!important;margin-top:4px!important}
   .pm-promo-readmore{height:46px!important;font-size:14px!important;padding:0 5px 0 20px!important}
   .pm-promo-dismiss{text-align:center;padding:6px 4px 0!important;font-size:13px!important}
+}
+
+@media(max-width:760px){
+  .pm-page .pm-spread{gap:20px!important;padding-block:28px!important}
+  .pm-page .pm-spread-copy{gap:14px!important}
+  .pm-page .pm-spread-copy>p:not(.pm-label){font-size:14.5px!important;line-height:1.55!important}
+  .pm-page .pm-spread .pm-plate-img{aspect-ratio:16/10!important}
+  .pm-page .pm-fee-bar{width:100%;box-sizing:border-box;padding:12px 14px!important;gap:8px!important}
+  .pm-page .pm-fee-bar strong{font-size:20px!important}
+  .pm-page .pm-hl-pills{gap:6px!important}
+  .pm-page .pm-hl-pills li{font-size:11.5px!important;padding:6px 9px!important}
+  .pm-page .pm-modules{grid-template-columns:1fr!important;column-gap:0!important}
+  .pm-page .pm-modules li{padding:10px 0!important;font-size:13px!important}
+  .pm-page .pm-row{width:100%;gap:8px!important}
+  .pm-page .pm-row>.pm-btn{height:46px!important;font-size:13.5px!important}
+  .pm-page .pm-details-note{width:100%;box-sizing:border-box;white-space:normal!important;line-height:1.45!important}
 }

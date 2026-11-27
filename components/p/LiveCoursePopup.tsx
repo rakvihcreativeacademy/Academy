@@ -87,13 +87,13 @@ export default function LiveCoursePopup() {
               </svg>
               Adobe Premiere Pro
             </span>
-            <strong>45-Day Intensive Studio Program</strong>
+            <strong>45 days Intensive Studio Program</strong>
           </div>
         </div>
 
         {/* Right Side: Course Contents & Read More CTA */}
         <div className="pm-promo-body">
-          <p className="pm-promo-eyebrow">Now Live · RAKVIH Digital</p>
+          <p className="pm-promo-eyebrow">Now Live at RAKVIH Solutions Private Limited</p>
           <h2 id="pm-promo-title" className="pm-promo-title">
             Professional <em>Video Editing</em>
           </h2>
@@ -107,7 +107,7 @@ export default function LiveCoursePopup() {
                 <Calendar size={17} strokeWidth={2} />
               </span>
               <div className="pm-promo-pt-copy">
-                <strong>45-Day Training Program</strong>
+                <strong>45 days Training Program</strong>
                 <span>Structured hands-on sessions from basics to pro delivery</span>
               </div>
             </li>
@@ -125,7 +125,7 @@ export default function LiveCoursePopup() {
                 <Award size={17} strokeWidth={2} />
               </span>
               <div className="pm-promo-pt-copy">
-                <strong>Get Training Certificate in 45 Days</strong>
+                <strong>Get Training Certificate in 45 days</strong>
                 <span>Industry-recognized completion certificate upon finishing</span>
               </div>
             </li>

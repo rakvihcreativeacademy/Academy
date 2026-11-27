@@ -1,5 +1,6 @@
 "use server";
 import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin-server';
 import { configured } from '@/lib/supabase/config';
 import { z } from 'zod';
 import { redirect } from 'next/navigation';
@@ -16,20 +17,35 @@ export async function authenticate(form: FormData) {
   const parsed = schema.safeParse(Object.fromEntries(form));
   if (!parsed.success) return { error: parsed.error.issues[0].message };
 
-  const db = await createClient();
+  const isAdminLogin = form.get('mode') === 'admin';
+  const db = isAdminLogin ? await createAdminClient() : await createClient();
   const { error } = await db.auth.signInWithPassword(parsed.data);
   if (error) {
     return { error: 'Invalid email or password. Use the credentials shared after enrollment approval.' };
   }
 
-  const next = String(form.get('next') || '');
-  if (/^\/admin(\/|$)/.test(next)) {
-    const { data: admin, error: roleError } = await db.rpc('is_admin');
-    if (roleError || !admin) {
-      return { error: 'This account does not have admin access. Sign in with your authorised admin email.' };
+  const { data: isAdmin, error: roleError } = await db.rpc('is_admin');
+  if (roleError || Boolean(isAdmin) !== isAdminLogin) {
+    await db.auth.signOut();
+    return {
+      error: isAdminLogin
+        ? 'This account does not have admin access. Sign in with your authorised admin email.'
+        : 'Administrator accounts must sign in through the admin portal.',
+    };
+  }
+
+  if (isAdminLogin) {
+    const studentDb = await createClient();
+    const { data: { user: existingUser } } = await studentDb.auth.getUser();
+    if (existingUser) {
+      const { data: existingIsAdmin } = await studentDb.rpc('is_admin');
+      if (existingIsAdmin) await studentDb.auth.signOut();
     }
   }
-  redirect(/^\/(admin|dashboard|courses)(\/|#|$)/.test(next) ? next : '/dashboard');
+
+  const next = String(form.get('next') || '');
+  if (isAdminLogin) redirect(/^\/admin(?:\/|$)/.test(next) ? next : '/admin');
+  redirect(/^\/(dashboard|courses)(\/|#|$)/.test(next) ? next : '/dashboard');
 }
 
 export async function signOut() {
@@ -42,7 +58,7 @@ export async function signOut() {
 
 export async function adminSignOut() {
   if (configured) {
-    const db = await createClient();
+    const db = await createAdminClient();
     await db.auth.signOut();
   }
   redirect('/admin/login');

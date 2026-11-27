@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Search, ArrowUpRight, CreditCard, Clock, X, ChevronDown,
   Scissors, Sliders, Palette, AudioLines, Film, Camera, Aperture, Focus,
@@ -13,6 +13,9 @@ import { isCourseEnabled, resolveCourseStatus, type PageContent } from '@/lib/cm
 import { DEFAULT_VIDEO_EDITING_OFFERING, formatInr, type CourseOffering } from '@/lib/payments';
 import VideoEditingCheckout from '@/components/VideoEditingCheckout';
 import VideoEditingDetailsModal from '@/components/VideoEditingDetailsModal';
+import { courses } from '@/lib/courses';
+import { configured } from '@/lib/supabase/config';
+import { createClient } from '@/lib/supabase/client';
 
 /** Official-style brand marks for creative tools and matched Lucide icons for skills. */
 function ModuleIcon({ label }: { label: string }) {
@@ -167,14 +170,45 @@ function ModuleIcon({ label }: { label: string }) {
 export default function CourseListing({
   sections,
   videoEditingOffering = DEFAULT_VIDEO_EDITING_OFFERING,
+  isLoggedIn = false,
 }: {
   sections: PageContent['sections'];
   videoEditingOffering?: CourseOffering;
+  isLoggedIn?: boolean;
 }) {
   const [query, setQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'live' | 'upcoming'>('all');
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [detailsOpen, setDetailsOpen] = useState(false);
+  const [browserLoggedIn, setBrowserLoggedIn] = useState(isLoggedIn);
+
+  useEffect(() => {
+    if (!configured) {
+      setBrowserLoggedIn(isLoggedIn);
+      return;
+    }
+    const supabase = createClient();
+    let active = true;
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (active) setBrowserLoggedIn(Boolean(session?.user) || isLoggedIn);
+    }).catch(() => {
+      if (active) setBrowserLoggedIn(isLoggedIn);
+    });
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (active) setBrowserLoggedIn(Boolean(user) || isLoggedIn);
+    }).catch(() => {
+      if (active) setBrowserLoggedIn(isLoggedIn);
+    });
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (active) setBrowserLoggedIn(Boolean(session?.user) || isLoggedIn);
+    });
+
+    return () => {
+      active = false;
+      subscription.unsubscribe();
+    };
+  }, [isLoggedIn]);
   const q = query.trim().toLowerCase();
   const visibleSections = sections.map(section => ({
     ...section,
@@ -243,9 +277,13 @@ export default function CourseListing({
           {section.items.map((item, i) => {
             const id = item.slug || `course-${si}-${i}`;
             const isVideoEditing = item.slug === 'video-editing' || /professional video editing/i.test(item.title);
-            const details = item.details
+            const cmsDetails = item.details
               .filter(Boolean)
               .filter(d => !(isVideoEditing && /davinci\s*resolve|final\s*cut\s*pro/i.test(d)));
+            const fallbackDetails = isVideoEditing
+              ? courses.find(course => course.slug === 'video-editing')?.modules ?? []
+              : [];
+            const details = cmsDetails.length > 0 ? cmsDetails : fallbackDetails;
             const isLive = resolveCourseStatus(item) === 'live';
             const canPay = isLive && isVideoEditing && videoEditingOffering.is_live && videoEditingOffering.enrollments_enabled;
 
@@ -269,7 +307,7 @@ export default function CourseListing({
                 <h3>{item.title}</h3>
                 {item.description && <p>{item.description}</p>}
 
-                {isLive && isVideoEditing && (
+                {isLive && isVideoEditing && !browserLoggedIn && (
                   <>
                     <div className="pm-fee-bar">
                       <div>
@@ -286,15 +324,17 @@ export default function CourseListing({
                   </>
                 )}
 
-                {details.length > 0 && <>
-                  <p className="pm-label" style={{ marginTop: 10 }}>What you’ll learn</p>
-                  <ul className="pm-modules" data-v>{details.map((d, j) => (
-                    <li key={j} style={{ '--k': j } as React.CSSProperties}>
-                      <ModuleIcon label={d} />
-                      <span>{d}</span>
-                    </li>
-                  ))}</ul>
-                </>}
+                {details.length > 0 && (!isVideoEditing || browserLoggedIn) && (
+                  <>
+                    <p className="pm-label" style={{ marginTop: 10 }}>What you’ll learn</p>
+                    <ul className="pm-modules" data-v>{details.map((d, j) => (
+                      <li key={j} style={{ '--k': j } as React.CSSProperties}>
+                        <ModuleIcon label={d} />
+                        <span>{d}</span>
+                      </li>
+                    ))}</ul>
+                  </>
+                )}
 
                 <div className="pm-row" style={{ marginTop: 8 }}>
                   {canPay ? (
@@ -322,7 +362,7 @@ export default function CourseListing({
                 </div>
                 {isLive && isVideoEditing && (
                   <p className="pm-details-note">
-                    <LockKeyhole size={13} /> Full 12-day course syllabus &amp; details are visible to registered &amp; logged-in students only.
+                    <LockKeyhole size={13} /> Full 45 days course syllabus &amp; details are visible to registered &amp; logged-in students only.
                   </p>
                 )}
               </div>

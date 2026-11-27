@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 import AdminLoginForm from '@/components/AdminLoginForm';
 import AdminClock from '@/components/AdminClock';
 import { configured } from '@/lib/supabase/config';
-import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin-server';
 export const metadata: Metadata = { title: 'Admin login' };
 
 const desks = [
@@ -17,7 +17,7 @@ const desks = [
 export default async function AdminLogin({ searchParams }: { searchParams: Promise<{ next?: string }> }) {
   const params = await searchParams;
   const next = params.next && /^\/admin(?:\/|$)/.test(params.next) && !params.next.startsWith('/admin/login') ? params.next : '/admin';
-  if (configured) { const db = await createClient(); const { data: { user } } = await db.auth.getUser(); if (user) { const { data } = await db.rpc('is_admin'); if (data) redirect(next); } }
+  if (configured) { const db = await createAdminClient(); const { data: { user } } = await db.auth.getUser(); if (user) { const { data } = await db.rpc('is_admin'); if (data) redirect(next); } }
   return <main className="al2">
     <div className="al2-bg" aria-hidden="true"><img src="/images/hero-viewfinder.webp" alt="" /><i className="al2-orb a" /><i className="al2-orb b" /><i className="al2-grid" /></div>
 

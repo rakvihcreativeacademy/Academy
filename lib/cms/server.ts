@@ -1,6 +1,6 @@
 import 'server-only';
 import { configured } from '@/lib/supabase/config';
-import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/supabase/admin-server';
 import { createPublicClient } from '@/lib/supabase/public';
 import { contentSchema, type PageKey } from './schema';
 import { defaultContent } from './defaults';
@@ -18,7 +18,7 @@ export async function getPageContent(key: PageKey) {
 }
 export async function requireAdmin() {
   if (!configured) throw new Error('Add Supabase credentials to .env.local first.');
-  const db = await createClient();
+  const db = await createAdminClient();
   const {data:{user}} = await db.auth.getUser();
   if (!user) throw new Error('Please sign in with your admin account.');
   const {data,error} = await db.rpc('is_admin');
