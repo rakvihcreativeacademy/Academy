@@ -3,6 +3,7 @@ import { ArrowUpRight, MapPin, MessageCircle, Phone, Mail, Instagram, Facebook, 
 import Masthead from '@/components/p/Masthead';
 import Motion from '@/components/p/Motion';
 import SmoothScroll from '@/components/p/SmoothScroll';
+import LiveCoursePopup from '@/components/p/LiveCoursePopup';
 import { nav, site, whatsappLink } from '@/lib/site';
 import { courses } from '@/lib/courses';
 
@@ -19,6 +20,7 @@ export default function WebsiteLayout({ children }: { children: React.ReactNode 
   return <div className="pm-site">
     <Motion />
     <SmoothScroll />
+    <LiveCoursePopup />
     <Masthead />
     {children}
     <footer className="pm-foot" data-dark>

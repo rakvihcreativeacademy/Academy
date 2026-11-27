@@ -6,12 +6,13 @@ import {
   Frame, Compass, Sun, Lightbulb, Mic, Volume2, Sparkles, Clapperboard,
   FileText, LayoutGrid, Video, Smartphone, Megaphone, Wand2, Layers,
   Captions, Workflow, User, Package, Calendar, Briefcase, Eye, Radio,
-  SlidersHorizontal, Check,
+  SlidersHorizontal, Check, BookOpen, LockKeyhole, Award, Users,
 } from 'lucide-react';
 import Link from '@/components/SiteLink';
 import { isCourseEnabled, resolveCourseStatus, type PageContent } from '@/lib/cms/schema';
 import { DEFAULT_VIDEO_EDITING_OFFERING, formatInr, type CourseOffering } from '@/lib/payments';
 import VideoEditingCheckout from '@/components/VideoEditingCheckout';
+import VideoEditingDetailsModal from '@/components/VideoEditingDetailsModal';
 
 /** Official-style brand marks for creative tools and matched Lucide icons for skills. */
 function ModuleIcon({ label }: { label: string }) {
@@ -173,6 +174,7 @@ export default function CourseListing({
   const [query, setQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'live' | 'upcoming'>('all');
   const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const [detailsOpen, setDetailsOpen] = useState(false);
   const q = query.trim().toLowerCase();
   const visibleSections = sections.map(section => ({
     ...section,
@@ -240,8 +242,10 @@ export default function CourseListing({
         <div>
           {section.items.map((item, i) => {
             const id = item.slug || `course-${si}-${i}`;
-            const details = item.details.filter(Boolean);
             const isVideoEditing = item.slug === 'video-editing' || /professional video editing/i.test(item.title);
+            const details = item.details
+              .filter(Boolean)
+              .filter(d => !(isVideoEditing && /davinci\s*resolve|final\s*cut\s*pro/i.test(d)));
             const isLive = resolveCourseStatus(item) === 'live';
             const canPay = isLive && isVideoEditing && videoEditingOffering.is_live && videoEditingOffering.enrollments_enabled;
 
@@ -266,13 +270,20 @@ export default function CourseListing({
                 {item.description && <p>{item.description}</p>}
 
                 {isLive && isVideoEditing && (
-                  <div className="pm-fee-bar">
-                    <div>
-                      <small>{videoEditingOffering.batch_label}</small>
-                      <strong>{formatInr(videoEditingOffering.price_inr)}</strong>
+                  <>
+                    <div className="pm-fee-bar">
+                      <div>
+                        <small>{videoEditingOffering.batch_label}</small>
+                        <strong>{formatInr(videoEditingOffering.price_inr)}</strong>
+                      </div>
+                      <span>{videoEditingOffering.duration_label}</span>
                     </div>
-                    <span>{videoEditingOffering.duration_label}</span>
-                  </div>
+                    <ul className="pm-hl-pills" aria-label="Programme highlights">
+                      <li><Calendar size={13} /> 45-Day Training Program</li>
+                      <li><Users size={13} /> Live Project Training with Trainer Assistance</li>
+                      <li><Award size={13} /> Get Training Certificate in 45 Days</li>
+                    </ul>
+                  </>
                 )}
 
                 {details.length > 0 && <>
@@ -287,16 +298,33 @@ export default function CourseListing({
 
                 <div className="pm-row" style={{ marginTop: 8 }}>
                   {canPay ? (
-                    <button type="button" className="pm-btn" onClick={() => setCheckoutOpen(true)}>
-                      <CreditCard size={15} /> Enroll &amp; Pay {formatInr(videoEditingOffering.price_inr)}
-                    </button>
+                    <>
+                      <button type="button" className="pm-btn" onClick={() => setCheckoutOpen(true)}>
+                        <CreditCard size={15} /> Enroll &amp; Pay {formatInr(videoEditingOffering.price_inr)}
+                      </button>
+                      <button type="button" className="pm-btn ghost" onClick={() => setDetailsOpen(true)}>
+                        <BookOpen size={15} /> Course Details
+                      </button>
+                    </>
                   ) : isLive ? (
-                    <Link href={item.href || `/admissions?course=${encodeURIComponent(item.title)}`} className="pm-btn">Apply now <ArrowUpRight size={15} /></Link>
+                    <>
+                      <Link href={item.href || `/admissions?course=${encodeURIComponent(item.title)}`} className="pm-btn">Apply now <ArrowUpRight size={15} /></Link>
+                      {isVideoEditing && (
+                        <button type="button" className="pm-btn ghost" onClick={() => setDetailsOpen(true)}>
+                          <BookOpen size={15} /> Course Details
+                        </button>
+                      )}
+                    </>
                   ) : <>
                     <span className="pm-soon-btn" aria-disabled="true"><Clock size={15} /> Coming soon</span>
                     <Link href={`/contact?type=admission&notify=1&course=${encodeURIComponent(item.title)}#enquire`} className="pm-btn ghost">Notify me <ArrowUpRight size={15} /></Link>
                   </>}
                 </div>
+                {isLive && isVideoEditing && (
+                  <p className="pm-details-note">
+                    <LockKeyhole size={13} /> Full 12-day course syllabus &amp; details are visible to registered &amp; logged-in students only.
+                  </p>
+                )}
               </div>
             </article>;
           })}
@@ -306,5 +334,10 @@ export default function CourseListing({
     </div>
 
     <VideoEditingCheckout offering={videoEditingOffering} open={checkoutOpen} onClose={() => setCheckoutOpen(false)} />
+    <VideoEditingDetailsModal
+      open={detailsOpen}
+      onClose={() => setDetailsOpen(false)}
+      onOpenEnroll={videoEditingOffering.is_live && videoEditingOffering.enrollments_enabled ? () => { setDetailsOpen(false); setCheckoutOpen(true); } : undefined}
+    />
   </section>;
 }

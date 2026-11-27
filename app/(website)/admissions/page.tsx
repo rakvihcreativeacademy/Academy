@@ -53,7 +53,7 @@ export default async function Admissions() {
         </div>
         <div className="ap-more">
           <ol className="ap-steps">{stages.map((s, i) => <li key={s.t}><span>{String(i + 1).padStart(2, '0')}</span><div><b>{s.t}</b><small>{s.d}</small></div></li>)}</ol>
-          <ul className="ap-perks">{['Beginners welcome', 'Hands-on studio projects', 'Completion certificate'].map(x => <li key={x}><Check size={14} />{x}</li>)}</ul>
+          <ul className="ap-perks">{['45-Day Training Program', 'Live project training with trainer assistance', 'Get Training Certificate in 45 days', 'Beginners welcome'].map(x => <li key={x}><Check size={14} />{x}</li>)}</ul>
           <div className="ap-contact">
             <span><ShieldCheck size={16} /> Admin-verified student onboarding</span>
             <span><MapPin size={16} /> {site.location}</span>

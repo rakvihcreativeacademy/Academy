@@ -16,7 +16,7 @@ export default async function Login({ searchParams }: { searchParams: Promise<{ 
     const db = await createClient();
     const { data: { user } } = await db.auth.getUser();
     if (user) {
-      redirect(/^\/dashboard(\/|$)/.test(next) ? next : '/dashboard');
+      redirect(/^\/(dashboard|courses)(\/|#|$)/.test(next) ? next : '/dashboard');
     }
   }
 

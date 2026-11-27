@@ -8,8 +8,8 @@ export const courses: Course[] = [
   {
     slug: 'video-editing', symbol: '01', icon: 'scissors', tag: 'Post-production', title: 'Professional Video Editing',
     description: 'Find the story in every frame. Turn raw footage into work that moves people.',
-    skills: ['Premiere Pro', 'DaVinci Resolve', 'Final Cut Pro'],
-    modules: ['Adobe Premiere Pro', 'DaVinci Resolve', 'Final Cut Pro', 'Video editing techniques', 'Transitions and pacing', 'Colour correction and grading', 'Audio synchronization and sound editing', 'Reels and YouTube editing', 'Wedding and commercial editing'],
+    skills: ['Premiere Pro', 'Color Grading', 'Audio Sync'],
+    modules: ['Adobe Premiere Pro', 'Video editing techniques', 'Transitions and pacing', 'Colour correction and grading', 'Audio synchronization and sound editing', 'Reels and YouTube editing', 'Wedding and commercial editing'],
   },
   {
     slug: 'cinematography', symbol: '02', icon: 'video', tag: 'Behind the lens', title: 'Cinematography & Camera Handling',

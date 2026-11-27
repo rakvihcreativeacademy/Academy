@@ -49,11 +49,15 @@ export default async function Home() {
     .filter(it => resolveCourseStatus(it) === 'live')
     .map((it, idx) => {
       const slug = it.slug || `course-${idx + 1}`;
+      const isVideoEditing = slug === 'video-editing' || /professional video editing/i.test(it.title);
       return {
         slug,
         title: it.title,
         description: it.description,
-        highlights: it.details.filter(Boolean).slice(0, 6),
+        highlights: it.details
+          .filter(Boolean)
+          .filter(d => !(isVideoEditing && /davinci\s*resolve|final\s*cut\s*pro/i.test(d)))
+          .slice(0, 6),
         image: it.image || undefined,
         href: it.href || `/admissions?course=${encodeURIComponent(it.title)}`,
       };
@@ -68,6 +72,7 @@ export default async function Home() {
     <section className="pm-sec pm-paper pm-stats-band">
       <div className="pm-wrap">
         <StatsStrip stats={[
+          { value: 45, label: '45-Day Training Program', note: 'Live project training with trainer assistance & certificate in 45 days', href: '/courses#video-editing', icon: 'award' },
           { value: disciplineCount, label: 'Professional courses', note: 'Editing, cinema, photo, motion & AI', href: '/courses', icon: 'course' },
           { value: 1, label: 'Premium podcast studio', note: 'Multi-camera, treated, ready to record', href: '/podcast-studio', icon: 'mic' },
           { value: productionServices.length, label: 'Production services', note: 'From brand films to social reels', href: '/production', icon: 'clap' },

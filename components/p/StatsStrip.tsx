@@ -1,10 +1,10 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import Link from '@/components/SiteLink';
-import { ArrowUpRight, GraduationCap, Mic, Clapperboard } from 'lucide-react';
+import { ArrowUpRight, GraduationCap, Mic, Clapperboard, Award } from 'lucide-react';
 
-type Stat = { value: number; label: string; note: string; href: string; icon: 'course' | 'mic' | 'clap' };
-const ICONS = { course: GraduationCap, mic: Mic, clap: Clapperboard };
+type Stat = { value: number; label: string; note: string; href: string; icon: 'course' | 'mic' | 'clap' | 'award' };
+const ICONS = { course: GraduationCap, mic: Mic, clap: Clapperboard, award: Award };
 
 /** Counts a number up from zero the first time it scrolls into view. */
 function Count({ to, run }: { to: number; run: boolean }) {

@@ -1,4 +1,4 @@
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Award, Calendar, Users } from 'lucide-react';
 import Link from '@/components/SiteLink';
 import { formatInr, type CourseOffering } from '@/lib/payments';
 import { courseImages } from '@/lib/course-images';
@@ -60,7 +60,10 @@ export default function LiveCourseCard({
             const fee = isVideoEditing && videoEditingOffering ? videoEditingOffering.price_inr : course.priceInr;
             const batch = isVideoEditing && videoEditingOffering ? videoEditingOffering.batch_label : (course.batchLabel || 'Next batch enrolling now');
             const duration = isVideoEditing && videoEditingOffering ? videoEditingOffering.duration_label : course.durationLabel;
-            const bullets = course.highlights.filter(Boolean).slice(0, 6);
+            const bullets = course.highlights
+              .filter(Boolean)
+              .filter(h => !(isVideoEditing && /davinci\s*resolve|final\s*cut\s*pro/i.test(h)))
+              .slice(0, 6);
             const img = course.image || courseImages[course.slug]?.src || '/images/banners/editing-colour.webp';
             const imgAlt = course.imageAlt || courseImages[course.slug]?.alt || course.title;
 
@@ -76,6 +79,11 @@ export default function LiveCourseCard({
                 <div className="pm-lc-body">
                   <h3 className="pm-lc-title">{course.title}</h3>
                   <p className="pm-lc-sub">{course.description}</p>
+                  <ul className="pm-lc-highlights" aria-label="Programme highlights">
+                    <li><Calendar size={13} /> 45-Day Training Program</li>
+                    <li><Users size={13} /> Live Project Training with Trainer Assistance</li>
+                    <li><Award size={13} /> Get Training Certificate in 45 Days</li>
+                  </ul>
                   {bullets.length > 0 && (
                     <div className="pm-lc-skills">
                       <span className="pm-lc-label">What you&apos;ll learn</span>

@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Award, Calendar, Users } from 'lucide-react';
 import Link from '@/components/SiteLink';
 import { site } from '@/lib/site';
 import { bannerImages } from '@/lib/banner-images';
@@ -47,7 +47,12 @@ export default function Hero() {
           <h1 className="pm-hx-title">Turn your creativity <em>into your career.</em></h1>
         </div>
         <div className="pm-hx-side">
-          <p className="pm-hero-blurb">Hands-on training in editing, cinema &amp; photography, with a premium podcast studio.</p>
+          <p className="pm-hero-blurb">Hands-on 45-day training in editing, cinema &amp; photography with live project training &amp; trainer assistance.</p>
+          <ul className="pm-hero-badges" aria-label="Training highlights">
+            <li><Calendar size={12} /> 45-Day Training Program</li>
+            <li><Users size={12} /> Live Project Training with Trainer Assistance</li>
+            <li><Award size={12} /> Get Training Certificate in 45 Days</li>
+          </ul>
           <div className="pm-row on-dark">
             <Link href="/courses" className="pm-btn">Explore Our Courses <ArrowUpRight size={15} /></Link>
             <Link href="/podcast-studio#enquire" className="pm-btn ghost on-dark">Book Our Podcast Studio</Link>

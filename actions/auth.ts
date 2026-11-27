@@ -29,7 +29,7 @@ export async function authenticate(form: FormData) {
       return { error: 'This account does not have admin access. Sign in with your authorised admin email.' };
     }
   }
-  redirect(/^\/(admin|dashboard)(\/|$)/.test(next) ? next : '/dashboard');
+  redirect(/^\/(admin|dashboard|courses)(\/|#|$)/.test(next) ? next : '/dashboard');
 }
 
 export async function signOut() {

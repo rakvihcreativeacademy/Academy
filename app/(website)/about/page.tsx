@@ -13,7 +13,7 @@ export default function About() {
     <Banner crumb="About" eyebrow="About RAKVIH Digital" title="Empowering the next generation of" italic="creative professionals."
       lede={`${site.name} is a division of RAKVIH Solutions Pvt. Ltd., built around technology, creativity and practical learning — established to make professional creative and media skills accessible to aspiring creators, while offering production facilities and services to businesses and individuals.`}
       image="/images/academy-filmmaking.webp" imageAlt="Illustration of students working on a film camera" position="70% 40%"
-      facts={[{ label: '8 professional courses' }, { label: 'Premium podcast studio' }, { label: 'Real production work' }]}
+      facts={[{ label: '45-Day Training Program' }, { label: 'Live project training with trainer assistance' }, { label: 'Training certificate in 45 days' }]}
       side={<figure className="pm-quote"><blockquote>“Learn the art. Master the technology. Create your future.”</blockquote><figcaption><img src="/brand/rakvih-mark-128.png" alt="" /> RAKVIH Digital</figcaption></figure>}>
       <Link href="/courses" className="pm-btn">Explore courses <ArrowUpRight size={15} /></Link>
       <Link href="/contact" className="pm-btn ghost on-dark">Talk to us</Link>
