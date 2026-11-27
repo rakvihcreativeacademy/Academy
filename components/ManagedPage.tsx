@@ -110,7 +110,6 @@ export default async function ManagedPage({ page }: { page: PageKey }) {
                       {details.length > 0 && <ul>{details.map((d, j) => <li key={j}>{d}</li>)}</ul>}
                     </span></span>}
                   </span>
-                  <span className="st-eq" aria-hidden="true">{Array.from({ length: hero ? 14 : 9 }, (_, k) => <i key={k} style={{ '--k': k } as React.CSSProperties} />)}</span>
                 </span>
               </> : <>
                 <span className="cr-flip">
