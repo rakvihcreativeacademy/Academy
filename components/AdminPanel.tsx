@@ -17,7 +17,7 @@ export type Enquiry = {
 type Status = 'new' | 'contacted' | 'enrolled' | 'closed';
 const statuses: Status[] = ['new', 'contacted', 'enrolled', 'closed'];
 
-const fmt = (d: string) => new Date(d).toLocaleString('en-IN', { days: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+const fmt = (d: string) => new Date(d).toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
 /** Indian numbers without a country code get +91 so WhatsApp can open the chat. */
 const waNumber = (phone: string) => { const d = phone.replace(/\D/g, ''); return d.length === 10 ? '91' + d : d; };
 const csvCell = (v: unknown) => `"${String(v ?? '').replace(/"/g, '""')}"`;
