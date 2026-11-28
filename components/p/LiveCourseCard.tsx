@@ -80,7 +80,7 @@ export default function LiveCourseCard({
                   <h3 className="pm-lc-title">{course.title}</h3>
                   <p className="pm-lc-sub">{course.description}</p>
                   <ul className="pm-lc-highlights" aria-label="Programme highlights">
-                    <li><Calendar size={13} /> 45-Day Training Program</li>
+                    <li><Calendar size={13} /> 45-Days Training Program</li>
                     <li><Users size={13} /> Live Project Training with Trainer Assistance</li>
                     <li><Award size={13} /> Get Training Certificate in 45 Days</li>
                   </ul>

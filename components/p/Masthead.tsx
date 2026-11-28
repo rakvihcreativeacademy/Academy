@@ -1,11 +1,11 @@
 'use client';
+import DigitalWordmark from './DigitalWordmark';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import {
   ArrowUpRight,
-  BookOpen,
   ChevronDown,
-  Clapperboard,
+  CalendarDays,
   GraduationCap,
   House,
   LayoutDashboard,
@@ -16,8 +16,8 @@ import {
   Briefcase,
 } from 'lucide-react';
 import Link from '@/components/SiteLink';
+import StudentAuthDialog, { type StudentAuthMode } from './StudentAuthDialog';
 import { nav, site } from '@/lib/site';
-import { ThemeButton, ThemeSwitch } from '@/components/p/ThemeToggle';
 import { configured } from '@/lib/supabase/config';
 import { createClient } from '@/lib/supabase/client';
 
@@ -25,7 +25,7 @@ const useIso = typeof window === 'undefined' ? useEffect : useLayoutEffect;
 // '/projects' (Student Work) is hidden from the header for now — the page itself still works. Remove it here to show it again.
 const hiddenInHeader = new Set(['/about', '/projects']);
 const headerNav = nav.filter(l => !hiddenInHeader.has(l.href));
-const NAV_ICONS: Record<string, typeof House> = { '/': House, '/courses': GraduationCap, '/podcast-studio': Mic, '/production': Clapperboard, '/careers': Briefcase, '/contact': MessageCircle };
+const NAV_ICONS: Record<string, typeof House> = { '/': House, '/courses': GraduationCap, '/podcast-studio': Mic, '/upcoming': CalendarDays, '/careers': Briefcase, '/contact': MessageCircle };
 
 type LoggedInStudent = {
   email: string;
@@ -51,6 +51,15 @@ export default function Masthead() {
   const router = useRouter();
   const [path, setPath] = useState('');
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const [authMode, setAuthMode] = useState<StudentAuthMode | null>(null);
+
+  useEffect(() => setAuthMode(null), [pathname]);
+
+  const openAuth = (mode: StudentAuthMode) => {
+    setOpen(false);
+    setAuthMode(mode);
+  };
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [student, setStudent] = useState<LoggedInStudent | null>(null);
   const [signingOut, setSigningOut] = useState(false);
@@ -154,20 +163,20 @@ export default function Masthead() {
   const firstName = student?.name.split(/\s+/)[0] || 'Student';
 
   return <>
+    {authMode && !student && <StudentAuthDialog mode={authMode} onChange={setAuthMode} onClose={() => setAuthMode(null)} />}
     <header className="pm-head">
       <Link href="/" className="pm-brand" aria-label={`${site.name} — home`}>
-        <span className="pm-lockup"><img className="pm-logo-full" src="/brand/rakvih-logo.png" alt="RAKVIH Solutions Private Limited" width={1052} height={373} /><span className="pm-lockup-name">Rakvih <i>Digital</i></span></span>
+        <DigitalWordmark />
       </Link>
       <nav className="pm-nav" aria-label="Main" ref={capsule} onMouseLeave={home}>
         <span className={'pm-nav-pill' + (glide ? ' glide' : '')} aria-hidden="true" style={pill ? { transform: `translateX(${pill.x}px)`, width: pill.w, opacity: 1 } : { opacity: 0 }} />
-        {headerNav.map(l => <Link key={l.href} href={l.href} className={(active(l.href) ? 'active ' : '') + (l.href === '/' ? 'home' : '') + (l.href === '/production' ? ' has-badge' : '')}
+        {headerNav.map(l => <Link key={l.href} href={l.href} className={(active(l.href) ? 'active ' : '') + (l.href === '/' ? 'home' : '')}
           aria-current={active(l.href) ? 'page' : undefined} onMouseEnter={e => place(e.currentTarget)} onFocus={e => place(e.currentTarget)}>
           {(() => { const Icon = NAV_ICONS[l.href]; return Icon ? <Icon size={14} strokeWidth={1.7} className="pm-nav-ico" aria-hidden="true" /> : null; })()}
-          {l.href === '/production' ? <span className="pm-nav-stack"><span>{l.label}</span><small className="pm-nav-badge">Upcoming</small></span> : l.label}
+          {l.label}
         </Link>)}
       </nav>
       <div className="pm-head-actions">
-        <ThemeButton />
         {student ? (
           <div className="pm-user-wrap" ref={userMenuRef}>
             <button
@@ -194,17 +203,6 @@ export default function Masthead() {
                   </div>
                 </div>
 
-                <div className="pm-user-drop-links">
-                  <Link href="/dashboard" role="menuitem" onClick={() => setUserMenuOpen(false)}>
-                    <LayoutDashboard size={15} />
-                    <span>Student Dashboard</span>
-                  </Link>
-                  <Link href="/courses#video-editing" role="menuitem" onClick={() => setUserMenuOpen(false)}>
-                    <BookOpen size={15} />
-                    <span>Course Details &amp; Syllabus</span>
-                  </Link>
-                </div>
-
                 <div className="pm-user-drop-foot">
                   <button
                     type="button"
@@ -221,9 +219,9 @@ export default function Masthead() {
             )}
           </div>
         ) : (
-          <Link href="/login" className="pm-head-login" aria-label="Student login"><LogIn size={14} strokeWidth={2} /> <span>Login</span></Link>
+          <button type="button" className="pm-head-login" aria-haspopup="dialog" onClick={() => openAuth('login')}><LogIn size={14} strokeWidth={2} /> <span>Login</span></button>
         )}
-        <Link href="/admissions" className="pm-btn sm">Apply now <ArrowUpRight size={14} /></Link>
+        {!student && <button type="button" className="pm-btn sm" aria-haspopup="dialog" onClick={() => openAuth('register')}>Register <ArrowUpRight size={14} /></button>}
         <button ref={btn} type="button" className="pm-burger" aria-expanded={open} aria-controls="pm-menu" aria-label={open ? 'Close menu' : 'Open menu'} onClick={() => setOpen(o => !o)}>
           <span>{open ? 'Close' : 'Menu'}</span><i aria-hidden="true" />
         </button>
@@ -236,13 +234,12 @@ export default function Masthead() {
           const on = active(l.href);
           return <Link key={l.href} href={l.href} className={'pm-menu-link' + (on ? ' active' : '')} aria-current={on ? 'page' : undefined}
             style={{ '--i': i } as React.CSSProperties} onClick={() => setOpen(false)}>
-            <span>{l.href === '/' && <House size={18} strokeWidth={1.8} />}<span className="pm-menu-stack"><span>{l.label}</span>{l.href === '/production' && <small className="pm-nav-badge">Upcoming</small>}</span></span>
+            <span>{l.href === '/' && <House size={18} strokeWidth={1.8} />}<span className="pm-menu-stack"><span>{l.label}</span></span></span>
             {on ? <i className="pm-menu-here">You’re here</i> : <ArrowUpRight size={18} className="pm-menu-arrow" />}
           </Link>;
         })}
       </nav>
       <div className="pm-menu-foot">
-        <ThemeSwitch />
         {student ? (
           <div className="pm-menu-student">
             <div className="pm-menu-student-info">
@@ -262,8 +259,8 @@ export default function Masthead() {
           </div>
         ) : (
           <div className="pm-menu-cta">
-            <Link href="/admissions" className="pm-btn" onClick={() => setOpen(false)}>Apply now <ArrowUpRight size={14} /></Link>
-            <Link href="/login" className="pm-btn ghost on-dark pm-menu-login" onClick={() => setOpen(false)}><LogIn size={15} /> Login</Link>
+            <button type="button" className="pm-btn" aria-haspopup="dialog" onClick={() => openAuth('register')}>Register <ArrowUpRight size={14} /></button>
+            <button type="button" className="pm-btn ghost on-dark pm-menu-login" aria-haspopup="dialog" onClick={() => openAuth('login')}><LogIn size={15} /> Login</button>
           </div>
         )}
         <div className="pm-menu-meta">

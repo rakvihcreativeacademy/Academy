@@ -1,0 +1,177 @@
+/* Live course popup — matches the futuristic home banner: black + neon violet (#8B5CFF) / blue (#3AD6FF),
+   Outfit headings with an Instrument Serif italic gradient accent, Cabin for the pill. */
+.backdrop {
+  --neon: #3ad6ff;
+  --violet: #8b5cff;
+  --grad: linear-gradient(90deg, #7b39fc, #3a8bff);
+  --line: #8b5cff2e;
+  --muted: #a7a3c2;
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  --display: var(--f-display), system-ui, sans-serif;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: radial-gradient(60% 60% at 50% 50%, #1c115066, transparent 70%), #000000c4;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-family: var(--f-body), system-ui, sans-serif;
+  animation: fade .35s ease both;
+}
+/* rotating neon light border */
+.frame {
+  position: relative;
+  width: min(440px, 100%);
+  max-height: calc(100svh - 32px);
+  padding: 1.5px;
+  border-radius: 28px;
+  background: conic-gradient(from var(--spin, 0deg), #8b5cff26 0 55%, var(--violet) 68%, var(--neon) 76%, #8b5cff26 88%);
+  box-shadow: 0 0 60px -10px #7b39fc80, 0 50px 120px -40px #3a8bff60, 0 30px 80px -20px #000;
+  animation: popIn .55s var(--ease) both, spin 7s linear infinite;
+}
+.modal {
+  position: relative;
+  overflow: auto;
+  max-height: calc(100svh - 35px);
+  border-radius: 26.5px;
+  background:
+    radial-gradient(90% 60% at 100% 0%, #2a167080 0%, transparent 60%),
+    radial-gradient(70% 50% at 0% 100%, #0b3a5a66 0%, transparent 60%),
+    linear-gradient(180deg, #0d0a1f 0%, #05040d 100%);
+  color: #f5f5f7;
+  scrollbar-width: none;
+}
+.modal::-webkit-scrollbar { display: none; }
+/* tiny star field */
+.stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .7;
+  background-image:
+    radial-gradient(1px 1px at 12% 18%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 72% 12%, #9aefff 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 88% 46%, #c4b0ff 50%, transparent 51%),
+    radial-gradient(1px 1px at 34% 62%, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 58% 84%, #9aefff 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 8% 90%, #c4b0ff 50%, transparent 51%),
+    radial-gradient(1px 1px at 46% 30%, #fff 50%, transparent 51%);
+  animation: twinkle 4s ease-in-out infinite alternate;
+}
+/* glowing lens rings in the corner, echoing the 3D banner */
+.lensDeco { position: absolute; top: -70px; right: -70px; width: 230px; height: 230px; pointer-events: none; }
+.lensDeco i { position: absolute; inset: 0; border-radius: 50%; border: 1.5px solid transparent; }
+.lensDeco i:nth-child(1) { border-color: #3ad6ff70; box-shadow: 0 0 22px #3ad6ff40, inset 0 0 22px #3ad6ff30; animation: spinRing 18s linear infinite; border-top-color: transparent; }
+.lensDeco i:nth-child(2) { inset: 26px; border-color: #8b5cff80; box-shadow: 0 0 18px #8b5cff50; animation: spinRing 12s linear infinite reverse; border-left-color: transparent; }
+.lensDeco i:nth-child(3) { inset: 56px; border-color: #c04bff70; background: radial-gradient(circle, #3a1f8a90 0%, #120a30 60%, transparent 70%); box-shadow: 0 0 30px #7b39fc70; }
+.live {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  padding: 4px 12px 4px 4px;
+  border: 1px solid #8b5cff80;
+  border-radius: 10px;
+  background: rgba(60, 40, 130, .35);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0 22px -6px #8b5cff90;
+  color: #fff;
+  font-family: var(--f-cabin), system-ui, sans-serif;
+  font-size: .82rem;
+  font-weight: 500;
+}
+.live b { display: inline-flex; align-items: center; gap: 6px; padding: 4px 9px; border-radius: 6px; background: linear-gradient(90deg, var(--violet), var(--neon)); font-weight: 600; }
+.live i { width: 6px; height: 6px; border-radius: 50%; background: #fff; animation: pulse 1.6s ease-in-out infinite; }
+.close {
+  position: absolute;
+  z-index: 2;
+  right: 14px;
+  top: 14px;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #8b5cff60;
+  border-radius: 50%;
+  background: #0d0a1fcc;
+  backdrop-filter: blur(8px);
+  color: #fff;
+  cursor: pointer;
+  transition: background .3s, border-color .3s, rotate .3s var(--ease), box-shadow .3s;
+}
+.close:hover { background: var(--grad); border-color: transparent; rotate: 90deg; box-shadow: 0 0 18px #7b39fc90; }
+.body { position: relative; padding: 26px 24px 24px; }
+.body > * { position: relative; }
+.backdrop .title { margin: 0; max-width: 11ch; color: #fff; -webkit-text-fill-color: #fff; font-family: var(--display); font-size: clamp(1.9rem, 7vw, 2.4rem); font-weight: 700; line-height: 1; letter-spacing: -.04em; text-shadow: 0 0 30px #8b5cff50; }
+.backdrop .title em {
+  display: block;
+  margin-top: 2px;
+  font-family: var(--f-serif), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -.01em;
+  background: linear-gradient(90deg, var(--violet), var(--neon), #c04bff, var(--violet));
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+  animation: sheen 8s linear infinite;
+}
+.desc { margin: 12px 0 0; color: var(--muted); font-size: .92rem; line-height: 1.6; }
+.points { display: grid; gap: 8px; margin: 18px 0 0; padding: 0; list-style: none; }
+.points li { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 14px; background: #13102a99; animation: rise .5s var(--ease) both; transition: border-color .3s, box-shadow .3s; }
+.points li:hover { border-color: #8b5cff80; box-shadow: 0 0 22px -8px #7b39fc90; }
+.points li:nth-child(1) { animation-delay: .15s; }
+.points li:nth-child(2) { animation-delay: .25s; }
+.points li:nth-child(3) { animation-delay: .35s; }
+.ico { display: grid; place-items: center; flex: none; width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(135deg, #7b39fc33, #3a8bff33); border: 1px solid #8b5cff40; color: var(--neon); }
+.points strong { display: block; font-family: var(--display); font-size: .95rem; font-weight: 600; letter-spacing: -.01em; }
+.points li > div span { display: block; margin-top: 2px; color: var(--muted); font-size: .8rem; line-height: 1.4; }
+.actions { display: grid; margin-top: 20px; }
+.primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 50px;
+  padding: 10px 18px;
+  border-radius: 12px;
+  background: var(--grad);
+  color: #fff !important;
+  font-family: var(--f-cabin), var(--display), system-ui, sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 0 0 1px #ffffff1f inset, 0 14px 40px -12px #7b39fcc0;
+  transition: transform .3s var(--ease), box-shadow .3s, filter .3s;
+}
+.primary:hover { transform: translateY(-2px); filter: brightness(1.12); box-shadow: 0 0 0 1px #ffffff30 inset, 0 18px 46px -10px #3ad6ffa0; }
+.backdrop :focus-visible { outline: 3px solid var(--neon); outline-offset: 3px; }
+
+@property --spin { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+@keyframes spin { to { --spin: 360deg; } }
+@keyframes spinRing { to { rotate: 360deg; } }
+@keyframes sheen { to { background-position: -300% 0; } }
+@keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .4; transform: scale(.7); } }
+@keyframes twinkle { from { opacity: .4; } to { opacity: .85; } }
+@keyframes fade { from { opacity: 0; } }
+@keyframes popIn { from { opacity: 0; transform: translateY(24px) scale(.95); } }
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } }
+@media (prefers-reduced-motion: reduce) {
+  .backdrop, .frame, .points li, .live i, .stars, .lensDeco i, .backdrop .title em { animation: none !important; }
+}
+
+/* centred content */
+.body { text-align: center; }
+.live { margin-inline: auto; }
+.backdrop .title { margin-inline: auto; }
+.desc { margin-inline: auto; max-width: 34ch; }
+.points li { text-align: left; }
+
+/* "Live" badge: green dot + green text */
+.backdrop .live b { background: #22c55e1f !important; border: 1px solid #22c55e66; color: #4ade80 !important; box-shadow: 0 0 16px -4px #22c55e80; }
+.backdrop .live b i { background: #22c55e !important; box-shadow: 0 0 0 3px #22c55e33, 0 0 8px #22c55e; }

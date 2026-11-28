@@ -146,13 +146,13 @@ export default function VideoEditingDetailsModal({
             <span className="pm-syl-eyebrow">Registered Students Only</span>
             <h3>Login to View Full Course Details</h3>
             <p className="pm-syl-gate-desc">
-              The complete <strong>Adobe Premiere Pro 12-Day Class Schedule</strong>, daily module syllabus, and practical deliverables are exclusively unlocked for registered &amp; logged-in students.
+              The complete <strong>Adobe Premiere Pro 12-Days Class Schedule</strong>, daily module syllabus, and practical deliverables are exclusively unlocked for registered &amp; logged-in students.
             </p>
 
             <ul className="pm-syl-gate-perks">
               <li>
                 <Calendar size={15} />
-                <span>45-Day Training Program</span>
+                <span>45-Days Training Program</span>
               </li>
               <li>
                 <Users size={15} />
@@ -194,7 +194,7 @@ export default function VideoEditingDetailsModal({
             </p>
           </div>
         ) : (
-          /* UNLOCKED VIEW — Full 12-Day Syllabus for Registered & Logged-in Students */
+          /* UNLOCKED VIEW — Full 12-Days Syllabus for Registered & Logged-in Students */
           <div className="pm-syl-content">
             <header className="pm-syl-head">
               <div className="pm-syl-badges">
@@ -212,7 +212,7 @@ export default function VideoEditingDetailsModal({
 
               <div className="pm-syl-highlights">
                 <span>
-                  <Calendar size={14} /> 45-Day Training Program
+                  <Calendar size={14} /> 45-Days Training Program
                 </span>
                 <span>
                   <Users size={14} /> Live Project Training with Trainer Assistance
@@ -224,13 +224,9 @@ export default function VideoEditingDetailsModal({
             </header>
 
             <div className="pm-syl-list">
-              {VIDEO_EDITING_SYLLABUS.map((item, idx) => (
-                <article key={item.day} className="pm-syl-card">
+              {VIDEO_EDITING_SYLLABUS.map(item => (
+                <article key={item.days} className="pm-syl-card">
                   <div className="pm-syl-card-top">
-                    <span className="pm-syl-day">
-                      {item.day}
-                      <small>{String(idx + 1).padStart(2, '0')}/12</small>
-                    </span>
                     <h3>{item.module}</h3>
                   </div>
 

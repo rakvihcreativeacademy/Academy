@@ -10,7 +10,7 @@ import { useEffect } from 'react';
  */
 
 /** Sections that stay cinematic-dark in both themes (photographs, film, the 3D camera). */
-const MEDIA = '.pm-hero-simple, .pm-hx, .pm-banner, .pm-se:not(.pm-st), .pm-prod, .ap-hero, .lg-visual';
+const MEDIA = '[data-media], .pm-hero-simple, .pm-hx, .pm-banner, .pm-se:not(.pm-st), .pm-prod, .ap-hero, .lg-visual';
 
 export default function Motion() {
   useEffect(() => {

@@ -39,7 +39,7 @@ export default function PodcastConsole({ items }: { items: ConsoleItem[] }) {
             <span className={styles.check}>{selected === index && <Check size={17} />}</span>
           </button>)}
         </div>
-        <div className={styles.help} data-v><div><strong>Have a format in mind?</strong><p>Ask about hourly, half-day or full-day sessions.</p></div><Link href="#enquire">Let’s talk</Link></div>
+        <div className={styles.help} data-v><div><strong>Have a format in mind?</strong><p>Ask about hourly, half-days or full-days sessions.</p></div><Link href="#enquire">Let’s talk</Link></div>
       </div>
     </div>
     <div className={styles.steps}>

@@ -5,6 +5,7 @@ import FormSection from '@/components/v/FormSection';
 import CourseListing from '@/components/CourseListing';
 import BrandCard from '@/components/BrandCard';
 import { getPageContent } from '@/lib/cms/server';
+import { defaultContent } from '@/lib/cms/defaults';
 import { getVideoEditingOffering } from '@/lib/payments-server';
 import type { PageKey } from '@/lib/cms/schema';
 import { configured } from '@/lib/supabase/config';
@@ -17,9 +18,22 @@ import { productionItemImage } from '@/lib/production-images';
 import ChapterNav, { type Chapter } from '@/components/p/ChapterNav';
 import ShootEdit from '@/components/p/ShootEdit';
 import PodcastConsole from '@/components/p/PodcastConsole';
+import NeonHero from '@/components/p/NeonHero';
 
 const labels = { courses: 'Courses', 'podcast-studio': 'Podcast Studio', production: 'Production', projects: 'Student Work', careers: 'Careers' };
+const legacyBannerImages: Partial<Record<PageKey, string[]>> = {
+  courses: ['/images/banners/editing-colour.webp', '/images/banners/courses-editing-mentor.webp'],
+  'podcast-studio': ['/images/academy-studio.webp', '/images/banners/podcast-banner.webp'],
+  careers: ['/images/course-motion-graphics.webp'],
+};
 const tones = ['pm-paper', 'pm-dark', 'pm-paper2'];
+/** Pages that use the new neon banner + glass jump dock instead of Banner + ChapterNav. */
+const neonHero: Partial<Record<PageKey, { word: string; image: string }>> = {
+  courses: { word: 'Courses', image: '/images/banners/neon-courses.jpg' },
+  'podcast-studio': { word: 'Studio', image: '/images/banners/neon-podcast.jpg' },
+  careers: { word: 'Careers', image: '/images/banners/neon-careers.jpg' },
+  projects: { word: 'Work', image: '/images/banners/editing-podcast-workstation.jpg' },
+};
 /** Pages with their own card design + hover motion (everything else uses the shared photo tile). */
 const cardVariants: Partial<Record<PageKey, 'st' | 'cr' | 'gp' | 'tl'>> = { 'podcast-studio': 'st', careers: 'cr' };
 
@@ -50,6 +64,8 @@ export default async function ManagedPage({ page }: { page: PageKey }) {
     }
   }
   const b = doc.banner;
+  const replaceBanner = !b.image || legacyBannerImages[page]?.includes(b.image);
+  const bannerImage = replaceBanner ? defaultContent[page].banner.image : b.image;
   const variant = cardVariants[page];
   const short = (t: string) => t.replace(/^Professional\s+/i, '').replace(/\s*&\s*/g, ' & ');
   const chapters: Chapter[] = page === 'courses'
@@ -60,12 +76,28 @@ export default async function ManagedPage({ page }: { page: PageKey }) {
       ...(doc.enquiry.enabled ? [{ id: 'enquire', label: page === 'podcast-studio' ? 'Book the studio' : page === 'production' ? 'Start a project' : 'Enquire' }] : []),
     ];
   return <main className="pm-page managed-page">
-    <Banner crumb={labels[page]} eyebrow={b.eyebrow} title={b.title} italic={b.italic} lede={b.description} image={b.image || '/images/academy-filmmaking.webp'} imageAlt={b.image_alt} band={doc.sections[0]?.items.map(i => i.title)}>
-      {b.button_label && b.button_link && <Link className="pm-btn" href={b.button_link}>{b.button_label}<ArrowUpRight size={15} /></Link>}
-      {page === 'podcast-studio' && <Link className="pm-btn ghost on-dark" href="/admissions?type=studio#apply">Enquire About Packages</Link>}
-    </Banner>
+    {neonHero[page] ? (
+      <NeonHero
+        word={neonHero[page]!.word}
+        pill={page === 'courses' ? `${chapters.length} programmes · live & upcoming` : (b.eyebrow || labels[page])}
+        title={b.title}
+        italic={b.italic}
+        lede={b.description}
+        image={neonHero[page]!.image}
+        jumps={chapters}
+      >
+        {b.button_label && b.button_link && <Link className="pm-btn" href={b.button_link}>{b.button_label}<ArrowUpRight size={15} /></Link>}
+        {page === 'podcast-studio' && <Link className="pm-btn ghost on-dark" href="/admissions?type=studio#apply">Enquire About Packages</Link>}
+      </NeonHero>
+    ) : <>
+    <Banner crumb={labels[page]} eyebrow={b.eyebrow} title={b.title} italic={b.italic} lede={b.description} image={bannerImage} imageAlt={replaceBanner ? '' : b.image_alt} band={doc.sections[0]?.items.map(i => i.title)}>
+        {b.button_label && b.button_link && <Link className="pm-btn" href={b.button_link}>{b.button_label}<ArrowUpRight size={15} /></Link>}
+        {page === 'podcast-studio' && <Link className="pm-btn ghost on-dark" href="/admissions?type=studio#apply">Enquire About Packages</Link>}
+      </Banner>
+  
+      <ChapterNav items={chapters} title={page === 'courses' ? 'Programmes' : labels[page]} />
+    </>}
 
-    <ChapterNav items={chapters} title={page === 'courses' ? 'Programmes' : labels[page]} />
     {page === 'production' && <ShootEdit label="On set" variant="production" />}
 
     {page === 'courses' ? <CourseListing sections={doc.sections} videoEditingOffering={videoEditingOffering} isLoggedIn={isLoggedIn} /> : doc.sections.map((section, si) => {

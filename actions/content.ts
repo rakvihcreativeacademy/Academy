@@ -23,6 +23,7 @@ export async function saveContent(key: string, input: unknown, revision: number,
       }
       revalidatePath('/');
       revalidatePath('/'+page);
+      if (page === 'courses') revalidatePath('/upcoming');
       revalidatePath('/admissions');
     }
     return {ok:true as const,revision:data as number};

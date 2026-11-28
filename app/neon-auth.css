@@ -1,0 +1,148 @@
+/* Login + Register pages (.lg-page) and the header's Login/Register popup (.pm-student-auth)
+   in the futuristic neon look. Scoped with :root:root:root to win over premium.css light-theme rules. */
+:root { --na-grad: linear-gradient(90deg, #7b39fc, #3a8bff); }
+
+/* ── page backdrop: navy + neon waves + glow orbs ── */
+:root:root:root .pm-site .lg-page {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: radial-gradient(55% 60% at 80% 20%, #2a167066 0%, transparent 60%), radial-gradient(50% 55% at 0% 100%, #0b3a5a55 0%, transparent 60%), #05040d !important;
+  color: #f1eeff;
+}
+:root:root:root .pm-site .lg-page::before,
+:root:root:root .pm-site .lg-page::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 0; right: 0;
+  height: 420px;
+  pointer-events: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1600' height='420' viewBox='0 0 1600 420' fill='none'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1'%3E%3Cstop offset='0' stop-color='%238b5cff' stop-opacity='0'/%3E%3Cstop offset='.4' stop-color='%238b5cff'/%3E%3Cstop offset='.7' stop-color='%233ad6ff'/%3E%3Cstop offset='1' stop-color='%233ad6ff' stop-opacity='0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg stroke='url(%23g)' stroke-width='1.2'%3E%3Cpath d='M0 260 C200 160 400 360 600 250 S1000 120 1200 230 S1500 330 1600 220'/%3E%3Cpath d='M0 280 C200 180 400 380 600 270 S1000 140 1200 250 S1500 350 1600 240' opacity='.7'/%3E%3Cpath d='M0 300 C200 200 400 400 600 290 S1000 160 1200 270 S1500 370 1600 260' opacity='.5'/%3E%3Cpath d='M0 320 C200 220 400 420 600 310 S1000 180 1200 290 S1500 390 1600 280' opacity='.3'/%3E%3Cpath d='M0 240 C200 140 400 340 600 230 S1000 100 1200 210 S1500 310 1600 200' opacity='.5'/%3E%3C/g%3E%3C/svg%3E") repeat-x;
+  background-size: 1600px 420px;
+  opacity: .55;
+  filter: drop-shadow(0 0 6px #8b5cff80);
+  animation: naWave 40s linear infinite;
+}
+:root:root:root .pm-site .lg-page::before { top: 12%; }
+:root:root:root .pm-site .lg-page::after { bottom: -60px; transform: scaleX(-1); animation-duration: 54s; opacity: .4; }
+
+/* image panel */
+:root:root:root .pm-site .lg-visual { border: 1.5px solid transparent !important; background: linear-gradient(#05040d, #05040d) padding-box, linear-gradient(160deg, #8b5cff, #3ad6ff 55%, #8b5cff30) border-box !important; box-shadow: 0 0 70px -20px #7b39fcb0 !important; }
+:root:root:root .pm-site .lg-visual img { filter: saturate(1.1); }
+:root:root:root .pm-site .lg-visual-copy em,
+:root:root:root .pm-site .lg-visual h2 em { background-image: linear-gradient(90deg, #8b5cff, #3ad6ff) !important; -webkit-background-clip: text !important; background-clip: text !important; color: transparent !important; -webkit-text-fill-color: transparent !important; }
+:root:root:root .pm-site .lg-visual li svg { color: #3ad6ff !important; }
+:root:root:root .pm-site .lg-visual li > svg, :root:root:root .pm-site .lg-visual li span:first-child { background: #8b5cff26 !important; border-color: #8b5cff55 !important; }
+
+/* ── form card (page + popup) ── */
+:root:root:root .pm-site :is(.lg-card, .pm-student-auth-body) {
+  position: relative;
+  color: #f1eeff !important;
+}
+:root:root:root .pm-site .lg-form .lg-card {
+  padding: clamp(24px, 3vw, 40px) !important;
+  border-radius: 28px !important;
+  border: 1.5px solid transparent !important;
+  background: linear-gradient(180deg, #13102acc, #0b0918e6) padding-box, linear-gradient(150deg, #8b5cff99, #3ad6ff55 50%, #8b5cff22) border-box !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 0 60px -22px #7b39fcb0, 0 40px 80px -40px #000 !important;
+}
+:root:root:root .pm-site :is(.lg-card, .pm-student-auth-body) h1,
+:root:root:root .pm-site :is(.lg-card, .pm-student-auth-body) h2 { color: #fff !important; font-family: var(--f-display, inherit); letter-spacing: -.035em; text-shadow: 0 0 30px #8b5cff40; }
+:root:root:root .pm-site :is(.lg-card, .pm-student-auth-body) :is(.lg-desc, p) { color: #a7a3c2 !important; }
+:root:root:root .pm-site :is(.lg-card, .pm-student-auth-body) .pm-label { color: #e4e0ff !important; }
+:root:root:root .pm-site :is(.lg-card, .pm-student-auth-body, .lg-page) .pm-dot { background: #3ad6ff !important; box-shadow: 0 0 0 4px #3ad6ff26, 0 0 10px #3ad6ff !important; }
+:root:root:root .pm-site :is(.lg-card, .pm-student-auth-body) label { color: #d8d3f5 !important; }
+
+/* inputs */
+:root:root:root .pm-site :is(.lg-card, .pm-student-auth-body) :is(input, select, textarea) {
+  background: #0a0818 !important;
+  border: 1px solid #8b5cff44 !important;
+  color: #fff !important;
+  border-radius: 14px !important;
+  box-shadow: inset 0 1px 0 #ffffff08 !important;
+  transition: border-color .25s, box-shadow .25s !important;
+}
+:root:root:root .pm-site :is(.lg-card, .pm-student-auth-body) :is(input, textarea)::placeholder { color: #7d78a0 !important; }
+:root:root:root .pm-site :is(.lg-card, .pm-student-auth-body) :is(input, select, textarea):focus {
+  outline: none !important;
+  border-color: #3ad6ff !important;
+  box-shadow: 0 0 0 4px #3ad6ff22, 0 0 24px -6px #3ad6ff90 !important;
+}
+:root:root:root .pm-site :is(.lg-card, .pm-student-auth-body) input:-webkit-autofill { -webkit-text-fill-color: #fff !important; -webkit-box-shadow: 0 0 0 40px #0a0818 inset !important; }
+:root:root:root .pm-site :is(.lg-card, .pm-student-auth-body) button[aria-label*='assword'], :root:root:root .pm-site :is(.lg-card, .pm-student-auth-body) .panel button:not(.button) { color: #a7a3c2 !important; background: transparent !important; }
+
+/* submit */
+:root:root:root .pm-site :is(.lg-card, .pm-student-auth-body) form .button:not(#_):not(#_) {
+  background: var(--na-grad) !important;
+  color: #fff !important;
+  border: 0 !important;
+  border-radius: 14px !important;
+  box-shadow: 0 0 0 1px #ffffff1f inset, 0 14px 36px -12px #7b39fcc0 !important;
+  transition: filter .3s, transform .3s !important;
+}
+:root:root:root .pm-site :is(.lg-card, .pm-student-auth-body) form .button:not(#_):not(#_):hover { filter: brightness(1.12); transform: translateY(-2px); }
+:root:root:root .pm-site :is(.lg-card, .pm-student-auth-body) .notice { background: #8b5cff1a !important; border-color: #8b5cff55 !important; color: #e4e0ff !important; }
+
+/* footer links */
+:root:root:root .pm-site :is(.lg-card, .pm-student-auth-body) .lg-foot { border-color: #8b5cff2e !important; color: #a7a3c2 !important; }
+:root:root:root .pm-site :is(.lg-card, .pm-student-auth-body) .pm-link { color: #3ad6ff !important; border-color: #3ad6ff80 !important; background: none !important; }
+:root:root:root .pm-site :is(.lg-card, .pm-student-auth-body) .pm-link:hover { color: #9aefff !important; }
+:root:root:root .pm-site :is(.lg-card, .pm-student-auth-body) :is(small, .lg-meta) { color: #7d78a0 !important; }
+
+/* ── header popup (dialog) ── */
+:root:root:root .pm-student-auth::backdrop { background: radial-gradient(60% 60% at 50% 50%, #1c115066, transparent 70%), #000000c4; backdrop-filter: blur(10px); }
+:root:root:root .pm-site .pm-student-auth,
+:root:root:root .pm-student-auth {
+  border: 1.5px solid transparent !important;
+  border-radius: 28px !important;
+  background: linear-gradient(180deg, #0d0a1f, #05040d) padding-box, linear-gradient(150deg, #8b5cff, #3ad6ff 55%, #8b5cff30) border-box !important;
+  box-shadow: 0 0 80px -20px #7b39fcb0, 0 40px 100px -30px #000 !important;
+  color: #f1eeff !important;
+  overflow: hidden;
+}
+:root:root:root .pm-student-auth .pm-student-auth-body { background: radial-gradient(80% 50% at 100% 0%, #2a167055, transparent 60%) !important; }
+:root:root:root .pm-student-auth .pm-student-auth-close { background: #13102a !important; border: 1px solid #8b5cff60 !important; color: #fff !important; }
+:root:root:root .pm-student-auth .pm-student-auth-close:hover { background: var(--na-grad) !important; border-color: transparent !important; }
+
+@keyframes naWave { to { background-position: 1600px 0; } }
+@media (prefers-reduced-motion: reduce) { :root:root:root .pm-site .lg-page::before, :root:root:root .pm-site .lg-page::after { animation: none !important; } }
+:root:root:root .pm-site :is(.lg-card, .pm-student-auth-body) form .button:not(#_):not(#_) * { color: #fff !important; }
+
+/* popup inputs (the dialog sits outside .pm-site in some layouts) */
+:root:root:root .pm-student-auth :is(input, select, textarea):not(#_) {
+  background: #0a0818 !important;
+  border: 1px solid #8b5cff44 !important;
+  color: #fff !important;
+  border-radius: 14px !important;
+}
+:root:root:root .pm-student-auth :is(input, textarea):not(#_)::placeholder { color: #7d78a0 !important; }
+:root:root:root .pm-student-auth :is(input, select, textarea):not(#_):focus { outline: none !important; border-color: #3ad6ff !important; box-shadow: 0 0 0 4px #3ad6ff22, 0 0 24px -6px #3ad6ff90 !important; }
+:root:root:root .pm-student-auth label:not(#_) { color: #d8d3f5 !important; }
+:root:root:root .pm-student-auth h2:not(#_), :root:root:root .pm-student-auth h1:not(#_) { color: #fff !important; }
+
+/* ── landscape register: wide popup, fields in two columns, no scrolling ── */
+:root:root:root .pm-student-auth:has(.auth-form--register) { width: min(1060px, calc(100% - 32px)) !important; }
+:root:root:root .pm-student-auth:has(.auth-form--register) .pm-student-auth-layout { grid-template-columns: minmax(0, .8fr) minmax(0, 1.6fr); }
+:root:root:root .pm-student-auth:has(.auth-form--register) .pm-student-auth-body.lg-card { padding: 30px 34px 26px; }
+:root:root:root .pm-student-auth:has(.auth-form--register) .pm-student-auth-body h2 { margin: 4px 44px 18px 0; font-size: 28px; }
+:root:root:root :is(.pm-student-auth, .pm-site) form.auth-form--register {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 18px !important;
+}
+:root:root:root :is(.pm-student-auth, .pm-site) form.auth-form--register > * { margin: 0 !important; }
+:root:root:root :is(.pm-student-auth, .pm-site) form.auth-form--register > :is(.notice, .button, button[type='submit'], button:last-child) { grid-column: 1 / -1; }
+:root:root:root :is(.pm-student-auth, .pm-site) form.auth-form--register label { display: grid; gap: 7px; }
+:root:root:root :is(.pm-student-auth, .pm-site) form.auth-form--register :is(input, select) { height: 48px; }
+:root:root:root .pm-student-auth:has(.auth-form--register) .lg-foot { margin-top: 16px; padding-top: 14px; }
+/* register page card: wider so the two columns breathe */
+:root:root:root .pm-site .lg-form .lg-card:has(.auth-form--register) { max-width: 680px; width: 100%; }
+@media (max-width: 760px) {
+  :root:root:root :is(.pm-student-auth, .pm-site) form.auth-form--register { grid-template-columns: minmax(0, 1fr); }
+  :root:root:root .pm-student-auth:has(.auth-form--register) .pm-student-auth-layout { grid-template-columns: minmax(0, 1fr); }
+}
+:root:root:root :is(.pm-student-auth, .pm-site) form.auth-form--register > label:first-of-type { grid-column: 1 / -1; }
+@media (max-width: 760px) { :root:root:root :is(.pm-student-auth, .pm-site) form.auth-form--register > label:first-of-type { grid-column: auto; } }

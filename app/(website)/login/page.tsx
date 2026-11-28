@@ -22,7 +22,7 @@ export default async function Login({ searchParams }: { searchParams: Promise<{ 
 
   return <main className="lg-page">
     <section className="lg-visual" aria-hidden="true">
-      <img src="/images/academy-photography.webp" alt="" />
+      <img src="/images/banners/neon-login.jpg" alt="" />
       <div className="lg-visual-copy">
         <p className="pm-label on-dark"><span className="pm-dot" /> The RAKVIH Digital creative space</p>
         <h2>Your next chapter<br /><em>starts with you.</em></h2>
@@ -37,14 +37,14 @@ export default async function Login({ searchParams }: { searchParams: Promise<{ 
       <div className="lg-card">
         <p className="pm-label"><span className="pm-dot" /> Student login</p>
         <h1 id="lg-title">Good to have you back.</h1>
-        <p className="lg-desc">Sign in with the email and password shared by our admissions team after your enrollment is approved.</p>
+        <p className="lg-desc">Sign in with your student account email and password.</p>
         {!configured && <p className="lg-notice" role="status"><LockKeyhole size={15} /> The portal is being prepared. Please contact RAKVIH Digital for account access.</p>}
         <AuthForm next={next} />
         <div className="lg-foot">
-          <span>Not enrolled yet?</span>
-          <Link href="/admissions" className="pm-link">Apply for admission <ArrowUpRight size={13} /></Link>
+          <span>New to the student portal?</span>
+          <Link href="/register" className="pm-link">Create an account <ArrowUpRight size={13} /></Link>
         </div>
-        <p className="lg-secure"><LockKeyhole size={13} /> Approved students only · Accounts are issued by RAKVIH Digital.</p>
+        <p className="lg-secure"><LockKeyhole size={13} /> Student portal · RAKVIH Digital</p>
       </div>
     </section>
   </main>;

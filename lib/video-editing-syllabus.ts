@@ -1,5 +1,5 @@
 export type SyllabusDay = {
-  day: string;
+  days: string;
   module: string;
   topics: string[];
   deliverable: string;
@@ -7,14 +7,14 @@ export type SyllabusDay = {
 
 export const VIDEO_EDITING_SYLLABUS_META = {
   eyebrow: 'Adobe Premiere Pro Course Syllabus',
-  title: '12-Day Class Schedule',
+  title: '12-Days Class Schedule',
   subtitle: 'Comprehensive Video Editing Curriculum & Project-Based Training',
   intro:
-    'This 12-day instructional roadmap structures all core modules, technical post-production pipelines, and advanced Creative Cloud workflows into daily hands-on sessions.',
+    'This 12-days instructional roadmap structures all core modules, technical post-production pipelines, and advanced Creative Cloud workflows into daily hands-on sessions.',
   pacingNote:
-    'Modules 1 through 7 are paced at one module per day (Days 1–7), Module 8 spans Days 8 and 9 for comprehensive visual effects and multicam labs, and Days 10 through 12 focus entirely on mastering delivery codecs, proxy/batch pipelines, and cross-application Creative Cloud integration.',
+    'Modules 1 through 7 are paced at one module per days (Days 1–7), Module 8 spans Days 8 and 9 for comprehensive visual effects and multicam labs, and Days 10 through 12 focus entirely on mastering delivery codecs, proxy/batch pipelines, and cross-application Creative Cloud integration.',
   highlights: [
-    '45-Day Training Program',
+    '45-Days Training Program',
     'Live Project Training with Trainer Assistance',
     'Get Training Certificate in 45 Days',
   ],
@@ -22,7 +22,7 @@ export const VIDEO_EDITING_SYLLABUS_META = {
 
 export const VIDEO_EDITING_SYLLABUS: SyllabusDay[] = [
   {
-    day: 'Day 1',
+    days: 'Days 1',
     module: 'Module 1: Introduction to Premiere Pro',
     topics: [
       'What is Premiere Pro?',
@@ -34,7 +34,7 @@ export const VIDEO_EDITING_SYLLABUS: SyllabusDay[] = [
     deliverable: 'Initialize a structured project directory and import raw media assets cleanly.',
   },
   {
-    day: 'Day 2',
+    days: 'Days 2',
     module: 'Module 2: Premiere Pro Interface & Tools',
     topics: [
       'Panels overview: Project, Timeline, Program, Source Monitor',
@@ -45,7 +45,7 @@ export const VIDEO_EDITING_SYLLABUS: SyllabusDay[] = [
     deliverable: 'Configure a custom editing workspace and complete a shortcut speed drill.',
   },
   {
-    day: 'Day 3',
+    days: 'Days 3',
     module: 'Module 3: Timeline Editing Basics',
     topics: [
       'Creating sequences & working with video/audio tracks',
@@ -56,7 +56,7 @@ export const VIDEO_EDITING_SYLLABUS: SyllabusDay[] = [
     deliverable: 'Assemble a clean multi-clip rough cut using three-point editing techniques.',
   },
   {
-    day: 'Day 4',
+    days: 'Days 4',
     module: 'Module 4: Transitions & Effects',
     topics: [
       'Video transitions (cross dissolve, dip to black, etc.)',
@@ -67,7 +67,7 @@ export const VIDEO_EDITING_SYLLABUS: SyllabusDay[] = [
     deliverable: 'Apply seamless scene transitions and build a keyframed motion sequence.',
   },
   {
-    day: 'Day 5',
+    days: 'Days 5',
     module: 'Module 5: Working with Titles & Graphics',
     topics: [
       'Using the Essential Graphics Panel',
@@ -78,7 +78,7 @@ export const VIDEO_EDITING_SYLLABUS: SyllabusDay[] = [
     deliverable: 'Design a custom lower third and integrate an animated MOGRT title package.',
   },
   {
-    day: 'Day 6',
+    days: 'Days 6',
     module: 'Module 6: Audio Editing',
     topics: [
       'Audio track types: standard, mono, stereo',
@@ -89,7 +89,7 @@ export const VIDEO_EDITING_SYLLABUS: SyllabusDay[] = [
     deliverable: 'Clean up dialogue tracks and balance background music under voiceover using ducking.',
   },
   {
-    day: 'Day 7',
+    days: 'Days 7',
     module: 'Module 7: Color Correction & Grading',
     topics: [
       'Using Lumetri Color Panel',
@@ -100,7 +100,7 @@ export const VIDEO_EDITING_SYLLABUS: SyllabusDay[] = [
     deliverable: 'Balance exposure across multi-shot footage and apply a consistent creative color grade.',
   },
   {
-    day: 'Day 8',
+    days: 'Days 8',
     module: 'Module 8: Advanced Editing Techniques (Part 1)',
     topics: [
       'Multicam editing',
@@ -111,7 +111,7 @@ export const VIDEO_EDITING_SYLLABUS: SyllabusDay[] = [
     deliverable: 'Sync and edit a multi-camera sequence enhanced with dynamic speed ramps.',
   },
   {
-    day: 'Day 9',
+    days: 'Days 9',
     module: 'Module 8: Advanced Editing Techniques (Part 2)',
     topics: [
       'Green screen (Chroma Keying with Ultra Key)',
@@ -121,7 +121,7 @@ export const VIDEO_EDITING_SYLLABUS: SyllabusDay[] = [
     deliverable: 'Composite a green-screen subject and execute a tracked mask effect.',
   },
   {
-    day: 'Day 10',
+    days: 'Days 10',
     module: 'Module 9: Exporting & Delivery Standards',
     topics: [
       'Format & codec options (MP4, MOV, H.264, ProRes, etc.)',
@@ -132,7 +132,7 @@ export const VIDEO_EDITING_SYLLABUS: SyllabusDay[] = [
     deliverable: 'Export calibrated masters and social aspect-ratio deliverables with burned-in captions.',
   },
   {
-    day: 'Day 11',
+    days: 'Days 11',
     module: 'Module 10: Proxy Workflows & Batch Rendering',
     topics: [
       'Working with proxies for smooth 4K/8K editing',
@@ -143,7 +143,7 @@ export const VIDEO_EDITING_SYLLABUS: SyllabusDay[] = [
     deliverable: 'Set up a proxy editing pipeline and configure automated batch renders via Media Encoder.',
   },
   {
-    day: 'Day 12',
+    days: 'Days 12',
     module: 'Module 11: Creative Cloud Integration & Pro Workflows',
     topics: [
       'Dynamic Link integration with After Effects and Photoshop',

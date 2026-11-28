@@ -30,7 +30,7 @@ export const nav = [
   { href: '/about', label: 'About' },
   { href: '/courses', label: 'Courses' },
   { href: '/podcast-studio', label: 'Podcast Studio' },
-  { href: '/production', label: 'Production' },
+  { href: '/upcoming', label: 'Upcoming' },
   { href: '/projects', label: 'Student Work' },
   { href: '/careers', label: 'Careers' },
   { href: '/contact', label: 'Contact' },
@@ -40,7 +40,7 @@ export const offers = [
   { icon: 'graduation', title: 'Professional Training', text: 'Learn video editing, cinematography, photography, filmmaking, lighting, sound engineering, motion graphics, digital content creation and creative production.', href: '/courses' },
   { icon: 'mic', title: 'Premium Podcast Studio', text: 'Experience a professionally equipped podcast space for interviews, business discussions, video podcasts, audio podcasts and content production.', href: '/podcast-studio' },
   { icon: 'film', title: 'Practical Industry Experience', text: 'Work on real-world projects, short films, promotional videos, photography assignments and digital content.', href: '/projects' },
-  { icon: 'sparkles', title: 'Creative Production Services', text: 'Get professional video editing, photography, cinematography, podcast production, promotional videos, event coverage and digital content production.', href: '/production' },
+  { icon: 'sparkles', title: 'Creative Production Services', text: 'Get professional video editing, photography, cinematography, podcast production, promotional videos, event coverage and digital content production.', href: '/contact' },
   { icon: 'monitor', title: 'Digital Technology Solutions', text: 'Website development, software solutions, digital marketing and technology services through RAKVIH Digital.', href: '/contact' },
 ];
 

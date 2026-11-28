@@ -1,5 +1,5 @@
-import ManagedPage from '@/components/ManagedPage';
-export const metadata={title:'Production'};
-// Cached and refreshed on publish (revalidatePath) or every 5 minutes.
-export const revalidate=300;
-export default function Page(){return <ManagedPage page="production"/>;}
+import { redirect } from 'next/navigation';
+
+export default function ProductionPage() {
+  redirect('/upcoming');
+}

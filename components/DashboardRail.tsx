@@ -9,7 +9,7 @@ const stateLabel:Record<RailPage['state'],string>={live:'Live',changed:'Unpublis
 
 function ago(iso:string){
  const diff=(new Date(iso).getTime()-Date.now())/1000;const rtf=new Intl.RelativeTimeFormat('en',{numeric:'auto'});
- const units:[Intl.RelativeTimeFormatUnit,number][]=[['year',31536000],['month',2592000],['week',604800],['day',86400],['hour',3600],['minute',60]];
+ const units:[Intl.RelativeTimeFormatUnit,number][]=[['year',31536000],['month',2592000],['week',604800],['days',86400],['hour',3600],['minute',60]];
  for(const [unit,s] of units)if(Math.abs(diff)>=s)return rtf.format(Math.round(diff/s),unit);
  return 'just now';
 }

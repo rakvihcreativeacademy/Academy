@@ -52,7 +52,7 @@ export const DEFAULT_VIDEO_EDITING_OFFERING: CourseOffering = {
   price_inr: 14999,
   currency: 'INR',
   batch_label: 'Next batch enrolling now',
-  duration_label: '45-Day Training Program · Live project training with trainer assistance',
+  duration_label: '45-Days Training Program · Live project training with trainer assistance',
   is_live: true,
   enrollments_enabled: true,
 };

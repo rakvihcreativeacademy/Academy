@@ -1,6 +1,6 @@
 /* ════════════════════════════════════════════════════════════════════
    MOTION — premium animation layer for RAKVIH Creative Academy
-   Same palette (forest · cream · lime · olive #4F5723 · sun #FCCC0F).
+   Same palette (forest · cream · lime · olive #4F5723 · sun var(--rk-action-yellow)).
    Loaded after verdant.css. Everything is switched off for reduced motion.
    ════════════════════════════════════════════════════════════════════ */
 
@@ -43,7 +43,7 @@ figure[data-rv]{transition:opacity .9s var(--v-ease),scale 1.2s var(--v-ease),cl
 /* ── cards: 3D tilt (rotate set by Motion), lift + sun-edged glow ── */
 :is(.v-cards,.v-tiles,.course-grid,.projects-grid,div,section):has(> :is(.v-card,.v-tile,.course-card,.project-item)){perspective:1400px}
 html.js .v-card[data-v]{transition:opacity .9s var(--v-ease),filter .9s var(--v-ease),transform .9s var(--v-ease),rotate .6s var(--v-ease),box-shadow .5s var(--v-ease)}
-.v-card:hover{box-shadow:0 40px 90px -40px #000c,0 0 0 1px #fccc0f66}
+.v-card:hover{box-shadow:0 40px 90px -40px #000c,0 0 0 1px #f5ce5766}
 .v-card .v-big{background:linear-gradient(100deg,var(--v-ink) 40%,var(--v-olive-2) 50%,var(--v-ink) 60%) 100% 0/250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;transition:background-position 1.2s var(--v-ease)}
 .v-card:hover .v-big{background-position:0 0}
 :is(.v-tile,.course-card,.project-item){transition:transform .5s var(--v-ease),rotate .6s var(--v-ease),box-shadow .5s var(--v-ease),opacity .9s var(--v-ease),translate 1s var(--v-ease),filter .9s var(--v-ease)}
@@ -55,7 +55,7 @@ html.js .v-card[data-v]{transition:opacity .9s var(--v-ease),filter .9s var(--v-
   background-image:linear-gradient(110deg,transparent 35%,#ffffff70 50%,transparent 65%);background-size:260% 100%;background-position:130% 0;background-repeat:no-repeat}
 :is(.v-pill-white,.v-pill-dark,.v-pill-wa,.v-pill-ghost,.v-pill-sun,.v-pill-outline,.v-apply):hover{
   background-image:linear-gradient(110deg,transparent 35%,#ffffff70 50%,transparent 65%);background-size:260% 100%;background-position:-30% 0;background-repeat:no-repeat}
-.v-pill-sun:hover{box-shadow:0 14px 34px -12px #fccc0faa}
+.v-pill-sun:hover{box-shadow:0 14px 34px -12px #f5ce57aa}
 .lucide-arrow-up-right,.lucide-arrow-right{transition:translate .35s var(--v-ease)}
 a:hover>.lucide-arrow-up-right,button:hover>.lucide-arrow-up-right{translate:2px -2px}
 a:hover>.lucide-arrow-right,button:hover>.lucide-arrow-right{translate:3px 0}
@@ -66,7 +66,7 @@ a:hover>.lucide-arrow-right,button:hover>.lucide-arrow-right{translate:3px 0}
   transition:width .4s var(--v-ease),height .4s var(--v-ease),margin .4s var(--v-ease),background-color .35s,border-color .35s,opacity .3s}
 .rk-cursor-dot{width:6px;height:6px;margin:-3px 0 0 -3px;background:var(--v-olive);transition:opacity .3s,background-color .3s}
 .rk-cursor.on-dark{border-color:#eef5c9aa}.rk-cursor-dot.on-dark{background:var(--v-sun)}
-.rk-cursor.is-hot{width:58px;height:58px;margin:-29px 0 0 -29px;background:#fccc0f26;border-color:var(--v-sun)}
+.rk-cursor.is-hot{width:58px;height:58px;margin:-29px 0 0 -29px;background:#f5ce5726;border-color:var(--v-sun)}
 .rk-cursor.is-media{width:86px;height:86px;margin:-43px 0 0 -43px;background:var(--v-sun);border-color:var(--v-sun)}
 .rk-cursor-label{font:600 11px/1 var(--v-sans);letter-spacing:.12em;text-transform:uppercase;color:var(--v-ink);opacity:0;transition:opacity .25s}
 .rk-cursor.is-media .rk-cursor-label{opacity:1}
@@ -97,7 +97,7 @@ html.js .v-hb-tabs button:nth-child(3){animation-delay:calc(var(--hd) + .94s)}
 html.js .v-hb-side>*{animation:rk-up 1.2s var(--v-ease) both;animation-delay:calc(var(--hd) + .9s)}
 
 .rk-hero-cta{margin:0 0 4px;gap:12px}
-.rk-hero-cta .v-pill-sun{height:52px;padding:0 26px;font-size:14px;box-shadow:0 16px 40px -16px #fccc0fbb}
+.rk-hero-cta .v-pill-sun{height:52px;padding:0 26px;font-size:14px;box-shadow:0 16px 40px -16px #f5ce57bb}
 .rk-hero-cta .v-pill-ghost{height:52px;padding:0 22px;font-size:14px;background-color:#ffffff12;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 .rk-hero-cta .v-pill-ghost:hover{background-color:#ffffff26;border-color:#ffffff70}
 
@@ -105,7 +105,7 @@ html.js .v-hb-side>*{animation:rk-up 1.2s var(--v-ease) both;animation-delay:cal
 .rk-hero-lines{position:absolute;inset:0;z-index:-1;pointer-events:none}
 .rk-hero-lines i{position:absolute;top:0;bottom:0;width:1px;background:#ffffff0d;overflow:hidden}
 .rk-hero-lines i:nth-child(1){left:62%}.rk-hero-lines i:nth-child(2){left:50%}.rk-hero-lines i:nth-child(3){left:75%}
-.rk-hero-lines i::after{content:"";position:absolute;left:0;width:1px;height:160px;top:-160px;background:linear-gradient(180deg,transparent,#fccc0fcc,transparent);animation:rk-scan 6s linear infinite}
+.rk-hero-lines i::after{content:"";position:absolute;left:0;width:1px;height:160px;top:-160px;background:linear-gradient(180deg,transparent,#f5ce57cc,transparent);animation:rk-scan 6s linear infinite}
 .rk-hero-lines i:nth-child(2)::after{animation-delay:-2s}.rk-hero-lines i:nth-child(3)::after{animation-delay:-4s}
 @keyframes rk-scan{to{top:100%}}
 
@@ -115,7 +115,7 @@ html.js .v-hb-side>*{animation:rk-up 1.2s var(--v-ease) both;animation-delay:cal
 .rk-orbit-badge svg{position:absolute;inset:0;width:100%;height:100%;animation:v-spin 22s linear infinite;overflow:visible}
 .rk-orbit-badge text{font:600 12.5px var(--v-sans);letter-spacing:.2em;text-transform:uppercase;fill:#eef5c9}
 .rk-orbit-badge::before{content:"";position:absolute;inset:32px;border-radius:50%;background:#13210c66;border:1px solid #ffffff2a;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
-.rk-orbit-badge img{position:relative;width:64px;height:64px;border-radius:50%;background:#fff;padding:9px;box-shadow:0 0 0 6px #fccc0f33,0 12px 30px -10px #000a;transition:transform .8s var(--v-ease)}
+.rk-orbit-badge img{position:relative;width:64px;height:64px;border-radius:50%;background:#fff;padding:9px;box-shadow:0 0 0 6px #f5ce5733,0 12px 30px -10px #000a;transition:transform .8s var(--v-ease)}
 .rk-hero:hover .rk-orbit-badge img{transform:rotate(-12deg) scale(1.06)}
 .v-hb-onair{--d:-1}
 

@@ -367,7 +367,7 @@ export default function AdminPayments({
                     <span>{p.student_email}</span>
                     <span>{p.student_phone}</span>
                     <span>{p.learning_mode || 'Standard batch'}</span>
-                    <span>{new Date(p.created_at).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</span>
+                    <span>{new Date(p.created_at).toLocaleDateString('en-IN', { days: '2-digit', month: 'short', year: 'numeric' })}</span>
                   </div>
                 </div>
 

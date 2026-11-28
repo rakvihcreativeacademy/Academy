@@ -1,0 +1,291 @@
+/* Site header + mobile menu + scroll bar in the futuristic home look:
+   solid black, neon violet #8B5CFF / blue #3AD6FF, gradient #7B39FC → #3A8BFF.
+   Loaded last (app/layout.tsx) and scoped with `:root:root:root` (extra specificity) so it wins over the light-theme and
+   over-media variants in premium.css. One look on every page and in both themes. */
+html {
+  --nh-violet: #8b5cff;
+  --nh-neon: #3ad6ff;
+  --nh-grad: linear-gradient(90deg, #7b39fc, #3a8bff);
+}
+
+/* Solid black bar with a neon hairline. */
+:root:root:root .pm-site .pm-head::before,
+:root:root:root:has(.pm-menu) .pm-site .pm-head::before {
+  background: #000 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: 0 1px 0 #8b5cff2e, 0 10px 40px -20px #7b39fc66 !important;
+  opacity: 1 !important;
+}
+:root:root:root .pm-site .pm-head::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, #8b5cff99 30%, #3ad6ff99 70%, transparent);
+  opacity: .8;
+}
+:root:root:root .pm-site .pm-head :is(.pm-brand b, .pm-lockup-name) { color: #fff !important; }
+:root:root:root .pm-site .pm-head .pm-lockup-name i { color: var(--nh-neon) !important; }
+
+/* nav capsule */
+:root:root:root .pm-site .pm-head .pm-nav {
+  background: rgba(19, 16, 42, .55) !important;
+  border-color: #8b5cff40 !important;
+  box-shadow: inset 0 0 0 1px #ffffff08, 0 0 30px -12px #7b39fc80;
+}
+:root:root:root .pm-site .pm-head .pm-nav a { color: #c9c4e6 !important; }
+:root:root:root .pm-site .pm-head .pm-nav a:hover { color: #fff !important; }
+:root:root:root .pm-site .pm-head .pm-nav a.active { color: #fff !important; }
+:root:root:root .pm-site .pm-head .pm-nav a.home::after { background: #8b5cff40 !important; }
+:root:root:root .pm-site .pm-head .pm-nav .pm-nav-ico { color: currentColor; }
+:root:root:root .pm-site .pm-head .pm-nav-pill {
+  background: var(--nh-grad) !important;
+  box-shadow: 0 0 0 1px #ffffff26 inset, 0 6px 22px -6px #7b39fcc0;
+}
+
+/* Login + burger */
+:root:root:root .pm-site .pm-head :is(.pm-head-login, .pm-theme, .pm-burger) {
+  color: #e9e6ff !important;
+  border-color: #8b5cff55 !important;
+  background: rgba(19, 16, 42, .55) !important;
+}
+:root:root:root .pm-site .pm-head :is(.pm-head-login, .pm-burger):hover {
+  color: #fff !important;
+  border-color: var(--nh-neon) !important;
+  background: rgba(58, 214, 255, .1) !important;
+  box-shadow: 0 0 20px -6px #3ad6ff90;
+}
+
+/* Register (and any other button in the bar) */
+:root:root:root .pm-site .pm-head .pm-btn {
+  background: var(--nh-grad) !important;
+  color: #fff !important;
+  border-color: transparent !important;
+  box-shadow: 0 0 0 1px #ffffff26 inset, 0 12px 30px -12px #7b39fcc0 !important;
+}
+:root:root:root .pm-site .pm-head .pm-btn::before { background: #ffffff1f !important; }
+:root:root:root .pm-site .pm-head .pm-btn svg { background: #ffffff26 !important; color: #fff !important; border-radius: 50%; }
+:root:root:root .pm-site .pm-head .pm-btn:hover { filter: brightness(1.12); color: #fff !important; }
+
+/* signed-in student pill + dropdown */
+:root:root:root .pm-site .pm-head .pm-head-user {
+  color: #fff !important;
+  background: rgba(123, 57, 252, .14) !important;
+  border-color: #8b5cff66 !important;
+}
+:root:root:root .pm-site .pm-head .pm-head-user:is(:hover, .open) { background: rgba(123, 57, 252, .24) !important; border-color: var(--nh-neon) !important; }
+:root:root:root .pm-site :is(.pm-head, .pm-menu) .pm-user-av { background: var(--nh-grad) !important; color: #fff !important; }
+:root:root:root .pm-site .pm-user-drop { background: #0d0a1f !important; border-color: #8b5cff40 !important; color: #f5f5f7 !important; box-shadow: 0 30px 60px -20px #000, 0 0 40px -16px #7b39fc90 !important; }
+:root:root:root .pm-site .pm-user-status i { background: var(--nh-neon) !important; }
+
+/* thin scroll-progress line under the header */
+html body:has(.pm-site) .scroll-progress { background: linear-gradient(90deg, #7b39fc, #3a8bff, #3ad6ff) !important; box-shadow: 0 0 12px #3ad6ff80; }
+
+/* mobile full-screen menu */
+:root:root:root .pm-site .pm-menu,
+:root:root:root:has(.pm-menu) .pm-site .pm-menu {
+  background: radial-gradient(120% 60% at 100% 0%, #2a167099 0%, transparent 60%), radial-gradient(80% 50% at 0% 100%, #0b3a5a80 0%, transparent 60%), #05040d !important;
+  color: #fff !important;
+}
+:root:root:root .pm-site .pm-menu :is(.pm-menu-link, .pm-menu-kicker) { color: #e9e6ff !important; border-color: #8b5cff26 !important; }
+:root:root:root .pm-site .pm-menu .pm-menu-link.active { color: #fff !important; }
+:root:root:root .pm-site .pm-menu :is(.pm-menu-here, .pm-dot) { color: var(--nh-neon) !important; background-color: transparent; }
+:root:root:root .pm-site .pm-menu .pm-dot { background: var(--nh-neon) !important; box-shadow: 0 0 10px var(--nh-neon); }
+:root:root:root .pm-site .pm-menu .pm-btn { background: var(--nh-grad) !important; color: #fff !important; border-color: transparent !important; }
+:root:root:root .pm-site .pm-menu .pm-btn.ghost { background: rgba(19, 16, 42, .6) !important; border: 1px solid #8b5cff55 !important; }
+
+/* mobile menu links (light-theme rules in premium.css are very specific, so match their shape) */
+:root:root:root .pm-site .pm-menu nav.pm-menu-nav a.pm-menu-link { color: #c9c4e6 !important; }
+:root:root:root .pm-site .pm-menu nav.pm-menu-nav a.pm-menu-link:hover { background: #8b5cff1a !important; color: #fff !important; }
+:root:root:root .pm-site .pm-menu nav.pm-menu-nav a.pm-menu-link.active { background: var(--nh-grad) !important; color: #fff !important; box-shadow: 0 14px 34px -14px #7b39fcc0 !important; }
+:root:root:root .pm-site .pm-menu nav.pm-menu-nav a.pm-menu-link.active .pm-menu-here { color: #e9e6ff !important; }
+:root:root:root .pm-site .pm-menu .pm-menu-arrow { color: var(--nh-neon) !important; }
+:root:root:root .pm-site .pm-menu :is(.pm-menu-meta, .pm-menu-meta a, .pm-menu-foot) { color: #a7a3c2 !important; border-color: #8b5cff26 !important; }
+:root:root:root .pm-site .pm-menu .pm-btn.ghost { color: #fff !important; }
+:root:root:root .pm-site .pm-menu .pm-btn:not(.ghost) svg { background: #ffffff26 !important; color: #fff !important; }
+:root:root:root .pm-site .pm-menu nav.pm-menu-nav a.pm-menu-link.active::before,
+:root:root:root .pm-site .pm-menu nav.pm-menu-nav a.pm-menu-link.active > span::before { background: #fff !important; box-shadow: 0 0 0 4px #ffffff33 !important; }
+:root:root:root .pm-site .pm-menu nav.pm-menu-nav a.pm-menu-link.active svg { color: #fff !important; }
+
+:root:root:root .pm-site .pm-head .pm-brand {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  align-self: center !important;
+  width: auto !important;
+  min-width: max-content !important;
+  height: auto !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.pm-site :is(.pm-head, footer) .rk-wordmark {
+  display: inline-grid;
+  justify-items: center;
+  gap: .2em;
+  width: max-content;
+  margin: 0;
+  padding: .08em .16em .14em;
+  overflow: visible;
+  font: 800 clamp(20px, 2.05vw, 33px)/.94 var(--font-sans-src, system-ui), sans-serif;
+  letter-spacing: .1em;
+  white-space: nowrap;
+  -webkit-text-stroke: 0;
+}
+.pm-site footer .rk-wordmark--lg { font-size: clamp(25px, 3vw, 37px); }
+.pm-site :is(.pm-head, footer) .rk-wordmark :is(strong, b) {
+  font: inherit;
+  color: #73dbff;
+  background: linear-gradient(180deg, #f0fbff 0%, #49e2ff 29%, #3685ff 52%, #a469ff 79%, #d4c1ff 100%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: .4px #a9ddff;
+  filter: drop-shadow(0 0 5px #347dff70);
+}
+.pm-site :is(.pm-head, footer) .rk-wordmark b {
+  font-size: .47em;
+  letter-spacing: .37em;
+  padding-inline-start: .37em;
+}
+@media (forced-colors: active) {
+  .pm-site :is(.pm-head, footer) .rk-wordmark :is(strong, b) {
+    background: none;
+    -webkit-text-fill-color: currentColor;
+    -webkit-text-stroke: 0;
+    filter: none;
+  }
+}
+
+/* ── neon RAKVIH DIGITAL wordmark: Orbitron, glowing gradient, light swoosh ── */
+:root:root:root .pm-site :is(.pm-head, footer) .rk-wordmark:not(#_) {
+  position: relative;
+  display: inline-grid !important;
+  justify-items: center;
+  gap: .28em;
+  padding: .18em .5em .2em .62em;
+  font-family: var(--f-logo), var(--font-sans-src, system-ui), sans-serif !important;
+  font-weight: 900;
+  font-size: clamp(19px, 1.7vw, 26px);
+  letter-spacing: .08em;
+  line-height: .9;
+  isolation: isolate;
+}
+:root:root:root .pm-site footer .rk-wordmark--lg:not(#_) { font-size: clamp(26px, 2.8vw, 38px); }
+:root:root:root .pm-site :is(.pm-head, footer) .rk-wordmark:not(#_) :is(strong, b) {
+  background: linear-gradient(180deg, #f2fbff 0%, #6fe6ff 26%, #3a8bff 55%, #8b5cff 80%, #d2b8ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: .5px #bfe9ff99;
+  filter: drop-shadow(0 0 4px #3ad6ffa0) drop-shadow(0 0 12px #7b39fc70);
+}
+:root:root:root .pm-site :is(.pm-head, footer) .rk-wordmark:not(#_) strong { font-weight: 900; }
+:root:root:root .pm-site :is(.pm-head, footer) .rk-wordmark:not(#_) b {
+  font-weight: 700;
+  font-size: .5em;
+  letter-spacing: .62em;
+  padding-inline-start: .62em;
+}
+/* swoosh arc sweeping round the left of RAKVIH */
+:root:root:root .pm-site :is(.pm-head, footer) .rk-wordmark:not(#_)::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: -.1em;
+  top: -.22em;
+  width: 82%;
+  height: 1.55em;
+  border-radius: 50%;
+  border: .085em solid transparent;
+  border-top-color: #7fe9ff;
+  border-left-color: #8b5cff;
+  transform: rotate(-9deg);
+  filter: drop-shadow(0 0 5px #3ad6ffb0);
+  -webkit-mask-image: linear-gradient(90deg, #000 30%, transparent 85%);
+  mask-image: linear-gradient(90deg, #000 30%, transparent 85%);
+  pointer-events: none;
+}
+/* glow line under DIGITAL */
+:root:root:root .pm-site :is(.pm-head, footer) .rk-wordmark:not(#_)::after {
+  content: '';
+  position: absolute;
+  left: 18%;
+  right: 6%;
+  bottom: -.06em;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #3ad6ff, #8b5cff, transparent);
+  box-shadow: 0 0 8px #3ad6ff;
+  opacity: .8;
+  pointer-events: none;
+}
+:root:root:root .pm-site .pm-head .rk-wordmark:not(#_) b { letter-spacing: .42em; padding-inline-start: .42em; font-size: .46em; }
+
+/* ── mouse trail cursor ── */
+.rk-cursor { position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0; transition: opacity .3s; }
+.rk-cursor.on { opacity: 1; }
+.rk-cursor i {
+  position: fixed;
+  left: 0; top: 0;
+  width: calc(14px - var(--n) * .75px);
+  height: calc(14px - var(--n) * .75px);
+  border-radius: 50%;
+  background: #fff;
+  opacity: calc(1 - var(--n) * .065);
+  box-shadow: 0 0 10px #8b5cffcc, 0 0 22px #3ad6ff70;
+  will-change: transform;
+}
+.rk-cursor i:not(:first-child) { background: color-mix(in srgb, #c4b0ff calc(100% - var(--n) * 5%), #3ad6ff); box-shadow: 0 0 8px #8b5cff90; }
+.rk-cursor.press i:first-child { width: 22px; height: 22px; background: #3ad6ff; }
+@media (pointer: coarse), (prefers-reduced-motion: reduce) { .rk-cursor { display: none; } }
+
+/* ── "Live" labels everywhere: green dot + green text ── */
+:root:root:root .pm-site :is(.rk-live, [class*='planTagLive'], [class*='posterLiveTag'], [class*='liveTag'], .cs-pill.is-live, [class*='LiveCoursePopup_live'] > b):not(#_) {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 7px;
+  background: #22c55e1f !important;
+  border: 1px solid #22c55e66 !important;
+  color: #4ade80 !important;
+  -webkit-text-fill-color: #4ade80 !important;
+  box-shadow: 0 0 16px -4px #22c55e80 !important;
+}
+:root:root:root .pm-site :is(.rk-live, [class*='planTagLive'], [class*='posterLiveTag'], [class*='liveTag'], .cs-pill.is-live, [class*='LiveCoursePopup_live'] > b):not(#_) i,
+:root:root:root .pm-site .rk-live:not(#_)::before {
+  content: '';
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #22c55e !important;
+  box-shadow: 0 0 0 3px #22c55e33, 0 0 8px #22c55e;
+  animation: rkLivePulse 1.6s ease-in-out infinite;
+}
+@keyframes rkLivePulse { 0%, 100% { opacity: 1; } 50% { opacity: .45; } }
+
+.rk-digital-wordmark {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1390 / 450;
+  container-type: inline-size;
+}
+.pm-head .pm-brand .rk-digital-wordmark { width: clamp(118px, 12vw, 174px); }
+.pm-site .rk-digital-wordmark > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  clip-path: polygon(0 0, 100% 0, 100% 66%, 30% 66%, 30% 100%, 0 100%);
+}
+.rk-digital-wordmark > span {
+  position: absolute;
+  inset: 67% 4% auto 32%;
+  color: #b4eaff;
+  font: 750 8cqw/1 var(--font-sans-src), system-ui, sans-serif;
+  letter-spacing: .31em;
+  text-align: center;
+  text-indent: .31em;
+  text-shadow: 0 0 8px #735dff96;
+}

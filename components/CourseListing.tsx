@@ -317,7 +317,7 @@ export default function CourseListing({
                       <span>{videoEditingOffering.duration_label}</span>
                     </div>
                     <ul className="pm-hl-pills" aria-label="Programme highlights">
-                      <li><Calendar size={13} /> 45-Day Training Program</li>
+                      <li><Calendar size={13} /> 45-Days Training Program</li>
                       <li><Users size={13} /> Live Project Training with Trainer Assistance</li>
                       <li><Award size={13} /> Get Training Certificate in 45 Days</li>
                     </ul>

@@ -253,7 +253,7 @@ export default function AdminStudents({
                         </span>
                       </td>
                       <td className="adm-date-cell">
-                        {new Date(dateVal).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}
+                        {new Date(dateVal).toLocaleDateString('en-IN', { days: '2-digit', month: 'short', year: 'numeric' })}
                       </td>
                       <td style={{ textAlign: 'right' }}>
                         <button

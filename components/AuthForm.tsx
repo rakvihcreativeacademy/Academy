@@ -1,14 +1,16 @@
 "use client";
 import { useState } from 'react';
 import { Eye, EyeOff, Loader2 } from 'lucide-react';
-import { authenticate } from '@/actions/auth';
+import { authenticate, registerStudent } from '@/actions/auth';
 
 export default function AuthForm({
   next = '',
   adminMode = false,
+  registerMode = false,
 }: {
   next?: string;
   adminMode?: boolean;
+  registerMode?: boolean;
 }) {
   const [showPassword, setShowPassword] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -16,14 +18,16 @@ export default function AuthForm({
 
   return (
     <form
-      className="panel space-y-5"
+      className={`panel space-y-5${registerMode ? ' auth-form--register' : ''}`}
       onSubmit={async e => {
         e.preventDefault();
         setBusy(true);
         setFeedback('');
         try {
-          const result = await authenticate(new FormData(e.currentTarget));
+          const submit = registerMode ? registerStudent : authenticate;
+          const result = await submit(new FormData(e.currentTarget));
           if (result?.error) setFeedback(result.error);
+          else if (result && 'message' in result && result.message) setFeedback(result.message);
         } finally {
           setBusy(false);
         }
@@ -31,6 +35,13 @@ export default function AuthForm({
     >
       <input type="hidden" name="mode" value="signin" />
       <input type="hidden" name="next" value={next} />
+
+      {registerMode && (
+        <label>
+          Name
+          <input name="name" required maxLength={100} autoComplete="name" placeholder="Your full name" />
+        </label>
+      )}
 
       <label>
         Email
@@ -43,6 +54,13 @@ export default function AuthForm({
         />
       </label>
 
+      {registerMode && (
+        <label>
+          Phone number
+          <input type="tel" name="phone" required maxLength={32} autoComplete="tel" placeholder="+91 98765 43210" />
+        </label>
+      )}
+
       <label>
         Password
         <span style={{ position: 'relative', display: 'block' }}>
@@ -52,7 +70,7 @@ export default function AuthForm({
             required
             minLength={8}
             maxLength={128}
-            autoComplete="current-password"
+            autoComplete={registerMode ? 'new-password' : 'current-password'}
             placeholder="Enter your password"
             style={{ width: '100%', paddingRight: 48 }}
           />
@@ -82,6 +100,21 @@ export default function AuthForm({
         </span>
       </label>
 
+      {registerMode && (
+        <label>
+          Confirm password
+          <input
+            type={showPassword ? 'text' : 'password'}
+            name="confirmPassword"
+            required
+            minLength={8}
+            maxLength={128}
+            autoComplete="new-password"
+            placeholder="Enter your password again"
+          />
+        </label>
+      )}
+
       {feedback && (
         <p role="status" className="notice">
           {feedback}
@@ -91,8 +124,10 @@ export default function AuthForm({
       <button disabled={busy} className="button w-full">
         {busy ? (
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-            <Loader2 size={17} className="pm-spin" /> Signing in…
+            <Loader2 size={17} className="pm-spin" /> {registerMode ? 'Creating account…' : 'Signing in…'}
           </span>
+        ) : registerMode ? (
+          'Create student account'
         ) : adminMode ? (
           'Sign in to admin panel ↗'
         ) : (

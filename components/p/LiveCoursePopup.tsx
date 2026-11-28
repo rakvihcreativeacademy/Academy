@@ -1,29 +1,46 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { usePathname } from 'next/navigation';
 import { ArrowUpRight, Award, Calendar, Users, X } from 'lucide-react';
 import Link from '@/components/SiteLink';
+import { fontVars, heroFontVars } from '@/lib/fonts';
+import styles from './LiveCoursePopup.module.css';
 
-/**
- * Homepage spotlight popup for the Live Professional Video Editing course.
- * Appears every time the home page loads or refreshes.
- * Compact text-only announcement with course highlights and a Read More link.
- */
+const dismissalKey = 'rk-live-course-dismissed-until';
+
 export default function LiveCoursePopup() {
-  const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const dismissedUntil = useRef(0);
 
   useEffect(() => {
-    if (pathname !== '/') {
-      setOpen(false);
-      return;
-    }
-    const timer = window.setTimeout(() => setOpen(true), 450);
-    return () => window.clearTimeout(timer);
-  }, [pathname]);
+    if (open) return;
 
-  const close = () => setOpen(false);
+    let timer: number;
+    function schedule() {
+      let until = dismissedUntil.current;
+      try {
+        until = Math.max(until, Number(localStorage.getItem(dismissalKey)) || 0);
+      } catch { /* The in-memory timer still works. */ }
+
+      const delay = until - Date.now();
+      if (delay > 0 || document.querySelector('.pm-student-auth[open]')) {
+        timer = window.setTimeout(schedule, delay > 0 ? delay : 500);
+        return;
+      }
+      setOpen(true);
+    }
+
+    timer = window.setTimeout(schedule, 450);
+    return () => window.clearTimeout(timer);
+  }, [open]);
+
+  const close = () => {
+    dismissedUntil.current = Date.now() + 120_000;
+    try {
+      localStorage.setItem(dismissalKey, String(dismissedUntil.current));
+    } catch { /* Keep the dismissal in memory. */ }
+    setOpen(false);
+  };
 
   useEffect(() => {
     if (!open) return;
@@ -48,7 +65,7 @@ export default function LiveCoursePopup() {
 
   return createPortal(
     <div
-      className="pm-promo-backdrop pm-site"
+      className={`${styles.backdrop} ${fontVars} ${heroFontVars}`}
       role="dialog"
       aria-modal="true"
       aria-labelledby="pm-promo-title"
@@ -57,63 +74,52 @@ export default function LiveCoursePopup() {
         if (e.target === e.currentTarget) close();
       }}
     >
-      <div className="pm-promo-modal" data-lenis-prevent>
-        <button
-          type="button"
-          className="pm-promo-close"
-          aria-label="Close live course announcement"
-          onClick={close}
-        >
-          <X size={18} strokeWidth={2.2} />
-        </button>
+      <div className={styles.frame}>
+        <div className={styles.modal}>
+          <span className={styles.stars} aria-hidden="true" />
+          <span className={styles.lensDeco} aria-hidden="true"><i /><i /><i /></span>
+          <button type="button" className={styles.close} aria-label="Close live course announcement" onClick={close}>
+            <X size={16} strokeWidth={2.2} />
+          </button>
 
-        <div className="pm-promo-body">
-          <p className="pm-promo-eyebrow">Now Live at RAKVIH Solutions Private Limited</p>
-          <h2 id="pm-promo-title" className="pm-promo-title">
-            Professional <em>Video Editing</em>
-          </h2>
-          <p className="pm-promo-desc">
-            Admissions are live! Master Adobe Premiere Pro, color grading, sound design, and real studio post-production workflows from scratch.
-          </p>
+          <div className={styles.body}>
+            <span className={styles.live}><b><i /> Live</b> Admissions open</span>
+            <h2 id="pm-promo-title" className={styles.title}>
+              Professional <em>Video Editing</em>
+            </h2>
+            <p className={styles.desc}>
+              Master Adobe Premiere Pro, colour grading, sound design and real post-production workflows from scratch.
+            </p>
 
-          <ul className="pm-promo-points">
-            <li>
-              <span className="pm-promo-ico" aria-hidden="true">
-                <Calendar size={17} strokeWidth={2} />
-              </span>
-              <div className="pm-promo-pt-copy">
-                <strong>45 days Training Program</strong>
-                <span>Structured hands-on sessions from basics to pro delivery</span>
-              </div>
-            </li>
-            <li>
-              <span className="pm-promo-ico" aria-hidden="true">
-                <Users size={17} strokeWidth={2} />
-              </span>
-              <div className="pm-promo-pt-copy">
-                <strong>Live Project Training with Trainer Assistance</strong>
-                <span>Edit real commercial &amp; film projects with dedicated mentors</span>
-              </div>
-            </li>
-            <li>
-              <span className="pm-promo-ico" aria-hidden="true">
-                <Award size={17} strokeWidth={2} />
-              </span>
-              <div className="pm-promo-pt-copy">
-                <strong>Get Training Certificate in 45 days</strong>
-                <span>Industry-recognized completion certificate upon finishing</span>
-              </div>
-            </li>
-          </ul>
+            <ul className={styles.points}>
+              <li>
+                <span className={styles.ico} aria-hidden="true"><Calendar size={17} strokeWidth={2} /></span>
+                <div>
+                  <strong>45-Days Training Program</strong>
+                  <span>Structured hands-on sessions from basics to final delivery</span>
+                </div>
+              </li>
+              <li>
+                <span className={styles.ico} aria-hidden="true"><Users size={17} strokeWidth={2} /></span>
+                <div>
+                  <strong>Live Project Training with Trainer Assistance</strong>
+                  <span>Edit a real project with your trainer guiding every stage</span>
+                </div>
+              </li>
+              <li>
+                <span className={styles.ico} aria-hidden="true"><Award size={17} strokeWidth={2} /></span>
+                <div>
+                  <strong>Certificate in 45 days</strong>
+                  <span>RAKVIH course-completion certificate when you finish</span>
+                </div>
+              </li>
+            </ul>
 
-          <div className="pm-promo-actions">
-            <Link
-              href="/courses#video-editing"
-              className="pm-btn pm-promo-readmore"
-              onClick={close}
-            >
-              Read More <ArrowUpRight size={16} />
-            </Link>
+            <div className={styles.actions}>
+              <Link href="/courses#video-editing" className={styles.primary} onClick={close}>
+                View course <ArrowUpRight size={16} />
+              </Link>
+            </div>
           </div>
         </div>
       </div>

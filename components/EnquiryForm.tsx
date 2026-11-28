@@ -13,7 +13,7 @@ const optionsFor: Record<EnquiryType, string[]> = {
       : `${c.title} (Upcoming)`,
   ),
   studio: [
-    'Podcast studio rental (Hourly / Half-day / Full-day)',
+    'Podcast studio rental (Hourly / Half-days / Full-days)',
     'Audio podcast recording',
     'Multi-camera video podcast recording',
     'Podcast editing, mixing & mastering',
