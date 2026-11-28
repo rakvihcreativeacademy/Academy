@@ -10,7 +10,6 @@ import { getPageContent } from '@/lib/cms/server';
 import { isCourseEnabled, resolveCourseStatus } from '@/lib/cms/schema';
 import { formatInr } from '@/lib/payments';
 import { getVideoEditingOffering } from '@/lib/payments-server';
-import GradePreview from './GradePreview';
 import EditingImagePreview from './EditingImagePreview';
 import styles from './home-motion.module.css';
 
